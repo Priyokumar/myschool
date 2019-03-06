@@ -110,6 +110,8 @@ export class AdmissionFeeCreateEditComponent extends Admission implements OnInit
       dueAmount: this.dueAmountFormCtl.value,
       promiseToPayDate: this.promiseToPayDateFormCtl.value,
       student: {
+        sameAsPermAddr:null,
+        permanentAddress : null,
         correspondentAddress: null,
         dob: null,
         fatherInfo: null,
@@ -124,7 +126,14 @@ export class AdmissionFeeCreateEditComponent extends Admission implements OnInit
         registrationNo: null,
         registrationStatus: null,
         rollNo: null,
-        standard: null
+        standard: null,
+        gender: null,
+        bloodGroup: null,
+        religion: null,
+        community: null,
+        nationality: null,
+        aadhaarNo: null,
+        physicallyChallenged: null,
       },
       fees: null
     }

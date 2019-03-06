@@ -2,6 +2,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms"
 import * as moment from "moment"
 import { IStudent, RegistrationStatus, Standards, Genders } from 'src/app/model/student.model';
 import { IKeyValue } from 'src/app/model/IKeyVal';
+import { BloodGroups, Relgions, Nationalities, Communities } from 'src/app/model/constants';
 
 export class Student {
 
@@ -14,6 +15,10 @@ export class Student {
     standards: IKeyValue[] = Standards
     genders: IKeyValue[] = Genders
     yesNo: IKeyValue[] = [{ key: "Yes", value: true }, { key: "No", value: false }]
+    bloodGroups: String[] = BloodGroups
+    religions: String[] = Relgions
+    nationalities: String[] = Nationalities
+    communities: String[] = Communities
 
     // Registration details
     idFormCtl = new FormControl('', null)
@@ -29,12 +34,15 @@ export class Student {
     rollNoFormCtl = new FormControl('', null)
     dobFormCtl = new FormControl('', Validators.required)
     joiningDateFormCtl = new FormControl('', null)
+
     genderFormCtl = new FormControl('', null)
     bloodGroupFormCtl = new FormControl('', null)
     religionFormCtl = new FormControl('', null)
-    casteFormCtl = new FormControl('', null)
     nationalityFormCtl = new FormControl('', null)
     communityFormCtl = new FormControl('', null)
+    aadhaarNoFormCtl = new FormControl('', null)
+    physicallyChallengedFormCtl = new FormControl('', null)
+
 
     // Permanent Address details
     sameAsPermAddrFormCtl = new FormControl('', null)
@@ -95,6 +103,14 @@ export class Student {
             dobFormCtl: this.dobFormCtl,
             joiningDateFormCtl: this.joiningDateFormCtl,
 
+            genderFormCtl: this.genderFormCtl,
+            bloodGroupFormCtl: this.bloodGroupFormCtl,
+            religionFormCtl: this.religionFormCtl,
+            nationalityFormCtl: this.nationalityFormCtl,
+            communityFormCtl: this.communityFormCtl,
+            aadhaarNoFormCtl: this.aadhaarNoFormCtl,
+            physicallyChallengedFormCtl: this.physicallyChallengedFormCtl,
+
             // Student Address details
             firstLineFormCtl: this.firstLineFormCtl,
             secondLineFormCtl: this.secondLineFormCtl,
@@ -122,5 +138,18 @@ export class Student {
         this.registrationDateFormCtl.disable()
         this.registrationDateFormCtl.setValue(moment())
         this.registrationStatusFormCtl.disable()
+        this.sameAsPermAddrFormCtl.setValue(false)
+
+        this.sameAsPermAddrFormCtl.valueChanges.subscribe(data => {
+
+            if (data === true) {
+                this.corrAddIdFormCtl.setValue(this.addIdFormCtl.value)
+                this.corrFirstLineFormCtl.setValue(this.firstLineFormCtl.value)
+                this.corrSecondLineFormCtl.setValue(this.secondLineFormCtl.value)
+                this.corrCountryFormCtl.setValue(this.countryFormCtl.value)
+                this.corrStateFormCtl.setValue(this.stateFormCtl.value)
+                this.corrDistrictFormCtl.setValue(this.districtFormCtl.value)
+            }
+        })
     }
 }

@@ -84,6 +84,7 @@ export interface IEmployee {
     firstName: String
     middleName: String
     lastName: String
+    gender:String
     email: String
     mobileNo: String
     status: String
@@ -111,9 +112,18 @@ export class EmployeeStatus {
 
 export class EmployeeType {
 
+    public static CONTRACT: String = "Contract"
+    public static PERMANENT: String = "Permanent"
+
+}
+
+export class Designation {
+
     public static TEACHING_STAFF: String = "Teaching staff"
     public static CLERK: String = "Clerk"
     public static FINANCE: String = "Finance"
+    public static PRINCIPAL: String = "Principal"
+    public static MANAGING_COMMITEE: String = "Managing Commitee"
 }
 
 export interface IPaySalary {

@@ -1,20 +1,24 @@
-import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { IAddress, EmployeeStatus, IEmployee, EmployeeType, IPersonalInfo } from "src/app/model/employeeModels";
+import { FormGroup, FormControl, Validators } from "@angular/forms"
+import { IAddress, EmployeeStatus, IEmployee, EmployeeType, IPersonalInfo, Designation } from "src/app/model/employeeModels"
+import { IKeyValue } from 'src/app/model/IKeyVal';
+import { Genders } from 'src/app/model/student.model';
 
 export class Employee {
 
-    public empId: number;
-    public errorMessage: String;
-    public hasSubmitted: boolean = false;
-    public employeeForm: FormGroup;
-    public employee: IEmployee;
+    public empId: number
+    public errorMessage: String
+    public hasSubmitted: boolean = false
+    public employeeForm: FormGroup
+    public employee: IEmployee
+    genders: IKeyValue[] = Genders
 
-    public employeeStatuses = [EmployeeStatus.IN_ACTIVE, EmployeeStatus.ACTIVE, EmployeeStatus.EXPIRED];
-    public employeeTypes = [EmployeeType.TEACHING_STAFF, EmployeeType.FINANCE, EmployeeType.CLERK];
+    public employeeStatuses = [EmployeeStatus.IN_ACTIVE, EmployeeStatus.ACTIVE, EmployeeStatus.EXPIRED]
+    public designations = [Designation.TEACHING_STAFF, Designation.FINANCE, Designation.CLERK, Designation.PRINCIPAL, Designation.MANAGING_COMMITEE]
+    public employeeTypes = [EmployeeType.CONTRACT, EmployeeType.PERMANENT]
 
-    public correspondentAddress: IAddress;
-    public permanentAddress: IAddress;
-    public personalInfo: IPersonalInfo;
+    public correspondentAddress: IAddress
+    public permanentAddress: IAddress
+    public personalInfo: IPersonalInfo
 
     constructor() {
         this.employeeForm = new FormGroup({
@@ -71,6 +75,7 @@ export class Employee {
     public firstName = new FormControl('', Validators.required);
     public middleName = new FormControl('', null);
     public lastName = new FormControl('', Validators.required);
+    public genderFormCrtl = new FormControl('', Validators.required);
     public email = new FormControl('', [Validators.required, Validators.email]);
     public mobileNo = new FormControl('', [Validators.required, Validators.email]);
     public status = new FormControl('', null);

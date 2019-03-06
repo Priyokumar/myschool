@@ -58,7 +58,17 @@ export class StudentCreateEditComponent extends Student implements OnInit {
       rollNo: this.rollNoFormCtl.value,
       dob: datePipe.transform(this.dobFormCtl.value, 'MM/dd/yyyy'),
       joiningDate: datePipe.transform(this.joiningDateFormCtl.value, 'MM/dd/yyyy'),
-      correspondentAddress: {
+
+      gender: this.genderFormCtl.value,
+      bloodGroup: this.bloodGroupFormCtl.value,
+      religion: this.religionFormCtl.value,
+      community: this.communityFormCtl.value,
+      nationality: this.nationalityFormCtl.value,
+      aadhaarNo: this.aadhaarNoFormCtl.value,
+      physicallyChallenged: this.physicallyChallengedFormCtl.value,
+
+      sameAsPermAddr : this.sameAsPermAddrFormCtl.value,
+      permanentAddress: {
         id: this.addIdFormCtl.value,
         firstLine: this.firstLineFormCtl.value,
         secondLine: this.secondLineFormCtl.value,
@@ -66,6 +76,16 @@ export class StudentCreateEditComponent extends Student implements OnInit {
         state: this.stateFormCtl.value,
         district: this.districtFormCtl.value
       },
+
+      correspondentAddress: {
+        id: this.corrAddIdFormCtl.value,
+        firstLine: this.corrFirstLineFormCtl.value,
+        secondLine: this.corrSecondLineFormCtl.value,
+        country: this.corrCountryFormCtl.value,
+        state: this.corrStateFormCtl.value,
+        district: this.corrDistrictFormCtl.value
+      },
+
       fatherInfo: {
         id: this.fInfoIdFormCtl.value,
         name: this.fatherNameFormCtl.value,
@@ -130,14 +150,33 @@ export class StudentCreateEditComponent extends Student implements OnInit {
     this.dobFormCtl.setValue(moment(<string>this.student.dob))
     this.joiningDateFormCtl.setValue(moment(<string>this.student.joiningDate))
 
-    let address = this.student.correspondentAddress
-    if (address) {
-      this.addIdFormCtl.setValue(address.id)
-      this.firstLineFormCtl.setValue(address.firstLine)
-      this.secondLineFormCtl.setValue(address.secondLine)
-      this.countryFormCtl.setValue(address.id)
-      this.stateFormCtl.setValue(address.country)
-      this.districtFormCtl.setValue(address.district)
+    this.genderFormCtl.setValue(this.student.gender)
+    this.bloodGroupFormCtl.setValue(this.student.bloodGroup)
+    this.religionFormCtl.setValue(this.student.religion)
+    this.nationalityFormCtl.setValue(this.student.nationality)
+    this.communityFormCtl.setValue(this.student.community)
+    this.aadhaarNoFormCtl.setValue(this.student.aadhaarNo)
+    this.physicallyChallengedFormCtl.setValue(this.student.physicallyChallenged)
+
+    let permanentAddress = this.student.permanentAddress
+    if (permanentAddress) {
+      this.addIdFormCtl.setValue(permanentAddress.id)
+      this.firstLineFormCtl.setValue(permanentAddress.firstLine)
+      this.secondLineFormCtl.setValue(permanentAddress.secondLine)
+      this.countryFormCtl.setValue(permanentAddress.id)
+      this.stateFormCtl.setValue(permanentAddress.country)
+      this.districtFormCtl.setValue(permanentAddress.district)
+    }
+
+    this.sameAsPermAddrFormCtl.setValue(this.student.sameAsPermAddr)
+    let correspondentAddress = this.student.correspondentAddress
+    if (correspondentAddress) {
+      this.corrAddIdFormCtl.setValue(correspondentAddress.id)
+      this.corrFirstLineFormCtl.setValue(correspondentAddress.firstLine)
+      this.corrSecondLineFormCtl.setValue(correspondentAddress.secondLine)
+      this.corrCountryFormCtl.setValue(correspondentAddress.id)
+      this.corrStateFormCtl.setValue(correspondentAddress.country)
+      this.corrDistrictFormCtl.setValue(correspondentAddress.district)
     }
 
     let fatherInfo = this.student.fatherInfo

@@ -57,6 +57,7 @@ export class EmployeeCreateEditComponent extends Employee implements OnInit {
       firstName: this.firstName.value,
       middleName: this.middleName.value,
       lastName: this.lastName.value,
+      gender:this.genderFormCrtl.value,
       email: this.email.value,
       mobileNo: this.mobileNo.value,
       status: this.status.value,
@@ -142,6 +143,7 @@ export class EmployeeCreateEditComponent extends Employee implements OnInit {
     this.firstName.setValue(this.employee.firstName)
     this.middleName.setValue(this.employee.middleName)
     this.lastName.setValue(this.employee.lastName)
+    this.genderFormCrtl.setValue(this.employee.gender)
     this.email.setValue(this.employee.email)
     this.mobileNo.setValue(this.employee.mobileNo)
     this.status.setValue(this.employee.status)

@@ -61,7 +61,7 @@
           <div class="col-md-4">
             <mat-form-field appearance="fill" class="w-100">
               <mat-label>Gender</mat-label>
-              <mat-select placeholder="Gender" [formControl]="genderFormCtl">
+              <mat-select [formControl]="genderFormCtl">
                 <mat-option *ngFor="let option of genders" [value]="option.value">
                   {{option.value}}
                 </mat-option>
@@ -74,7 +74,11 @@
           <div class="col-md-4">
             <mat-form-field appearance="fill" class="w-100">
               <mat-label>Blood group</mat-label>
-              <input matInput placeholder="Blood group" [formControl]="bloodGroupFormCtl">
+              <mat-select [formControl]="bloodGroupFormCtl">
+                <mat-option *ngFor="let option of bloodGroups" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-select>
               <mat-error *ngIf="bloodGroupFormCtl.hasError('required')">
                 Blood group is <strong>required</strong>
               </mat-error>
@@ -83,25 +87,25 @@
           <div class="col-md-4">
             <mat-form-field appearance="fill" class="w-100">
               <mat-label>Religion</mat-label>
-              <input matInput placeholder="Religion" [formControl]="religionFormCtl">
+              <mat-select [formControl]="religionFormCtl">
+                <mat-option *ngFor="let option of religions" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-select>
               <mat-error *ngIf="religionFormCtl.hasError('required')">
                 Religion is <strong>required</strong>
               </mat-error>
             </mat-form-field>
           </div>
-          <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
-              <mat-label>Caste</mat-label>
-              <input matInput placeholder="Caste" [formControl]="casteFormCtl">
-              <mat-error *ngIf="casteFormCtl.hasError('required')">
-                Caste is <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-          </div>
+          
           <div class="col-md-4">
             <mat-form-field appearance="fill" class="w-100">
               <mat-label>Nationality</mat-label>
-              <input matInput placeholder="Nationality" [formControl]="nationalityFormCtl">
+              <mat-select [formControl]="nationalityFormCtl">
+                <mat-option *ngFor="let option of nationalities" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-select>
               <mat-error *ngIf="nationalityFormCtl.hasError('required')">
                 Nationality is <strong>required</strong>
               </mat-error>
@@ -110,7 +114,25 @@
           <div class="col-md-4">
             <mat-form-field appearance="fill" class="w-100">
               <mat-label>Community</mat-label>
-              <input matInput placeholder="Community" [formControl]="communityFormCtl">
+              <mat-select [formControl]="communityFormCtl">
+                <mat-option *ngFor="let option of communities" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="communityFormCtl.hasError('required')">
+                Community is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-4">
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label>Physically Challenged ?</mat-label>
+              <mat-select [formControl]="physicallyChallengedFormCtl">
+                <mat-option *ngFor="let option of yesNo" [value]="option.value">
+                  {{option.key}}
+                </mat-option>
+              </mat-select>
               <mat-error *ngIf="communityFormCtl.hasError('required')">
                 Community is <strong>required</strong>
               </mat-error>

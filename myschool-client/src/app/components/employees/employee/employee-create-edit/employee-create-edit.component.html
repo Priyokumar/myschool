@@ -64,6 +64,20 @@
 
           <div class="col-md-4">
             <mat-form-field appearance="fill" class="w-100">
+              <mat-label>Gender</mat-label>
+              <mat-select placeholder="Status" [formControl]="genderFormCrtl">
+                <mat-option *ngFor="let option of genders" [value]="option.value">
+                  {{option.value}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="employeeType.hasError('required')">
+                Employee Type is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-4">
+            <mat-form-field appearance="fill" class="w-100">
               <mat-label>Email</mat-label>
               <input matInput placeholder="Placeholder" [formControl]="email">
               <mat-error *ngIf="email.hasError('required')">
@@ -140,7 +154,11 @@
           <div class="col-md-4">
             <mat-form-field appearance="fill" class="w-100">
               <mat-label>Designation</mat-label>
-              <input matInput placeholder="Placeholder" [formControl]="designation">
+              <mat-select placeholder="Status" [formControl]="designation">
+                <mat-option *ngFor="let option of designations" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-select>
               <mat-error *ngIf="designation.hasError('required')">
                 Designation is <strong>required</strong>
               </mat-error>

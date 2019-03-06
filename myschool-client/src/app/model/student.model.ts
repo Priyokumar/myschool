@@ -13,6 +13,17 @@ export interface IStudent {
     rollNo: String
     dob: String
     joiningDate: String
+
+    gender: String
+    bloodGroup: String
+    religion: String
+    community: String
+    nationality: String
+    aadhaarNo: String
+    physicallyChallenged: String
+
+    sameAsPermAddr: Boolean
+    permanentAddress: IAddress
     correspondentAddress: IAddress
     fatherInfo: IGuardian
     motherInfo: IGuardian

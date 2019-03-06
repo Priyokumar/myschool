@@ -14,3 +14,37 @@ export const userRoles: IKeyValue[] = [
     { key: UserRole.CLERK, value: "Clerk" }
 ]
 
+export const BloodGroups = [
+    "A+",
+    "A-",
+    "B+",
+    "B-",
+    "O+",
+    "O-",
+    "AB+",
+    "AB-"
+]
+
+export const Relgions = [
+
+    "Sanamahism",
+    "Hinduism",
+    "Islam",
+    "Christian",
+    "Others"
+]
+
+export const Nationalities = [
+
+    "Indian"
+
+]
+
+export const Communities = [
+
+    "General",
+    "SC/ST",
+    "OBC",
+    "Others"
+]
+
