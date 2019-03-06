@@ -57,9 +57,33 @@ public class ScStudent implements Serializable {
 
 	@Column(name = "JOINING_DATE")
 	private Date joiningDate;
+	
+	@Column(name = "GENDER")
+	private String gender;
+	
+	@Column(name = "BLOOD_GROUP")
+	private String bloodGroup;
+	
+	@Column(name = "RELIGION")
+	private String religion;
+	
+	@Column(name = "COMMUNITY")
+	private String community;
+	
+	@Column(name = "NATIONALITY")
+	private String nationality;
+	
+	@Column(name = "AADHAAR_NO")
+	private String aadhaarNo;
+	
+	@Column(name = "PHYSICALLY_CHALLENGED")
+	private Boolean physicallyChallenged;
 
 	@Embedded
 	private ScRecordAudit recordAudit = new ScRecordAudit();
+	
+	@Column(name = "SAME_AS_PERM_ADDR")
+	private Boolean sameAsPermAddr;
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "CORRESPONDENT_ADDRESS_ID")
@@ -223,4 +247,70 @@ public class ScStudent implements Serializable {
 		this.recordAudit = recordAudit;
 	}
 
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getBloodGroup() {
+		return bloodGroup;
+	}
+
+	public void setBloodGroup(String bloodGroup) {
+		this.bloodGroup = bloodGroup;
+	}
+
+	public String getReligion() {
+		return religion;
+	}
+
+	public void setReligion(String religion) {
+		this.religion = religion;
+	}
+
+	public String getCommunity() {
+		return community;
+	}
+
+	public void setCommunity(String community) {
+		this.community = community;
+	}
+
+	public String getNationality() {
+		return nationality;
+	}
+
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+
+	public String getAadhaarNo() {
+		return aadhaarNo;
+	}
+
+	public void setAadhaarNo(String aadhaarNo) {
+		this.aadhaarNo = aadhaarNo;
+	}
+
+	public Boolean getPhysicallyChallenged() {
+		return physicallyChallenged;
+	}
+
+	public void setPhysicallyChallenged(Boolean physicallyChallenged) {
+		this.physicallyChallenged = physicallyChallenged;
+	}
+
+	public Boolean getSameAsPermAddr() {
+		return sameAsPermAddr;
+	}
+
+	public void setSameAsPermAddr(Boolean sameAsPermAddr) {
+		this.sameAsPermAddr = sameAsPermAddr;
+	}
+	
+	
+	
 }

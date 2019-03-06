@@ -11,6 +11,8 @@ public class Employee {
 	private String middleName;
 
 	private String lastName;
+	
+	private String gender;
 
 	private String email;
 
@@ -182,6 +184,14 @@ public class Employee {
 
 	public void setProfilePic(Document profilePic) {
 		this.profilePic = profilePic;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 	
 }

@@ -111,6 +111,7 @@ public class ScEmployeeService {
 		dtoEmployee.setLastName(employee.getLastName());
 		dtoEmployee.setMiddleName(employee.getMiddleName());
 		dtoEmployee.setStatus(employee.getStatus());
+		dtoEmployee.setGender(employee.getGender());
 
 		ScAddress permanentAddress = employee.getPermanentAddress();
 		if (ScUtil.isAllPresent(permanentAddress)) {
@@ -230,6 +231,7 @@ public class ScEmployeeService {
 		employee.setLastName(employeeDto.getLastName());
 		employee.setMiddleName(employeeDto.getMiddleName());
 		employee.setStatus(employeeDto.getStatus());
+		employee.setGender(employeeDto.getGender());
 
 		Address permAddDto = employeeDto.getPermanentAddress();
 		if (ScUtil.isAllPresent(permAddDto)) {

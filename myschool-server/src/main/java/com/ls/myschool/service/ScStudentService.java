@@ -116,6 +116,13 @@ public class ScStudentService {
 		studentDto.setMiddleName(student.getMiddleName());
 		studentDto.setRollNo(student.getRollNo());
 		studentDto.setStandard(student.getStandard());
+		studentDto.setBloodGroup(student.getBloodGroup());
+		studentDto.setCommunity(student.getCommunity());
+		studentDto.setGender(student.getGender());
+		studentDto.setNationality(student.getNationality());
+		studentDto.setPhysicallyChallenged(student.getPhysicallyChallenged());
+		studentDto.setReligion(student.getReligion());
+		studentDto.setSameAsPermAddr(student.getSameAsPermAddr());
 
 		ScAddress permanentAddress = student.getPermanentAddress();
 		if (ScUtil.isAllPresent(permanentAddress)) {
@@ -200,6 +207,15 @@ public class ScStudentService {
 		student.setMiddleName(studentDto.getMiddleName());
 		student.setRollNo(studentDto.getRollNo());
 		student.setStandard(studentDto.getStandard());
+		student.setReligion(studentDto.getReligion());
+
+		student.setBloodGroup(studentDto.getBloodGroup());
+		student.setCommunity(studentDto.getCommunity());
+		student.setGender(studentDto.getGender());
+		student.setNationality(studentDto.getNationality());
+		student.setPhysicallyChallenged(studentDto.getPhysicallyChallenged());
+		
+		student.setSameAsPermAddr(studentDto.getSameAsPermAddr());
 
 		Address permAddDto = studentDto.getPermanentAddress();
 		if (ScUtil.isAllPresent(permAddDto)) {
@@ -210,7 +226,7 @@ public class ScStudentService {
 			permanentAddress.setCountry(permAddDto.getCountry());
 			permanentAddress.setDistrict(permAddDto.getDistrict());
 			permanentAddress.setFirstLine(permAddDto.getFirstLine());
-			permanentAddress.setId(permAddDto.getId());
+			//permanentAddress.setId(permAddDto.getId());
 			permanentAddress.setSecondLine(permAddDto.getSecondLine());
 			permanentAddress.setState(permAddDto.getState());
 
@@ -227,7 +243,7 @@ public class ScStudentService {
 			correspondentAddress.setCountry(corrAddrDto.getCountry());
 			correspondentAddress.setDistrict(corrAddrDto.getDistrict());
 			correspondentAddress.setFirstLine(corrAddrDto.getFirstLine());
-			correspondentAddress.setId(corrAddrDto.getId());
+			//correspondentAddress.setId(corrAddrDto.getId());
 			correspondentAddress.setSecondLine(corrAddrDto.getSecondLine());
 			correspondentAddress.setState(corrAddrDto.getState());
 

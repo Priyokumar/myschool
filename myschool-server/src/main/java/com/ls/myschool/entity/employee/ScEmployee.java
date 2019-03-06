@@ -49,6 +49,9 @@ public class ScEmployee implements Serializable {
 
 	@Column(name = "LAST_NAME")
 	private String lastName;
+	
+	@Column(name = "GENDER")
+	private String gender;
 
 	@Column(name = "EMAIL")
 	private String email;
@@ -267,6 +270,14 @@ public class ScEmployee implements Serializable {
 
 	public void setMobileNo(String mobileNo) {
 		this.mobileNo = mobileNo;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 	
 }

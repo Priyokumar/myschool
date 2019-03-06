@@ -28,14 +28,30 @@ public class Student {
 	private Long age;
 
 	private String joiningDate;
+	
 
+	private String gender;
+
+	private String bloodGroup;
+
+	private String religion;
+
+	private String community;
+
+	private String nationality;
+
+	private String aadhaarNo;
+
+	private Boolean physicallyChallenged;
+	
+	private Boolean sameAsPermAddr;
+	
 	private Address correspondentAddress;
 
 	private Address permanentAddress;
 
 	private RecordAudit recordAudit;
 
-	/* private List<StudentGuardian> guardians = new ArrayList<>(); */
 	private StudentGuardian fatherInfo;
 
 	private StudentGuardian motherInfo;
@@ -184,6 +200,70 @@ public class Student {
 
 	public void setRecordAudit(RecordAudit recordAudit) {
 		this.recordAudit = recordAudit;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getBloodGroup() {
+		return bloodGroup;
+	}
+
+	public void setBloodGroup(String bloodGroup) {
+		this.bloodGroup = bloodGroup;
+	}
+
+	public String getReligion() {
+		return religion;
+	}
+
+	public void setReligion(String religion) {
+		this.religion = religion;
+	}
+
+	public String getCommunity() {
+		return community;
+	}
+
+	public void setCommunity(String community) {
+		this.community = community;
+	}
+
+	public String getNationality() {
+		return nationality;
+	}
+
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+
+	public String getAadhaarNo() {
+		return aadhaarNo;
+	}
+
+	public void setAadhaarNo(String aadhaarNo) {
+		this.aadhaarNo = aadhaarNo;
+	}
+
+	public Boolean getPhysicallyChallenged() {
+		return physicallyChallenged;
+	}
+
+	public void setPhysicallyChallenged(Boolean physicallyChallenged) {
+		this.physicallyChallenged = physicallyChallenged;
+	}
+
+	public Boolean getSameAsPermAddr() {
+		return sameAsPermAddr;
+	}
+
+	public void setSameAsPermAddr(Boolean sameAsPermAddr) {
+		this.sameAsPermAddr = sameAsPermAddr;
 	}
 
 }
