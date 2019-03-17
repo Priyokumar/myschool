@@ -25,7 +25,7 @@
       <div class="col-md-12">
         <p style="font-weight: bold; font-size: 14px;">Payment Info</p>
       </div>
-      <div class="col-md-4" *ngIf="!userId">
+      <div class="col-md-4">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>Employee</mat-label>
           <mat-select #selectedEmployee placeholder="Employee" [formControl]="employeeFormCtl" (selectionChange)="onSelectEmployee(selectedEmployee.value)">

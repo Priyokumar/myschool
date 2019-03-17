@@ -11,9 +11,9 @@ import { UserServiceService } from '../../../service/user-service.service';
 })
 export class LoginComponent implements OnInit {
 
-  private errorMessage: String;
-  private isLoading: boolean = false;
-  private loginForm: FormGroup;
+   errorMessage: String;
+   isLoading: boolean = false;
+   loginForm: FormGroup;
   redirectUrl: String
 
   constructor(private http: HttpClient, private router: Router, private userService: UserServiceService, private activatedRoute: ActivatedRoute) {
@@ -29,8 +29,8 @@ export class LoginComponent implements OnInit {
 
   }
 
-  private userName = new FormControl('', [Validators.required]);
-  private password = new FormControl('', [Validators.required]);
+   userName = new FormControl('', [Validators.required]);
+   password = new FormControl('', [Validators.required]);
 
   ngOnInit() {
   }
