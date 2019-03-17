@@ -1,7 +1,7 @@
 
 export class ApiEndpoint {
 
-    public static BASE_URL = "http://localhost:8080"
+    public static BASE_URL = "http://www.pesl.org.in:8080"
 
     public static SECURITY = ApiEndpoint.BASE_URL + "/security"
     public static LOGIN = ApiEndpoint.BASE_URL + "/security/login"
