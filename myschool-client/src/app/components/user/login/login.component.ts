@@ -3,6 +3,7 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserServiceService } from '../../../service/user-service.service';
+import { ApiEndpoint } from 'src/app/model/apiEndpoint';
 
 @Component({
   selector: 'app-login',
@@ -45,7 +46,7 @@ export class LoginComponent implements OnInit {
     let login = this.loginForm.value;
 
     let resp = null;
-    this.http.post("http://localhost:8080/security/login", login).subscribe(data => {
+    this.http.post(ApiEndpoint.LOGIN, login).subscribe(data => {
       resp = data;
 
       if (resp && !resp.apiMessage.error) {
