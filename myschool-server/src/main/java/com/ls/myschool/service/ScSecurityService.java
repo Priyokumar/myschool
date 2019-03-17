@@ -47,6 +47,7 @@ public class ScSecurityService {
 
 	public LoginResponse login(Login login) {
 
+		System.out.println("Login Service");
 		LoginResponse res = new LoginResponse();
 
 		String password = login.getPassword();
@@ -56,7 +57,7 @@ public class ScSecurityService {
 			throw new InternalServerException(ApiMessageType.INSUFFICIENT_DATA);
 
 		ScUser user = findUserByUserName(username);
-
+		System.out.println("User " + user);
 		if (!ScUtil.isAllPresent(user))
 			throw new NotFoundException(ApiMessageType.USER_NOT_FOUND);
 

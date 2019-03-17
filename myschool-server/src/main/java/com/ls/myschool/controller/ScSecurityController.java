@@ -24,6 +24,7 @@ public class ScSecurityController {
 
 	@PostMapping(value = "/login")
 	public LoginResponse login(@RequestBody Login login) {
+		System.out.println("Login controller");
 		return securityService.login(login);
 	}
 
