@@ -18,28 +18,23 @@
 
         <div class="p-3">
           <h4>Welcome to Public English School Leishangthem</h4>
-          <p class="text-justify"> <strong> Ever since the blossoming of our first PES in Thoubal 28 years ago, to
-              a chain
-              of 25
-              International Schools,
-              we have impacted more than 25,000 lives, setting a new benchmark for quality of education. PES The
-              International School is one of the top International Schools, blooming all over Bengaluru, Mumbai,
-              Hyderabad,
-              and
-              Pune.
+          <p class="text-justify">
+            A warm welcome to PES – an outstanding school located at Leishangthem Wangma Taba, Thoubal. Here
+            you will find a dedicated and talented team of staff, hard-working and engaging pupils along with
+            supportive and proud parents. Together we are a team – together we are Greet!
+            Our pupils are at the heart of all that we do. We provide an exciting, broad and balanced curriculum to
+            inspire and motivate our pupils with opportunities to promote independence, learn life-long skills and to
+            have aspirations for the future.
+          </p>
+          <p class="text-justify"> Our website gives you a glimpse of daily life at PES. Look around.
+            You’ll see that our teachers, administrators, and staff are committed to providing a safe and nurturing
+            learning environment for our students by providing the best learning opportunities for students.
+          </p>
 
-              We believe in “Shaping minds, Touching lives, Building Second Homes”.
-
-              Along with academic excellence, we also lay a strong emphasis on personality development and employ a
-              number
-              of
-              innovative ways to inculcate strong values, building responsible individuals and future-ready global
-              citizens.
-            </strong></p>
         </div>
 
       </div>
-      <div class="col-md-6">
+      <div class="col-md-9">
         <div class=" p-3">
           <div class="row">
             <div class="col-md-12">
@@ -48,43 +43,35 @@
               </h4>
             </div>
             <div class="col-md-6">
-              <img src="../../../assets/images/prinicipal/principal.JPG" alt="" class="img-thumbnail" width="100%" height="100%">
+              <img src="../../../assets/images/prinicipal/principal.JPG" alt="" class="img-thumbnail" width="100%"
+                height="100%">
+              <br><br>
             </div>
             <div class="col-md-6 text-left">
-              <p><strong>
-                  Along with academic excellence, we also lay a strong emphasis on personality development and employ a
-                  number
-                  of
-                  innovative ways to inculcate strong values, building responsible individuals and future-ready global
-                  citizens.
-                </strong> </p>
+              <p>
+                We are excited that you have chosen PES and we are glad you’ve joined the Bulldog family. I am honored
+                to serveRobert Hernandez as Principal of PES and to be a part of a culture steeped in rich tradition
+                and academic excellence.
+              </p>
+              <p>
+                Our faculty, staff, and administration are focused on providing a quality learning experience for all
+                students through the various curricular and extracurricular opportunities available. Our focus as
+                educators will continue to be on preparing students for college and careers by developing essential
+                skills and behaviors in a safe, supportive environment. Our teachers provide relevant, engaging content
+                while building strong relationships with all students and families.
+              </p>
             </div>
           </div>
         </div>
 
       </div>
-      <div class="col-md-6 text-center">
+      <div class="col-md-3">
         <div class=" p-3">
           <h4>
             <mat-icon>notifications</mat-icon> Notification
           </h4>
-          <p class="text-justify"><strong>Ever since the blossoming of our first PES in Hyderabad 28 years ago, to a
-              chain
-              of 25
-              International Schools,
-              we have impacted more than 25,000 lives, setting a new benchmark for quality of education. PES The
-              International School is one of the top International Schools, blooming all over Bengaluru, Mumbai,
-              Hyderabad,
-              and
-              Pune.
-
-              We believe in “Shaping minds, Touching lives, Building Second Homes”.
-
-              Along with academic excellence, we also lay a strong emphasis on personality development and employ a
-              number
-              of
-              innovative ways to inculcate strong values, building responsible individuals and future-ready global
-              citizens.
+          <p class="text-justify" style="color: rgb(236, 162, 0)"><strong>
+              No new notification !
             </strong>
           </p>
         </div>
@@ -96,7 +83,7 @@
     <div class="row p-4">
       <div class="col-md-12 text-center">
         <img src="../../../assets/images/icons/customer-service.png" alt="" height="30" width="40"> &nbsp;
-        <h3>Admission Inquiry</h3>
+        <h3>Admission Enquiry</h3>
       </div>
 
       <div class="col-md-12 mt-4">
@@ -122,7 +109,7 @@
       </div>
 
       <div class="col-md-12 mt-3 text-center">
-        <button class="w-100" mat-raised-button color="primary">Submit</button>
+        <button class="w-100" mat-raised-button color="primary" (click)="submit()">Submit</button>
       </div>
 
     </div>
@@ -130,38 +117,24 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="col-md-12">
-    <div class="w-100 p-4 text-center">
-      <img src="../../../assets/images/icons/mission.png" alt="mission" height="40%" width="14%">
-      <h4 class="text-center">Vision & Mission</h4>
-      <p class="text-justify"><strong> Our mission is to create a school system that is built on sound fundamentals. The
-          intent
-          is to strive towards
-          excellence by responding to changing needs and
-          expectations of the digital global community. The focus is to design a curriculum that encompasses the
-          brilliance
-          of academics, skill training and values to enhance intellectual competence, dynamism, versatility and
-          character.
-        </strong></p>
-    </div>
-  </div>
+<div fxLayout="row" fxLayoutAlign="center center">
+  <div class="p-4 text-center" [ngStyle.gt-md]="{'width': '50%'}" >
+    <img src="../../../assets/images/icons/mission.png" alt="mission" height="40%" width="14%">
+    <h4 class="text-center">Vision & Mission</h4>
 
-  <div class="col-md-12">
-    <div class="w-100 p-4 text-center">
-      <img src="../../../assets/images/icons/school.png" alt="mission" height="40%" width="14%">
-      <h4 class="text-center">
-        About Us
-      </h4>
-      <p class="text-justify"><Strong> Our mission is to create a school system that is built on sound fundamentals. The
-          intent
-          is to strive towards
-          excellence by responding to changing needs and
-          expectations of the digital global community. The focus is to design a curriculum that encompasses the
-          brilliance
-          of academics, skill training and values to enhance intellectual competence, dynamism, versatility and
-          character.
-        </Strong> </p>
-    </div>
+    <p class="text-justify">
+      <strong>Mission : </strong>
+      The PES prepares students to understand, contribute to, and succeed in a rapidly changing society, thus
+      making the world a better and more just place. We will ensure that our students develop both the skills that a
+      sound education provides and the competencies essential for success and leadership in the emerging creative
+      economy. We will also lead in generating practical and theoretical knowledge that enables people to better
+      understand our world and improve conditions for local and global communities.
+    </p>
+    <p class="text-justify">
+      <strong>Vision : </strong>
+      Our vision at PES is to empower students to acquire, demonstrate, articulate and value
+      knowledge and skills that will support them, as life-long learners, to participate in and contribute to the
+      global world and practise the core values of the school: respect, tolerance & inclusion, and excellence.
+    </p>
   </div>
 </div>

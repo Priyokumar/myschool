@@ -37,11 +37,18 @@
 .outline-primary-btn {
   background-color: transparent;
   color: $primary-color;
-  border: 3px solid $primary-color;
+  border: 2px solid $primary-color;
   border-radius: 0;
   font-weight: 600;
 }
 
+.outline-primary-btn:hover {
+  background-color: $primary-color;;
+  color: $white-color;
+  border: 2px solid $primary-color;
+  border-radius: 0;
+  font-weight: 600;
+}
 .outline-secondary-btn {
   background-color: transparent;
   color: $secondary-color;
