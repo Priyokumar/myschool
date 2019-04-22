@@ -1,4 +1,3 @@
-
 <div [ngStyle.gt-md]="{'width':'80vw'}" style="margin-left: auto; margin-right: auto">
 
 
@@ -99,14 +98,25 @@
         <div class="col-md-12 mt-3">
           <mat-form-field appearance="legacy" class="w-100">
             <mat-label>Email / Mobile</mat-label>
-            <input matInput placeholder="Enter your name" [formControl]="nameFormCntrl">
+            <input matInput placeholder="Enter your email / mobile no." [formControl]="emailOrMobileFormCntrl">
             <!-- <mat-icon matSuffix>email</mat-icon> -->
           </mat-form-field>
         </div>
 
         <div class="col-md-12 mt-3">
           <mat-form-field class="w-100">
-            <textarea matInput placeholder="Message"></textarea>
+            <mat-label>Admission for</mat-label>
+            <mat-select [formControl]="standardFormCntrl">
+              <mat-option *ngFor="let standard of standards" [value]="standard">
+                {{standard}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-12 mt-3">
+          <mat-form-field class="w-100">
+            <textarea matInput placeholder="Message" [formControl]="descriptionFormCntrl"></textarea>
           </mat-form-field>
         </div>
 

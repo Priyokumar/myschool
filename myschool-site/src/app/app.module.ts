@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderModule } from './modules/header/header.module';
-import { MatSidenavModule, MatListModule } from '@angular/material';
+import { MatSidenavModule, MatListModule, MatProgressSpinnerModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FooterModule } from './modules/footer/footer.module';
 
@@ -23,7 +23,8 @@ import { FooterModule } from './modules/footer/footer.module';
     MatSidenavModule,
     MatListModule,
     FlexLayoutModule,
-    FooterModule
+    FooterModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

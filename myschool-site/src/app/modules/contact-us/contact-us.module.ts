@@ -4,7 +4,7 @@ import { ContactUsComponent } from './contact-us.component';
 import { Routes, RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule } from '@angular/material';
+import { MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatSnackBarModule } from '@angular/material';
 
 const routes: Routes = [
   { path: "", component: ContactUsComponent }
@@ -21,6 +21,7 @@ const routes: Routes = [
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatSnackBarModule
   ]
 })
 export class ContactUsModule { }

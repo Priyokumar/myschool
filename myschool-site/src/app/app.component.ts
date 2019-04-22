@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { MediaObserver, MediaChange } from '@angular/flex-layout';
 import { Router } from '@angular/router';
 import { links } from './modules/header/header.component';
+import { LoaderService } from './service/loader.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +18,9 @@ export class AppComponent {
 
   links = links;
 
-  constructor(private media: MediaObserver, private router: Router) {
+  loaderStatus: Observable<boolean>;
+
+  constructor(private media: MediaObserver, private router: Router, public loaderService: LoaderService) {
     this.media.media$.subscribe((change: MediaChange) => {
       if (change.mqAlias === 'sm' || change.mqAlias === 'xs') {
         this.opened = false
@@ -26,5 +30,7 @@ export class AppComponent {
         this.mode = 'side'
       }
     })
+
+    this.loaderStatus = this.loaderService.status();
   }
 }

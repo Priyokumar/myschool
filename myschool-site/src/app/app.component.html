@@ -19,4 +19,10 @@
     </mat-sidenav-content>
 
 </mat-sidenav-container>
-<app-footer></app-footer> 
+<app-footer></app-footer>
+
+<div style="height: 100vh; width: 100vw;position: fixed; top:0;background: rgba(0, 0, 0, 0.8);z-index: 5000" *ngIf="loaderStatus | async">
+    <div style="height: 100vh;" fxLayout="row" fxLayoutAlign="center center">
+        <div style="color: aliceblue;"><mat-spinner></mat-spinner></div> 
+    </div>
+</div>
