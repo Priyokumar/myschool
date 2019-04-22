@@ -49,7 +49,7 @@ export class ContactUsComponent implements OnInit {
       this.errorMessage = null;
       this.loaderService.change(true);
       let resp = await this.http.post(ApiEndpoint.CONTACT_US, reqBody).toPromise();
-      //this.loaderService.change(false);
+      this.loaderService.change(false);
       this.contactForm.reset();
       this.snackBar.open("Thanks for contacting us.", "Close", {
         duration: 8000,
