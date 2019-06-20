@@ -38,6 +38,9 @@ export class ContactUsComponent implements OnInit {
 
   async submit() {
 
+    if (!this.nameFormCntrl.value || !this.emailOrMobileFormCntrl.value || !this.descriptionFormCntrl.value)
+      return;
+
     let reqBody = {
       name: this.nameFormCntrl.value,
       emailMobile: this.emailOrMobileFormCntrl.value,

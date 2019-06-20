@@ -43,6 +43,10 @@ export class AdmissionEnquiryDialogComponent implements OnInit {
 
 
   async submit() {
+
+    if (!this.nameFormCntrl.value || !this.emailOrMobileFormCntrl.value || !this.standardFormCntrl.value || !this.descriptionFormCntrl.value)
+      return;
+
     let reqBody = {
       name: this.nameFormCntrl.value,
       emailMobile: this.emailOrMobileFormCntrl.value,

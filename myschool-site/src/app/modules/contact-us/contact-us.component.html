@@ -57,7 +57,7 @@
         <div class="col-md-12">
           <mat-form-field appearance="legacy" class="w-100">
             <mat-label>Name</mat-label>
-            <input matInput placeholder="Enter your name" [formControl]="nameFormCntrl">
+            <input matInput placeholder="Enter your name" [formControl]="nameFormCntrl" required>
             <!-- <mat-icon matSuffix>account_circle</mat-icon> -->
           </mat-form-field>
         </div>
@@ -65,14 +65,14 @@
         <div class="col-md-12 mt-3">
           <mat-form-field appearance="legacy" class="w-100">
             <mat-label>Email / Mobile</mat-label>
-            <input matInput placeholder="Enter your name" [formControl]="emailOrMobileFormCntrl">
+            <input matInput placeholder="Enter your name" [formControl]="emailOrMobileFormCntrl" required>
             <!-- <mat-icon matSuffix>email</mat-icon> -->
           </mat-form-field>
         </div>
 
         <div class="col-md-12 mt-3">
           <mat-form-field class="w-100">
-            <textarea matInput rows="6" matInput placeholder="Message" [formControl]="descriptionFormCntrl"></textarea>
+            <textarea matInput rows="6" matInput placeholder="Message" [formControl]="descriptionFormCntrl" required></textarea>
           </mat-form-field>
         </div>
 

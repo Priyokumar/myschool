@@ -1,7 +1,7 @@
 package com.ls.myschool.dto.employee;
 
 import com.ls.myschool.dto.Document;
-
+ 
 public class Employee {
 
 	private Long id;

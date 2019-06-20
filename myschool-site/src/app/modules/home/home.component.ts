@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoaderService } from 'src/app/service/loader.service';
 import { MatSnackBar } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
@@ -25,10 +25,10 @@ export class HomeComponent implements OnInit {
   admissionForm: FormGroup;
   standards = standards;
 
-  nameFormCntrl = new FormControl("");
-  emailOrMobileFormCntrl = new FormControl("");
-  standardFormCntrl = new FormControl("");
-  descriptionFormCntrl = new FormControl("");
+  nameFormCntrl = new FormControl("", Validators.required);
+  emailOrMobileFormCntrl = new FormControl("", Validators.required);
+  standardFormCntrl = new FormControl("", Validators.required);
+  descriptionFormCntrl = new FormControl("", Validators.required);
 
   constructor(private http: HttpClient,
     private loaderService: LoaderService,
@@ -47,6 +47,11 @@ export class HomeComponent implements OnInit {
   }
 
   async submit() {
+
+
+    if (!this.nameFormCntrl.value || !this.emailOrMobileFormCntrl.value || !this.standardFormCntrl.value || !this.descriptionFormCntrl.value)
+      return;
+
     let reqBody = {
       name: this.nameFormCntrl.value,
       emailMobile: this.emailOrMobileFormCntrl.value,

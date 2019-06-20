@@ -90,7 +90,7 @@
         <div class="col-md-12 mt-4">
           <mat-form-field appearance="legacy" class="w-100">
             <mat-label>Name</mat-label>
-            <input matInput placeholder="Enter your name" [formControl]="nameFormCntrl">
+            <input matInput placeholder="Enter your name" [formControl]="nameFormCntrl" required>
             <!-- <mat-icon matSuffix>account_circle</mat-icon> -->
           </mat-form-field>
         </div>
@@ -98,7 +98,7 @@
         <div class="col-md-12 mt-3">
           <mat-form-field appearance="legacy" class="w-100">
             <mat-label>Email / Mobile</mat-label>
-            <input matInput placeholder="Enter your email / mobile no." [formControl]="emailOrMobileFormCntrl">
+            <input matInput placeholder="Enter your email / mobile no." [formControl]="emailOrMobileFormCntrl" required>
             <!-- <mat-icon matSuffix>email</mat-icon> -->
           </mat-form-field>
         </div>
@@ -106,7 +106,7 @@
         <div class="col-md-12 mt-3">
           <mat-form-field class="w-100">
             <mat-label>Admission for</mat-label>
-            <mat-select [formControl]="standardFormCntrl">
+            <mat-select [formControl]="standardFormCntrl" required>
               <mat-option *ngFor="let standard of standards" [value]="standard">
                 {{standard}}
               </mat-option>
@@ -116,7 +116,7 @@
 
         <div class="col-md-12 mt-3">
           <mat-form-field class="w-100">
-            <textarea matInput placeholder="Message" [formControl]="descriptionFormCntrl"></textarea>
+            <textarea matInput placeholder="Message" [formControl]="descriptionFormCntrl" required></textarea>
           </mat-form-field>
         </div>
 
