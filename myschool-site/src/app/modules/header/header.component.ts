@@ -4,8 +4,7 @@ export const links = [
   { name: "Home", url: "/", hasSubLinks: false },
   { name: "Admission", url: "/admission", hasSubLinks: false },
   { name: "Academy", url: "/academic", hasSubLinks: false },
-  { name: "Contact us", url: "/contact-us", hasSubLinks: false },
-  { name: "Admin Login", url: "/admin", hasSubLinks: false }
+  { name: "Contact us", url: "/contact-us", hasSubLinks: false }
 
 ];
 
@@ -24,6 +23,12 @@ export class HeaderComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onCLickAdmin() {
+
+    window.open(window.location.origin + "/admin", "_blank");
+
   }
 
 }

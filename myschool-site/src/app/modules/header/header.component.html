@@ -24,7 +24,8 @@
       <div class="col-md-6 text-right" fxShow="true" fxHide.lt-md="true">
         <span *ngFor="let link of links"><button class="primary-color" mat-flat-button
             [routerLink]="link.url">{{link.name}}</button>&nbsp;</span>
+        <span><button class="primary-color" mat-flat-button (click)="onCLickAdmin()">Admin</button>&nbsp;</span>
       </div>
-    </div>
+    </div> 
   </nav>
 </div>
