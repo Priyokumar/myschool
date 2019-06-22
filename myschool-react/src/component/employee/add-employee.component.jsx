@@ -7,6 +7,7 @@ import { EMPLOYEE_DESIGNATION, EMPLOYEE_STATUSES, EMPLOYEE_TYPES } from "../../c
 import { setInitialState, saveOrUpdateEmployee, getEditData, addAcademicHistory, addDocument } from "../../service/employee.service"
 import { modalService } from "../../service/modal.service"
 import EmployeeHistory from "../employee/employee-history.component"
+import AcademicHistory from "./academic-history.component"
 
 
 class AddEmployee extends Component {
@@ -32,6 +33,19 @@ class AddEmployee extends Component {
                     this.setState({ employeeHistories: cloneArr })
                 }
             }
+            else if (data && data.type === "add_academic_history") {
+                let index = data.index
+                if (index !== null && index !== undefined) {
+                    let copy = this.state.academicHistories
+                    copy[index] = data.academicHistory
+                    this.setState({ academicHistories: copy })
+                }
+                else {
+                    let academicHistory = data.academicHistory
+                    let cloneArr = this.state.academicHistories ? this.state.academicHistories.concat(academicHistory) : [academicHistory]
+                    this.setState({ academicHistories: cloneArr })
+                }
+            }
         })
     }
 
@@ -54,6 +68,13 @@ class AddEmployee extends Component {
         modalService.open({ Component: EmployeeHistory, data: { index: index, employeeHistory: this.state.employeeHistories[index] }, modalConfig: { title: "Edit Employee History", size: "lg" } })
     }
 
+    openAcademicHistoryModal() {
+        modalService.open({ Component: AcademicHistory, data: {}, modalConfig: { title: "Add Academic History", size: "lg" } })
+    }
+    openAcademicHistoryEditModal(index) {
+        modalService.open({ Component: AcademicHistory, data: { index: index, academicHistory: this.state.academicHistories[index] }, modalConfig: { title: "Edit Academic History", size: "lg" } })
+    }
+
     render() {
         return (
             <Fragment>
@@ -72,7 +93,7 @@ class AddEmployee extends Component {
                         <button type="button" className="btn btn-secondary btn-sm" onClick={() => { this.saveOrUpdateEmployee() }}>Save</button>
                         &nbsp;
                                 <button type="button" className="btn btn-warning btn-sm">
-                            <Link to="/module/employees" className="breadcrumb-link">Cancel</Link>
+                            <Link to={"/module/employees"} className="breadcrumb-link">Cancel</Link>
                         </button>
                     </div>
                 </div>
@@ -86,10 +107,10 @@ class AddEmployee extends Component {
                                     <a className="nav-link active" id="home-tab" data-toggle="tab" href="#general-details" role="tab" aria-controls="general-details" aria-selected="true">General details </a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" id="profile-tab" data-toggle="tab" href="#address-employee-history" role="tab" aria-controls="address-employee-history" aria-selected="false">Address & Employee history</a>
+                                    <a className="nav-link" id="profile-tab" data-toggle="tab" href="#address-employee-history" role="tab" aria-controls="address-employee-history" aria-selected="false">Address</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" id="contact-tab" data-toggle="tab" href="#academic" role="tab" aria-controls="academic" aria-selected="false">Academic Details</a>
+                                    <a className="nav-link" id="contact-tab" data-toggle="tab" href="#academic" role="tab" aria-controls="academic" aria-selected="false">Academic Details & Employee history</a>
                                 </li>
                             </ul>
 
@@ -564,7 +585,7 @@ class AddEmployee extends Component {
                                                     <strong>List of Academic History</strong>
                                                 </div>
                                                 <div className="col-md-4 pr-2 text-right">
-                                                    <button type="button" className="btn btn-info btn-sm" onClick={() => { this.openModal() }}>Add</button>
+                                                    <button type="button" className="btn btn-info btn-sm" onClick={() => { this.openAcademicHistoryModal() }}>Add</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -595,7 +616,10 @@ class AddEmployee extends Component {
                                                                     <td><i className="fas fa-trash-alt cursor-pointer" style={{ "color": "red" }} onClick={() => {
                                                                         this.state.academicHistories.splice(index, 1)
                                                                         this.setState({ academicHistories: this.state.academicHistories })
-                                                                    }}></i></td>
+                                                                    }}></i>
+                                                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                                                                    <i class="fas fa-edit cursor-pointer" onClick={() => { this.openAcademicHistoryEditModal(index) }}></i>
+                                                                    </td>
                                                                 </tr>
                                                             )
                                                         })

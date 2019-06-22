@@ -50,17 +50,17 @@ class Layout extends Component {
                             <SideNav />
                         </div>
                         <div className="col-md-10 pl-0">
-                            <Route exact path="/module/dashboard" component={Dashboard} />
-                            <Route exact path="/module/users" component={User} />
-                            <Route exact path="/module/users/add" component={AddUpdateUser} />
-                            <Route exact path="/module/roles" component={Role} />
-                            <Route exact path="/module/roles/add" component={AddUpdateRole} />
-                            <Route exact path="/module/roles/:roleId/edit" component={AddUpdateRole} />
-                            <Route exact path="/module/roles/:roleId/view" component={ViewRole} />
-                            <Route exact path="/module/employees" component={Employees} />
-                            <Route exact path="/module/employees/add" component={AddEmployee} />
-                            <Route exact path="/module/employees/:id/edit" component={AddEmployee} />
-                            <Route exact path="/module/employees/:id/view" component={EmployeeView} />
+                            <Route exact path={"/module/dashboard"} component={Dashboard} />
+                            <Route exact path={"/module/users"} component={User} />
+                            <Route exact path={"/module/users/add"} component={AddUpdateUser} />
+                            <Route exact path={"/module/roles"} component={Role} />
+                            <Route exact path={"/module/roles/add"} component={AddUpdateRole} />
+                            <Route exact path={"/module/roles/:roleId/edit"} component={AddUpdateRole} />
+                            <Route exact path={"/module/roles/:roleId/view"} component={ViewRole} />
+                            <Route exact path={"/module/employees"} component={Employees} />
+                            <Route exact path={"/module/employees/add"} component={AddEmployee} />
+                            <Route exact path={"/module/employees/:id/edit"} component={AddEmployee} />
+                            <Route exact path={"/module/employees/:id/view"} component={EmployeeView} />
                         </div>
                     </div>
                 </div>

@@ -28,7 +28,7 @@ class Role extends Component {
                         </nav>
                     </div>
                     <div className="col-md-6 text-right action-col">
-                        <button type="button" className="btn btn-secondary btn-sm"><Link to="/module/roles/add" className="breadcrumb-link">Add Role</Link></button>
+                        <button type="button" className="btn btn-secondary btn-sm"><Link to={"/module/roles/add"} className="breadcrumb-link">Add Role</Link></button>
                     </div>
                 </div>
 

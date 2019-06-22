@@ -1,4 +1,6 @@
 import React, { Component, Fragment } from 'react'
+import { Textbox, Select, Radiobox } from 'react-inputs-validation'
+import { ACADEMIC_NAMES } from "../../constants/common.constant"
 
 class AcademicHistory extends Component {
     state = {
@@ -160,8 +162,11 @@ class AcademicHistory extends Component {
                             }}
                         />
                     </div>
-                    <div className="col-md-4 align-self-center">
-                        <button type="button" className="btn btn-secondary btn-sm" onClick={() => { this.addAcademicHistory() }}>Add academic history</button>
+                </div>
+                <div className="row">
+                    <div className="col text-right">
+                        <button type="button" className="btn btn-danger btn-sm w-15" onClick={() => { this.close() }}>Cancel</button>&nbsp;&nbsp;
+                        <button type="button" className="btn btn-info btn-sm w-15" onClick={() => { this.add() }}>{this.props.index !== undefined ? "Save" : "Add"}</button>
                     </div>
                 </div>
             </Fragment>

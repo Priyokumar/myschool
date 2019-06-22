@@ -26,15 +26,15 @@ class FileUpload extends Component {
     render() {
         return (
             <Fragment>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <button class="btn btn-secondary" type="button" onClick={() => { this.upload() }}>Upload</button>
+                <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                        <button className="btn btn-secondary" type="button" onClick={() => { this.upload() }}>Upload</button>
                     </div>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="inputGroupFile03" onChange={(event) => {
+                    <div className="custom-file">
+                        <input type="file" className="custom-file-input" id="inputGroupFile03" onChange={(event) => {
                             this.setState({ file: event.target.files[0], fileName: event.target.files[0].name })
                         }} />
-                        <label class="custom-file-label" htmlFor="inputGroupFile03">{this.state.fileName}</label>
+                        <label className="custom-file-label" htmlFor="inputGroupFile03">{this.state.fileName}</label>
                     </div>
                 </div>
             </Fragment>

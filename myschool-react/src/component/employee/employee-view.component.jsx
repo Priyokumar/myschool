@@ -114,7 +114,7 @@ class EmployeeView extends Component {
         return (
             <Fragment>
                 <div style={{ "position": "absolute", "top": "9%", "zIndex": "10000", "right": "2%" }}>
-                    <img src={this.state.avatar} alt="profile_photo" class="img-thumbnail" width="170" />
+                    <img src={this.state.avatar} alt="profile_photo" className="img-thumbnail" width="170" />
                 </div>
                 <div className="row breadcrumb-row mt-1 mb-2">
                     <div className="col-md-6">
@@ -130,21 +130,21 @@ class EmployeeView extends Component {
 
                     <div className="col-md-6 text-right action-col">
                         <button type="button" className="btn btn-warning btn-sm" id="tooltip-back">
-                            <Link to="/module/employees" className="breadcrumb-link"><i class="fas fa-long-arrow-alt-left"></i></Link>
+                            <Link to={"/module/employees"} className="breadcrumb-link"><i className="fas fa-long-arrow-alt-left"></i></Link>
                         </button>
                         <Tooltip placement="bottom" isOpen={this.state.backTooltipOpen} target="tooltip-back" toggle={() => { this.toggle("back") }}>Back to employee list</Tooltip>
                         &nbsp;
                          <button type="button" className="btn btn-primary btn-sm" id="tooltip-edit">
-                            <Link to={"/module/employees/" + this.state.employee._id + "/edit"} className="breadcrumb-link"><i class="fas fa-edit"></i></Link>
+                            <Link to={"/module/employees/" + this.state.employee._id + "/edit"} className="breadcrumb-link"><i className="fas fa-edit"></i></Link>
                         </button>
                         <Tooltip placement="bottom" isOpen={this.state.editTooltipOpen} target="tooltip-edit" toggle={() => { this.toggle("edit") }}>Edit employee</Tooltip>
                         &nbsp;
                         <button type="button" className="btn btn-success btn-sm" id="tooltip-add">
-                            <Link to="/module/employees/add" className="breadcrumb-link"><i class="fas fa-plus"></i></Link>
+                            <Link to={"/module/employees/add"} className="breadcrumb-link"><i className="fas fa-plus"></i></Link>
                         </button>
                         <Tooltip placement="bottom" isOpen={this.state.addTooltipOpen} target="tooltip-add" toggle={() => { this.toggle("add") }}>Add new employee</Tooltip>
                         &nbsp;
-                        <button type="button" id="tooltip-delete" className="btn btn-danger btn-sm" onClick={() => { this.deleteEmployee() }}><i class="fas fa-trash"></i></button>
+                        <button type="button" id="tooltip-delete" className="btn btn-danger btn-sm" onClick={() => { this.deleteEmployee() }}><i className="fas fa-trash"></i></button>
                         <Tooltip placement="bottom" isOpen={this.state.deleteTooltipOpen} target="tooltip-delete" toggle={() => { this.toggle("delete") }}>Delete employee</Tooltip>
                     </div>
                 </div>
@@ -152,23 +152,23 @@ class EmployeeView extends Component {
                 <div className="col-md-12 pl-0 pr-0">
                     <div className="page-conatiner pl-5 pr-5 mb-5 pb-5">
                         <div className="col">
-                            <ul class="nav nav-tabs" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#general-details" role="tab" aria-controls="general-details" aria-selected="true">General details </a>
+                            <ul className="nav nav-tabs" role="tablist">
+                                <li className="nav-item">
+                                    <a className="nav-link active" id="home-tab" data-toggle="tab" href="#general-details" role="tab" aria-controls="general-details" aria-selected="true">General details </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#address-employee-history" role="tab" aria-controls="address-employee-history" aria-selected="false">Address Details</a>
+                                <li className="nav-item">
+                                    <a className="nav-link" id="profile-tab" data-toggle="tab" href="#address-employee-history" role="tab" aria-controls="address-employee-history" aria-selected="false">Address Details</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#academic" role="tab" aria-controls="academic" aria-selected="false">Academic Details & Employee history</a>
+                                <li className="nav-item">
+                                    <a className="nav-link" id="contact-tab" data-toggle="tab" href="#academic" role="tab" aria-controls="academic" aria-selected="false">Academic Details & Employee history</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="document-tab" data-toggle="tab" href="#document-details" role="tab" aria-controls="document-details" aria-selected="false">Document Details</a>
+                                <li className="nav-item">
+                                    <a className="nav-link" id="document-tab" data-toggle="tab" href="#document-details" role="tab" aria-controls="document-details" aria-selected="false">Document Details</a>
                                 </li>
                             </ul>
 
-                            <div class="tab-content pt-4">
-                                <div class="tab-pane fade show active" id="general-details" role="tabpanel" aria-labelledby="general-details-tab">
+                            <div className="tab-content pt-4">
+                                <div className="tab-pane fade show active" id="general-details" role="tabpanel" aria-labelledby="general-details-tab">
                                     <div className="row pb-3">
                                         <div className="col-md-12 pb-1">
                                             <span className="lead">General Details</span>
@@ -237,7 +237,7 @@ class EmployeeView extends Component {
                                 </div>
 
 
-                                <div class="tab-pane fade" id="address-employee-history" role="tabpanel" aria-labelledby="address-employee-history-tab">
+                                <div className="tab-pane fade" id="address-employee-history" role="tabpanel" aria-labelledby="address-employee-history-tab">
                                     <div className="row pb-3">
                                         <div className="col-md-12 pb-1">
                                             <span className="lead">Correspondense Address</span>
@@ -295,14 +295,58 @@ class EmployeeView extends Component {
                                 </div>
 
 
-                                <div class="tab-pane fade" id="academic" role="tabpanel" aria-labelledby="academic-tab">
+                                <div className="tab-pane fade" id="academic" role="tabpanel" aria-labelledby="academic-tab">
+                                    <div className="row">
+                                        {/* ================================== */}
+                                        {
+                                            this.state.employee.fresherOrExperienced === "Experienced" && (
+                                                <Fragment>
+                                                    <div className="col-md-12 pb-1">
+                                                        <div className="row">
+                                                            <div className="col-md-8 p-0">
+                                                                <span className="lead">List of Employment History</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-12">
+                                                        <table className="table">
+                                                            <thead className="thead-light">
+                                                                <tr>
+                                                                    <th>Employer Name</th>
+                                                                    <th>Start From</th>
+                                                                    <th>End To</th>
+                                                                    <th>Designation</th>
+                                                                    <th>Address</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {
+                                                                    this.state.employee.employeeHistories && this.state.employee.employeeHistories.map((employeeHistory, index) => {
+                                                                        return (
+                                                                            <tr key={index}>
+                                                                                <td>{employeeHistory.employerName}</td>
+                                                                                <td>{employeeHistory.startFrom}</td>
+                                                                                <td>{employeeHistory.endTo}</td>
+                                                                                <td>{employeeHistory.empHistDesignation}</td>
+                                                                                <td>{employeeHistory.address}</td>
+                                                                            </tr>
+                                                                        )
+                                                                    })
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </Fragment>
+                                            )
+                                        }
+                                    </div>
                                     <div className="row pb-3">
                                         <div className="col-md-12 pb-1">
                                             <span className="lead">List of Academic History</span>
                                         </div>
                                         <div className="col-md-12">
-                                            <table class="table">
-                                                <thead class="thead-light">
+                                            <table className="table">
+                                                <thead className="thead-light">
                                                     <tr>
                                                         <th>Name</th>
                                                         <th>Board</th>
@@ -335,53 +379,9 @@ class EmployeeView extends Component {
                                             </table>
                                         </div>
 
-
-                                        {/* ================================== */}
-                                        {
-                                            this.state.employee.fresherOrExperienced === "Experienced" && (
-                                                <Fragment>
-                                                    <div className="col-md-12 pb-1">
-                                                        <div className="row">
-                                                            <div className="col-md-8">
-                                                                <span className="lead">List of Employment History</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-md-12  pl-4 pr-4">
-                                                        <table className="table">
-                                                            <thead className="thead-light">
-                                                                <tr>
-                                                                    <th>Employer Name</th>
-                                                                    <th>Start From</th>
-                                                                    <th>End To</th>
-                                                                    <th>Designation</th>
-                                                                    <th>Address</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                {
-                                                                    this.state.employee.employeeHistories && this.state.employee.employeeHistories.map((employeeHistory, index) => {
-                                                                        return (
-                                                                            <tr key={index}>
-                                                                                <td>{employeeHistory.employerName}</td>
-                                                                                <td>{employeeHistory.startFrom}</td>
-                                                                                <td>{employeeHistory.endTo}</td>
-                                                                                <td>{employeeHistory.empHistDesignation}</td>
-                                                                                <td>{employeeHistory.address}</td>
-                                                                            </tr>
-                                                                        )
-                                                                    })
-                                                                }
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </Fragment>
-                                            )
-                                        }
-
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="document-details" role="tabpanel" aria-labelledby="document-details-tab">
+                                <div className="tab-pane fade" id="document-details" role="tabpanel" aria-labelledby="document-details-tab">
                                     <div className="row pb-3">
                                         <div className="col-md-12 pb-1">
                                             <span className="lead">Document Details</span>
@@ -389,16 +389,16 @@ class EmployeeView extends Component {
                                         </div>
                                     </div>
 
-                                    <div class="card border-secondary mb-3">
-                                        <div class="card-header">Photo</div>
-                                        <div class="card-body text-secondary">
+                                    <div className="card border-secondary mb-3">
+                                        <div className="card-header">Photo</div>
+                                        <div className="card-body text-secondary">
                                             <div className="row pb-4">
                                                 <div className="col-md-6  pl-0">
                                                     {
                                                         this.state.openPhotoUpload ? (
 
                                                             <div className="row">
-                                                                <div className="col-md-3"><img src={this.state.avatar} alt="profile_photo" class="img-thumbnail" width="90" /></div>
+                                                                <div className="col-md-3"><img src={this.state.avatar} alt="profile_photo" className="img-thumbnail" width="90" /></div>
                                                                 <div className="col-md-9">
                                                                     <button type="button" className="btn btn-warning btn-sm" id="tooltip-back" onClick={() => {
                                                                         this.setState({ openPhotoUpload: false })
@@ -436,9 +436,9 @@ class EmployeeView extends Component {
                                         </div>
                                     </div>
 
-                                    <div class="card border-secondary mb-3">
-                                        <div class="card-header">Aadhaar</div>
-                                        <div class="card-body text-secondary">
+                                    <div className="card border-secondary mb-3">
+                                        <div className="card-header">Aadhaar</div>
+                                        <div className="card-body text-secondary">
                                             <div className="row pb-4">
                                                 <div className="col-md-6  pl-0">
                                                     {
@@ -455,7 +455,7 @@ class EmployeeView extends Component {
                                                                     </button>
                                                                 </div>
                                                             </div>
-                                                        ) : (<span><i class="fas fa-info-circle"></i> Upload Aadhaar</span>)
+                                                        ) : (<span><i className="fas fa-info-circle"></i> Upload Aadhaar</span>)
                                                     }
                                                 </div>
                                                 <div className="col-md-6">
@@ -484,9 +484,9 @@ class EmployeeView extends Component {
 
 
 
-                                    <div class="card border-secondary mb-3">
-                                        <div class="card-header">PAN</div>
-                                        <div class="card-body text-secondary">
+                                    <div className="card border-secondary mb-3">
+                                        <div className="card-header">PAN</div>
+                                        <div className="card-body text-secondary">
                                             <div className="row pb-4">
                                                 <div className="col-md-6 pl-0">
                                                     {
@@ -503,7 +503,7 @@ class EmployeeView extends Component {
                                                                     </button>
                                                                 </div>
                                                             </div>
-                                                        ) : (<span><i class="fas fa-info-circle"></i> Upload PAN</span>)
+                                                        ) : (<span><i className="fas fa-info-circle"></i> Upload PAN</span>)
                                                     }
                                                 </div>
                                                 <div className="col-md-6">
@@ -531,9 +531,9 @@ class EmployeeView extends Component {
                                         </div>
                                     </div>
 
-                                    <div class="card border-secondary mb-3">
-                                        <div class="card-header">10 Certificate</div>
-                                        <div class="card-body text-secondary">
+                                    <div className="card border-secondary mb-3">
+                                        <div className="card-header">10 Certificate</div>
+                                        <div className="card-body text-secondary">
                                             <div className="row  pb-4">
                                                 <div className="col-md-6 pl-0">
                                                     {
@@ -550,7 +550,7 @@ class EmployeeView extends Component {
                                                                     </button>
                                                                 </div>
                                                             </div>
-                                                        ) : (<span><i class="fas fa-info-circle"></i> Upload 10 certificate</span>)
+                                                        ) : (<span><i className="fas fa-info-circle"></i> Upload 10 certificate</span>)
                                                     }
                                                 </div>
                                                 <div className="col-md-6">
@@ -579,9 +579,9 @@ class EmployeeView extends Component {
                                     </div>
 
 
-                                    <div class="card border-secondary mb-3">
-                                        <div class="card-header">10+2 Certificate</div>
-                                        <div class="card-body text-secondary">
+                                    <div className="card border-secondary mb-3">
+                                        <div className="card-header">10+2 Certificate</div>
+                                        <div className="card-body text-secondary">
                                             <div className="row  pb-4">
                                                 <div className="col-md-6 pl-0">
                                                     {
@@ -598,7 +598,7 @@ class EmployeeView extends Component {
                                                                     </button>
                                                                 </div>
                                                             </div>
-                                                        ) : (<span><i class="fas fa-info-circle"></i> Upload 10+2 certificate</span>)
+                                                        ) : (<span><i className="fas fa-info-circle"></i> Upload 10+2 certificate</span>)
                                                     }
                                                 </div>
                                                 <div className="col-md-6">
@@ -626,9 +626,9 @@ class EmployeeView extends Component {
                                         </div>
                                     </div>
 
-                                    <div class="card border-secondary mb-3">
-                                        <div class="card-header">Graduate certificate</div>
-                                        <div class="card-body text-secondary">
+                                    <div className="card border-secondary mb-3">
+                                        <div className="card-header">Graduate certificate</div>
+                                        <div className="card-body text-secondary">
                                             <div className="row  pb-4">
                                                 <div className="col-md-6 pl-0">
                                                     {
@@ -645,7 +645,7 @@ class EmployeeView extends Component {
                                                                     </button>
                                                                 </div>
                                                             </div>
-                                                        ) : (<span><i class="fas fa-info-circle"></i>Upload Graduate certificate</span>)
+                                                        ) : (<span><i className="fas fa-info-circle"></i>Upload Graduate certificate</span>)
                                                     }
                                                 </div>
                                                 <div className="col-md-6">
@@ -672,9 +672,9 @@ class EmployeeView extends Component {
                                         </div>
                                     </div>
 
-                                    <div class="card border-secondary mb-3">
-                                        <div class="card-header">Post graduate certificate</div>
-                                        <div class="card-body text-secondary">
+                                    <div className="card border-secondary mb-3">
+                                        <div className="card-header">Post graduate certificate</div>
+                                        <div className="card-body text-secondary">
                                             <div className="row  pb-4">
                                                 <div className="col-md-6 pl-0">
                                                     {
@@ -691,7 +691,7 @@ class EmployeeView extends Component {
                                                                     </button>
                                                                 </div>
                                                             </div>
-                                                        ) : (<span><i class="fas fa-info-circle"></i> Upload Post graduate certificate</span>)
+                                                        ) : (<span><i className="fas fa-info-circle"></i> Upload Post graduate certificate</span>)
                                                     }
                                                 </div>
                                                 <div className="col-md-6">

@@ -58,7 +58,7 @@ class AddUpdateRole extends Component {
     onClickNewRole() {
         this.props.history.push("/module/roles/add")
     }
-    
+
     saveRole() {
 
         let roleReqBody = {
@@ -95,7 +95,7 @@ class AddUpdateRole extends Component {
                             <button type="button" className="btn btn-secondary btn-sm" onClick={this.onClickNewRole}>Add New Role</button>
                             &nbsp;
                             <button type="button" className="btn btn-warning btn-sm">
-                                <Link to="/module/roles" className="breadcrumb-link">Back</Link>
+                                <Link to={ "/module/roles"} className="breadcrumb-link">Back</Link>
                             </button>
                         </div>
                     ) : (
@@ -103,7 +103,7 @@ class AddUpdateRole extends Component {
                                 <button type="button" className="btn btn-secondary btn-sm" onClick={this.saveRole}>Save</button>
                                 &nbsp;
                                 <button type="button" className="btn btn-warning btn-sm">
-                                    <Link to="/module/roles" className="breadcrumb-link">Cancel</Link>
+                                    <Link to={"/module/roles"} className="breadcrumb-link">Cancel</Link>
                                 </button>
                             </div>
                         )}

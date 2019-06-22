@@ -41,10 +41,9 @@ routes.addRoutes(app);
 app.get('/ping', (req, res) => res.status(200).send('Api Working'))
 
 // UI
-app.use(express.static(path.join(__dirname, 'dist/myschool-site')));
-app.use(express.static(path.join(__dirname, 'dist/myschool-client')));
-app.get("/admin*", (req, res) => res.sendFile(path.join(__dirname, 'dist/myschool-client/index.html')));
-app.get("*", (req, res) => res.sendFile(path.join(__dirname, 'dist/myschool-site/index.html')));
+app.use(express.static(path.join(__dirname, 'dist')));
+app.get("/", (req, res) => res.sendFile(path.join(__dirname, 'dist/index.html')));
+app.get("*", (req, res) => res.sendFile(path.join(__dirname, 'dist/index.html')));
 
 // ERROR HANDLING
 errorHandler.handleError(app)
