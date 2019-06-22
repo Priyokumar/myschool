@@ -5,7 +5,7 @@ import SideNav from './sidenav'
 import { Route } from "react-router-dom"
 import { connect } from 'react-redux'
 import User from '../user/user.component'
-import AddUpdateUser from "../user/user-add/user-add.component"
+import AddUpdateUser from "../user/user-add.component"
 import Role from '../role/role.component'
 import AddUpdateRole from '../role/add-update-role.component'
 import ViewRole from '../role/view-role.component'
@@ -15,6 +15,7 @@ import Employees from '../employee/employees.component'
 import AddEmployee from '../employee/add-employee.component'
 import EmployeeView from '../employee/employee-view.component'
 import ModalContainer from "../layout/modal"
+import { alertService } from "../../service/alert.service"
 
 class Layout extends Component {
 
@@ -23,18 +24,44 @@ class Layout extends Component {
         this.state = {
             showLoader: false,
             openModal: false,
-            modalConfigData: null
+            modalConfigData: null,
+            alerts: []
         }
     }
 
     componentDidMount() {
+
         this.subscription = navService.getLoadingStatus().subscribe(status => {
             this.setState({ showLoader: status })
+        })
+
+        this.alertSubscription = alertService.getAlert().subscribe(alert => {
+
+            if (alert) {
+                let alerts = this.state.alerts
+                alerts.push(alert)
+                this.setState({ alerts: alerts })
+            }
         })
     }
 
     componentWillUnmount() {
         this.subscription.unsubscribe()
+        this.alertSubscription.unsubscribe()
+    }
+
+    getAlertClassNames(alert) {
+
+        let classes = "alert alert-dismissible fade show shadow"
+
+        if (alert.type === "success")
+            classes += " alert-success"
+        else if (alert.type === "warning")
+            classes += " alert-warning"
+        else if (alert.type === "danger")
+            classes += " alert-danger"
+
+        return classes
     }
 
     render() {
@@ -71,6 +98,29 @@ class Layout extends Component {
                         </div>
                     )
                 }
+
+                {
+                    this.state.alerts.length > 0 && (
+                        <div style={{ "position": "absolute", "bottom": "50px", "right": "10px" }}>
+                            {
+                                this.state.alerts.map((alert, index) => {
+                                    return (
+                                        <div key={index} className={this.getAlertClassNames(alert)} role="alert">
+                                            <strong>{alert.message}</strong>
+                                            <span class="close cursor-pointer" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </span>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                    )
+                }
+
+
+
+
             </Fragment>
         )
     }

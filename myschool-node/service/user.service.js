@@ -1,6 +1,7 @@
 const UserModel = require("../model/mongoose/user.model")
 const uuid = require('uuid/v4')
 const commonUtil = require("../util/common.util")
+const { ConflictError } = require("../util/api-error.util")
 
 const addUser = async (req, res, next) => {
 
@@ -10,6 +11,10 @@ const addUser = async (req, res, next) => {
         if (!user.name || !user.email || !user.empId)
             throw new BadRequestError("Bad Request !")
 
+        let existingUser = await UserModel.findOne({ email: user.email }, null, {}).exec()
+        if (existingUser)
+            throw new ConflictError("User has already created")
+
         user.password = commonUtil.encryptPassword("test12")
         user.activationCode = uuid()
         let User = new UserModel(user)
@@ -18,6 +23,7 @@ const addUser = async (req, res, next) => {
         res.status(201).json(savedUser)
     }
     catch (error) {
+        console.log(error)
         next(error)
     }
 }

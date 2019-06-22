@@ -29,6 +29,7 @@ const userSchema = new Schema({
     empId: {
         type: String,
         required: true,
+        unique: true
     },
 
     isActivated: {
@@ -41,7 +42,7 @@ const userSchema = new Schema({
         type: String,
         required: true,
         unique: true
-    },
+    }, 
     mobileNo: {
         type: String,
         required: true,

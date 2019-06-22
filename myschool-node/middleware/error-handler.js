@@ -1,4 +1,4 @@
-const { BadRequestError, InternalServerError, ResourceNotFoundError, ForbiddenError } = require("../util/api-error.util")
+const { BadRequestError, InternalServerError, ResourceNotFoundError, ForbiddenError, ConflictError } = require("../util/api-error.util")
 
 exports.handleError = (app) => {
 
@@ -20,6 +20,11 @@ exports.handleError = (app) => {
         else if (errorName === InternalServerError.name) {
             status = 500
         }
+
+        else if (errorName === ConflictError.name) {
+            status = 409
+        }
+
         else {
             status = 500
         }

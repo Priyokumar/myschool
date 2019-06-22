@@ -49,7 +49,7 @@ class ModalContainer extends Component {
                             <div className="col-md-11 p-0 text-center"><h5>{this.state.modalConfig.title}</h5>
                             </div>
                             <div className="col-md-1 p-0 text-right">
-                                <i class="fas fa-times cursor-pointer" onClick={() => { this.close() }}></i>
+                                <i className="fas fa-times cursor-pointer" onClick={() => { this.close() }}></i>
                             </div>
                         </div>
                     </div>

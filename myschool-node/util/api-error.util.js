@@ -25,6 +25,12 @@ class BadRequestError extends APIError {
     }
 }
 
+class ConflictError extends APIError {
+    constructor(message) {
+        super(message)
+    }
+}
+
 class InternalServerError extends APIError {
     constructor(error) {
         super(error.message)
@@ -36,5 +42,6 @@ module.exports = {
     ResourceNotFoundError,
     InternalServerError,
     BadRequestError,
-    ForbiddenError
+    ForbiddenError,
+    ConflictError
 };

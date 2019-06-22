@@ -51,6 +51,14 @@ class EmployeeSearch extends Component {
         return (
 
             <Fragment>
+                <div className="col text-right p-0">
+                    <div className="input-group mb-3">
+                        <input type="text" className="form-control" placeholder="Search employee by name" />
+                        <div className="input-group-append">
+                            <button className="btn btn-outline-secondary" type="button" ><i className="fas fa-search"></i>Search</button>
+                        </div>
+                    </div>
+                </div>
                 <table className="table">
                     <thead className="thead-light">
                         <tr>
@@ -65,7 +73,7 @@ class EmployeeSearch extends Component {
                         {
                             this.state.employees.map((employee, index) => {
                                 return (
-                                    <tr key={index} onClick={() => { this.select(employee) }}>
+                                    <tr className="tr-hover cursor-pointer" key={index} onClick={() => { this.select(employee) }}>
                                         <td>{employee.firstName} {employee.middleName} {employee.lastName}</td>
                                         <td>{employee.gender}</td>
                                         <td>{employee.status}</td>
