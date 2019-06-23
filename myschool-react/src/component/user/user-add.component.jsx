@@ -68,7 +68,6 @@ class AddUpdateUser extends Component {
       let message = "Something went wrong ):"
       if (error.response.status === 409)
         message = error.response.data
-
       alertService.sendAlert({ type: "danger", message: message })
     }
   }

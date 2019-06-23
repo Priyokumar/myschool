@@ -43,6 +43,11 @@ const employeeSchema = new Schema({
         required: false,
     },
 
+    salary: {
+        type: Number,
+        required: false,
+    },
+
     dob: {
         type: String,
         required: true,

@@ -14,6 +14,10 @@ import { navService } from "../../service/nav-service"
 import Employees from '../employee/employees.component'
 import AddEmployee from '../employee/add-employee.component'
 import EmployeeView from '../employee/employee-view.component'
+import EmployeeSalary from '../employee/employee-salary.component'
+import EmployeeSalaryPayments from '../employee/employee-salary-payments.component'
+import EmployeeSalaryPaymentAddEdit from '../employee/employee-salary-payment-add-edit.component'
+import EmployeeSalaryPaymentView from '../employee/employee-salary-payment-view.component'
 import ModalContainer from "../layout/modal"
 import { alertService } from "../../service/alert.service"
 
@@ -80,12 +84,19 @@ class Layout extends Component {
                             <Route exact path={"/module/dashboard"} component={Dashboard} />
                             <Route exact path={"/module/users"} component={User} />
                             <Route exact path={"/module/users/add"} component={AddUpdateUser} />
+
                             <Route exact path={"/module/roles"} component={Role} />
                             <Route exact path={"/module/roles/add"} component={AddUpdateRole} />
                             <Route exact path={"/module/roles/:roleId/edit"} component={AddUpdateRole} />
                             <Route exact path={"/module/roles/:roleId/view"} component={ViewRole} />
+
                             <Route exact path={"/module/employees"} component={Employees} />
                             <Route exact path={"/module/employees/add"} component={AddEmployee} />
+                            <Route exact path={"/module/employees/salaries"} component={EmployeeSalary} />
+                            <Route exact path={"/module/employees/salary-payments"} component={EmployeeSalaryPayments} />
+                            <Route exact path={"/module/employees/salary-payments/add"} component={EmployeeSalaryPaymentAddEdit} />
+                            <Route exact path={"/module/employees/salary-payments/:id/add"} component={EmployeeSalaryPaymentAddEdit} />
+                            <Route exact path={"/module/employees/salary-payments/:id/view"} component={EmployeeSalaryPaymentView} />
                             <Route exact path={"/module/employees/:id/edit"} component={AddEmployee} />
                             <Route exact path={"/module/employees/:id/view"} component={EmployeeView} />
                         </div>
