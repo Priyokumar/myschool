@@ -1,0 +1,20 @@
+<mat-toolbar class="bg-white">
+    <mat-toolbar-row>
+        <span class="spacer"></span>
+        <mat-icon>notifications</mat-icon> &nbsp;
+        <span class="font-text letter-spacing2">Priyokumar</span>&nbsp;
+        <button mat-button [matMenuTriggerFor]="userMenu" class="font-black1">
+            <mat-icon>account_circle</mat-icon>&nbsp;
+            <mat-icon>expand_more</mat-icon>
+          </button>
+          <mat-menu #userMenu="matMenu" xPosition="before">
+            <button mat-menu-item>
+              <mat-icon>vpn_key</mat-icon>Change Password
+            </button>
+            <!-- <button mat-menu-item (click)="onClickChangePassword()">Change Password(by REST API)</button> -->
+            <button mat-menu-item>
+              <mat-icon>power_settings_new</mat-icon>Logout
+            </button>
+          </mat-menu>
+    </mat-toolbar-row>
+</mat-toolbar>
