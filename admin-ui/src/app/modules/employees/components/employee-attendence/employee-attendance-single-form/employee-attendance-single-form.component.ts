@@ -40,7 +40,7 @@ export class EmployeeAttendanceSingleFormComponent implements OnInit, OnChanges 
 
   getAttendance() {
     const date = moment(this.attendance.date).format('MM-DD-YYYY');
-    const email = this.userData.email;
+    const email = this.attendance.employee.email;
     const url = `${environment.baseUrl}/api/employee-attendances/email/${email}/date/${date}`;
 
     this.http.get<any>(url).subscribe(data => {

@@ -51,6 +51,31 @@ button:focus {
   letter-spacing: 3px;
 }
 
+
+.no-shadow {
+  box-shadow: none !important;
+}
+
+.btn {
+  color: #ffffff;
+  font-size: 12px;
+  padding: 0.2rem 0.75rem;
+  margin: 3px 2px;
+  height: 28px;
+}
+
+.btn-save {
+  background: #029734;
+}
+
+.btn-edit {
+  background: #4696d2;
+}
+
+.btn-cancel {
+  background: #ee3f64;
+}
+
 // Mat
 .mat-icon {
   vertical-align: middle !important;

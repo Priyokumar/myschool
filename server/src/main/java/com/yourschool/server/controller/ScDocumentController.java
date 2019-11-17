@@ -16,7 +16,7 @@ import com.yourschool.server.dto.ActionResponse;
 import com.yourschool.server.service.ScTempUploadService;
 
 @RestController
-@RequestMapping("/api/document")
+@RequestMapping("/document")
 public class ScDocumentController {
 
 	@Autowired

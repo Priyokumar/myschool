@@ -126,6 +126,7 @@ export interface IPaySalary {
 }
 
 export interface IAttendanceFormData {
+    employee?: IEmployee;
     id?: number;
     email?: string;
     day: string;

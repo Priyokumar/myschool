@@ -35,6 +35,7 @@ import { CustomDateModule } from '../shared/custom-date.module';
 import { EmployeeAttendanceSingleFormComponent } from './components/employee-attendence/employee-attendance-single-form/employee-attendance-single-form.component';
 import { EmployeeService } from './services/employee.service';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { EmployeesDialogComponent } from './components/employee/employees-dialog/employees-dialog.component';
 
 
 const routes: Routes = [
@@ -85,7 +86,8 @@ const routes: Routes = [
     TeachingStaffListComponent,
     TeachingStaffViewComponent,
     TeachingStaffCreateEditComponent,
-    EmployeeAttendanceSingleFormComponent
+    EmployeeAttendanceSingleFormComponent,
+    EmployeesDialogComponent
 
   ],
   imports: [
@@ -101,6 +103,7 @@ const routes: Routes = [
   ],
   providers: [
     EmployeeService
-  ]
+  ],
+  entryComponents: [EmployeesDialogComponent]
 })
 export class EmployeesModule { }

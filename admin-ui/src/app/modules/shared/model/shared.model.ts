@@ -60,7 +60,7 @@ export class ApiEndpoint {
     public static EMPLOYEE_SALARY = ApiEndpoint.BASE_URL + '/api/salaries';
     public static EMPLOYEE_ATTENDENCES = ApiEndpoint.BASE_URL + '/employee-attendences';
     public static PAY_SALARY = ApiEndpoint.BASE_URL + '/api/pay-salaries';
-    public static DOCUMENT = ApiEndpoint.BASE_URL + '/api/document';
+    public static DOCUMENT = ApiEndpoint.BASE_URL + '/document';
 
 
 }

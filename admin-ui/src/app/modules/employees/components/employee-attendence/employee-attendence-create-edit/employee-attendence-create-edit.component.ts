@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { addDays, addWeeks, subWeeks } from 'date-fns';
 import * as moment from 'moment';
 import { FormControl } from '@angular/forms';
-import { IAttendanceFormData } from '../../../model/employeeModels';
+import { IAttendanceFormData, IEmployee } from '../../../model/employeeModels';
 import { Utils } from 'src/app/modules/shared/model/shared.model';
 import { EmployeeService } from '../../../services/employee.service';
 import { IUser } from 'src/app/modules/shared/model/security';
 import { CommonService } from 'src/app/modules/shared/services/common.service';
+import { MatDialog } from '@angular/material';
+import { EmployeesDialogComponent } from '../../employee/employees-dialog/employees-dialog.component';
 
 @Component({
   selector: 'app-employee-attendence-create-edit',
@@ -20,10 +22,12 @@ export class EmployeeAttendenceCreateEditComponent implements OnInit {
   currentDateFctl = new FormControl('', null);
   attendances: IAttendanceFormData[] = [];
   userData: IUser;
+  employee: IEmployee;
 
   constructor(
     private employeeService: EmployeeService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private dialog: MatDialog
   ) {
     this.currentDateFctl.setValue(this.currDate);
     this.currentDateFctl.valueChanges.subscribe(data => {
@@ -36,6 +40,12 @@ export class EmployeeAttendenceCreateEditComponent implements OnInit {
     this.getWeekDates(now);
     this.userData = this.commonService.getUserData();
     console.log('this.userData', this.userData);
+  }
+
+  selectEmployee() {
+    this.dialog.open(EmployeesDialogComponent, { width: '50%', disableClose: true }).afterClosed().subscribe(data => {
+      this.employee = data;
+    });
   }
 
   private getWeekDates(now: moment.Moment) {

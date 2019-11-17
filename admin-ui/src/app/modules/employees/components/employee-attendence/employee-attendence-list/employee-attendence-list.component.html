@@ -1,11 +1,27 @@
 <div class="form-min-height ml-3 mr-3 mt-1 pb-5 bg-white">
-  <div class="row p-1">
-    <div class="col-md-6">
+  <div class="d-flex justify-content-between p-1">
+    <div class="pl-3">
       <span style="font-weight: bold; font-size: 14px; line-height: 35px;">Employee Attendence</span>
     </div>
-    <div class="col-md-6 text-right">
+    <div class="d-flex align-items-center pr-3">
+      <div>
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" (dateChange)="onChangeDate($event)" readonly>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>&nbsp;&nbsp;
+      </div>
       <button class="btn btn-save" [routerLink]="['/employee/attendence-create']">
-        <mat-icon>add</mat-icon>&nbsp;New Attendence
+        Save
+      </button>&nbsp;
+      <button class="btn btn-save" [routerLink]="['/employee/attendence-create']">
+        Submit
+      </button>
+      <button class="mr-5" mat-icon-button (click)="previous()">
+        <mat-icon>keyboard_arrow_left</mat-icon>
+      </button>
+      <button mat-icon-button (click)="next()">
+        <mat-icon>keyboard_arrow_right</mat-icon>
       </button>
     </div>
   </div>
@@ -14,29 +30,32 @@
     <div class="col-md-12 table-header mb-5">
 
       <div class="no-shadow w-100">
-        <table mat-table [dataSource]="empAttdDataSource" matSort>
-
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>#</th>
-            <td style="padding-left: 25px !important;" mat-cell *matCellDef="let row; let i = index">{{i+1}}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="date">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
-            <td mat-cell *matCellDef="let row" class="name-class" (click)="onClickRow(row.id)">{{row.date}}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-            <td mat-cell *matCellDef="let row" class="text-right" (click)="onDeleteRow(row.id)">
-              <mat-icon style="color: firebrick; cursor: pointer;">clear</mat-icon> &nbsp;
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="empAttdColumns;sticky: true"></tr>
-          <tr mat-row *matRowDef="let row; columns: empAttdColumns ; let i = index;">
-          </tr>
+        <table class="w-100 table table-bordered">
+          <thead>
+            <tr>
+              <th>Employee</th>
+              <th>Day</th>
+              <th>Date</th>
+              <th>Time In</th>
+              <th>Time Out</th>
+              <th>Total Time</th>
+              <th>Comments</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let attendance of attendances" app-employee-attendance-single-form [userData]="userData"
+              [attendance]="attendance">
+            </tr>
+          </tbody>
         </table>
+        <div class="d-flex justify-content-end">
+          <button class="mr-5" mat-icon-button (click)="previous()">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+          </button>
+          <button mat-icon-button (click)="next()">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+        </div>
         <div class="d-flex justify-content-center align-items-center" style="height: 40vh;" *ngIf="errorMessage">
           <div>
             <h4 class="font-grey font-300">{{errorMessage}}</h4>

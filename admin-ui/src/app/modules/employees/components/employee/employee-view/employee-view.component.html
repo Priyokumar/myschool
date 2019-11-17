@@ -175,7 +175,7 @@
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon>insert_drive_file</mat-icon>
-          <span style="font-size: 13px;">Documents and others</span>
+          <span style="font-size: 13px;">others</span>
         </ng-template>
         <div class="row pt-2">
 
@@ -228,6 +228,20 @@
             <p>Designation : {{employee.lastEmployeeHistory?.designation}}</p>
           </div>
         </div>
+        <div class="row pt-2">
+          <div class="col-md-12">
+            <p style="font-weight: bold; font-size: 14px;">Documents</p>
+            <hr>
+          </div>
+        </div>
+      </mat-tab>
+
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>insert_drive_file</mat-icon>
+          <span style="font-size: 13px;">Documents</span>
+        </ng-template>
         <div class="row pt-2">
           <div class="col-md-12">
             <p style="font-weight: bold; font-size: 14px;">Documents</p>
@@ -452,7 +466,7 @@
               <div class="col-md-10">
                 <div class="row">
                   <div class="col-md-4" *ngIf="postGraduationCertUrl">
-                    <span><a [href]="postGraduationCertUrl">Click here to download</a></span>
+                    <span><a [href]="postGraduationCertUrl">Click here to download</a> <span *ngIf="postGraduationCertFile">{{postGraduationCertFile.name}}</span></span>
                     <span>
                       <button mat-icon-button color="primary" (click)="editDoc('POST_GRADUATION_CERT')">
                         <mat-icon>edit</mat-icon>

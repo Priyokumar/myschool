@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FileUploadComponent } from './file-upload/file-upload.component';
 import { ImagePreviewComponent } from './image-preview/image-preview.component';
 import { MatFormFieldModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material/material.module';
+import { FileUploadComponent } from './components/file-upload/file-upload.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +21,7 @@ import { MaterialModule } from './material/material.module';
   exports: [
     FileUploadComponent,
     ImagePreviewComponent
-  ]
+  ],
+  entryComponents:[ImagePreviewComponent]
 })
 export class SharedModule { }

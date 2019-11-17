@@ -33,6 +33,15 @@ export class EmployeeViewComponent implements OnInit {
   graduationCertUrl: string;
   postGraduationCertUrl: string;
 
+  panCardFile: File;
+  aadhaarCardFile: File;
+  voterIdFile: File;
+  drivingLicenseFile: File;
+  xCertFile: File;
+  xIICertFile: File;
+  graduationCertFile: File;
+  postGraduationCertFile: File;
+
   constructor(private http: HttpClient,
               private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -114,6 +123,25 @@ export class EmployeeViewComponent implements OnInit {
 
   onSelectFile(file: File, type: string) {
 
+
+    if (type === 'AADHAAR_CARD') {
+      this.aadhaarCardFile = file;
+    } else if (type === 'PAN_CARD') {
+      this.panCardFile = file;
+    } else if (type === 'VOTER_ID') {
+      this.voterIdFile = file;
+    } else if (type === 'DRIVING_LICENSE') {
+      this.drivingLicenseFile = file;
+    } else if (type === 'X_CERT') {
+      this.xCertFile = file;
+    } else if (type === 'XII_CERT') {
+      this.xIICertFile = file;
+    } else if (type === 'GRADUATION_CERT') {
+      this.graduationCertFile = file;
+    } else if (type === 'POST_GRADUATION_CERT') {
+      this.postGraduationCertFile = file;
+    }
+
     this.fileUploadService.uploadDoc(file, this.empId, 'EMPLOYEE', type, type).subscribe(event => {
       console.log(event);
       if (event.type === HttpEventType.UploadProgress) {
@@ -121,7 +149,7 @@ export class EmployeeViewComponent implements OnInit {
       } else if (event instanceof HttpResponse) {
 
         this.uploadingFile = false;
-        let body: string | any =  event.body as string;
+        let body: string | any = event.body as string;
         body = JSON.parse(body);
 
         const docUrl = ApiEndpoint.DOCUMENT + '/' + body.actionMessage + '/view';
@@ -140,21 +168,21 @@ export class EmployeeViewComponent implements OnInit {
       this.profilePicUrl = docUrl;
     } else if (type === 'PAN_CARD') {
       this.panCardUrl = docUrl;
- } else if (type === 'AADHAAR_CARD') {
+    } else if (type === 'AADHAAR_CARD') {
       this.aadhaarCardUrl = docUrl;
- } else if (type === 'VOTER_ID') {
+    } else if (type === 'VOTER_ID') {
       this.voterIdUrl = docUrl;
- } else if (type === 'DRIVING_LICENSE') {
+    } else if (type === 'DRIVING_LICENSE') {
       this.drivingLicenseUrl = docUrl;
- } else if (type === 'X_CERT') {
+    } else if (type === 'X_CERT') {
       this.xCertUrl = docUrl;
- } else if (type === 'XII_CERT') {
+    } else if (type === 'XII_CERT') {
       this.xIICertUrl = docUrl;
- } else if (type === 'GRADUATION_CERT') {
+    } else if (type === 'GRADUATION_CERT') {
       this.graduationCertUrl = docUrl;
- } else if (type === 'POST_GRADUATION_CERT') {
+    } else if (type === 'POST_GRADUATION_CERT') {
       this.postGraduationCertUrl = docUrl;
- }
+    }
 
   }
 
@@ -163,21 +191,21 @@ export class EmployeeViewComponent implements OnInit {
       this.profilePicUrl = null;
     } else if (type === 'PAN_CARD') {
       this.panCardUrl = null;
- } else if (type === 'AADHAAR_CARD') {
+    } else if (type === 'AADHAAR_CARD') {
       this.aadhaarCardUrl = null;
- } else if (type === 'VOTER_ID') {
+    } else if (type === 'VOTER_ID') {
       this.voterIdUrl = null;
- } else if (type === 'DRIVING_LICENSE') {
+    } else if (type === 'DRIVING_LICENSE') {
       this.drivingLicenseUrl = null;
- } else if (type === 'X_CERT') {
+    } else if (type === 'X_CERT') {
       this.xCertUrl = null;
- } else if (type === 'XII_CERT') {
+    } else if (type === 'XII_CERT') {
       this.xIICertUrl = null;
- } else if (type === 'GRADUATION_CERT') {
+    } else if (type === 'GRADUATION_CERT') {
       this.graduationCertUrl = null;
- } else if (type === 'POST_GRADUATION_CERT') {
+    } else if (type === 'POST_GRADUATION_CERT') {
       this.postGraduationCertUrl = null;
- }
+    }
   }
 
   cancel(type: string) {

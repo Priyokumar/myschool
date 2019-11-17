@@ -1,9 +1,9 @@
 <div>
-  <div *ngIf="type==='image'" style="text-align: left">
-    <img [src]="imageSrc" width="100%" class="img-thumbnail" alt="Cinque Terre"
-      (click)="imagePreview()" style="cursor: pointer">
+  <div *ngIf="type==='image'" style="text-align: center">
+    <img [src]="imageSrc" width="100%" class="img-thumbnail" (click)="imagePreview()"
+      style="cursor: pointer">
   </div>
-  <div class="d-flex justify-content-start">
+  <div>
     <label class="btn w-100" [ngStyle]='{"background": bgButton,"margin-top":"5px","color": color}' *ngIf="type==='image'">
       Upload Photo<input type="file" (change)="selectFile($event)" style="display: none;">
     </label>

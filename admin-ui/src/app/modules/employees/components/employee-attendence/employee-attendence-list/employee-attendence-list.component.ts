@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { IEmployeeAttendence } from '../../../model/employeeModels';
-import { ApiEndpoint } from 'src/app/modules/shared/model/shared.model';
+import { IEmployee, IAttendanceFormData } from '../../../model/employeeModels';
+import { ApiEndpoint, Utils } from 'src/app/modules/shared/model/shared.model';
+import { CommonService } from 'src/app/modules/shared/services/common.service';
+import { addDays, subDays } from 'date-fns';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-employee-attendence-list',
@@ -13,66 +15,77 @@ import { ApiEndpoint } from 'src/app/modules/shared/model/shared.model';
 export class EmployeeAttendenceListComponent implements OnInit {
 
 
-  public errorMessage: string;
-  public empAttdColumns: string[] = ['id', 'date', 'action'];
-  public empAttdDataSource: MatTableDataSource<IEmployeeAttendence>;
-  public empAttds: IEmployeeAttendence[] = [];
-  constructor(private http: HttpClient, private router: Router) { }
+  errorMessage: string;
+  employees: IEmployee[] = [];
+  attendances: IAttendanceFormData[] = [];
+  userData: any;
+  selectedDate: Date = new Date();
+  currentDateFctl = new FormControl('', null);
+
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private commonService: CommonService
+  ) {
+  }
 
   ngOnInit() {
+    this.currentDateFctl.setValue(this.selectedDate);
     this.getEmpAttds();
+    this.userData = this.commonService.getUserData();
   }
 
   private getEmpAttds() {
 
-    let resp;
-    this.http.get(ApiEndpoint.EMPLOYEE_ATTENDENCES).subscribe(data => {
+    this.http.get<any>(ApiEndpoint.EMPLOYEES).subscribe(data => {
 
-      resp = data;
-      if (resp && !resp.apiMessage.error) {
-
-        this.empAttds = resp.data;
-        this.empAttdDataSource = new MatTableDataSource(this.empAttds);
-
-        if (!this.empAttds) {
-          this.errorMessage = 'No attendence found';
-        }
-
-      } else {
-        this.errorMessage = resp.apiMessage.detail;
+      this.employees = data.data;
+      if (!this.employees) {
+        this.errorMessage = 'No attendences to display';
       }
-
+      this.generateEmployeeAttendance();
     }, err => {
       if (err.error && err.error.apiMessage) {
         this.errorMessage = err.error.apiMessage.detail;
       } else {
         this.errorMessage = err.message;
       }
-
       console.error(err);
     });
-
   }
 
-  public onClickRow(empAttdId: number) {
-
-    this.router.navigate(['/employee/attendences/' + empAttdId + '/view']);
-
+  generateEmployeeAttendance() {
+    if (this.employees.length > 0) {
+      this.getAttendances(this.selectedDate);
+    }
   }
 
-  public onDeleteRow(empAttdId: number) {
-
-    this.http.delete(ApiEndpoint.EMPLOYEE_ATTENDENCES + '/' + empAttdId).subscribe(data => {
-      this.empAttdDataSource = new MatTableDataSource([]);
-      this.getEmpAttds();
-    }, err => {
-      console.error(err);
-      if (err.error && err.error.apiMessage) {
-        this.errorMessage = err.error.apiMessage.detail;
-      } else {
-        this.errorMessage = err.message;
-      }
+  private getAttendances(date: Date) {
+    this.attendances = [];
+    this.selectedDate = date;
+    this.employees.forEach(employee => {
+      const attendanceForm: IAttendanceFormData = {
+        employee,
+        day: Utils.getDay(date.getDay()),
+        date,
+        timeIn: '',
+        timeOut: '',
+        comment: ''
+      };
+      this.attendances.push(attendanceForm);
     });
+  }
+
+  next() {
+    this.getAttendances(addDays(this.selectedDate, 1));
+  }
+
+  previous() {
+    this.getAttendances(subDays(this.selectedDate, 1));
+  }
+
+  onChangeDate(event: any) {
+    this.getAttendances(event.target.value.toDate());
   }
 
 }
