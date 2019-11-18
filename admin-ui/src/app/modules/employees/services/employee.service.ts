@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { ApiEndpoint } from '../../shared/model/shared.model';
+import { IEmployee } from '../model/employeeModels';
 
 @Injectable()
 export class EmployeeService {
@@ -7,7 +10,9 @@ export class EmployeeService {
   private saveSubject = new BehaviorSubject<any>('');
   private discardSubject = new BehaviorSubject<any>('');
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   sendSaveInstruction(data: any) {
     this.saveSubject.next(data);
@@ -23,6 +28,10 @@ export class EmployeeService {
 
   receiveDiscardInstruction() {
     return this.discardSubject.asObservable();
+  }
+
+  getEmployee(email: string): Observable<IEmployee> {
+    return this.http.get<IEmployee>(ApiEndpoint.EMPLOYEES + '/email/' + email);
   }
 
 

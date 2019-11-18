@@ -1,10 +1,11 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { IAttendanceFormData } from '../../../model/employeeModels';
+import { IAttendanceFormData, IEmployee } from '../../../model/employeeModels';
 import * as moment from 'moment';
 import { EmployeeService } from '../../../services/employee.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material';
+import { Observable } from 'rxjs';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -16,6 +17,7 @@ export class EmployeeAttendanceSingleFormComponent implements OnInit, OnChanges 
 
   @Input() attendance: IAttendanceFormData;
   @Input() userData: any;
+  employee$: Observable<any>;
 
   constructor(
     private employeService: EmployeeService,
@@ -36,11 +38,17 @@ export class EmployeeAttendanceSingleFormComponent implements OnInit, OnChanges 
 
   ngOnChanges(changes: SimpleChanges): void {
     this.getAttendance();
+    this.getEmployee();
   }
+
+  getEmployee() {
+    this.employee$ = this.employeService.getEmployee(this.attendance.email);
+  }
+
 
   getAttendance() {
     const date = moment(this.attendance.date).format('MM-DD-YYYY');
-    const email = this.attendance.employee.email;
+    const email = this.attendance.email;
     const url = `${environment.baseUrl}/api/employee-attendances/email/${email}/date/${date}`;
 
     this.http.get<any>(url).subscribe(data => {
@@ -64,10 +72,10 @@ export class EmployeeAttendanceSingleFormComponent implements OnInit, OnChanges 
     }
 
     const date = this.attendance.date;
-    const timeInDateStr = `${date.getFullYear()} ${(date.getMonth() + 1)} ${date.getDay()} ${timeIn.toLowerCase()}`;
+    const timeInDateStr = `${date.getFullYear()} ${(date.getMonth() + 1)} ${(date.getDay() + 1)} ${timeIn.toLowerCase()}`;
     const timeInDate = moment(timeInDateStr);
 
-    const timeOutDateStr = `${date.getFullYear()} ${(date.getMonth() + 1)} ${date.getDay()} ${timeOut.toLowerCase()}`;
+    const timeOutDateStr = `${date.getFullYear()} ${(date.getMonth() + 1)} ${(date.getDay() + 1)} ${timeOut.toLowerCase()}`;
     const timeOutDate = moment(timeOutDateStr);
 
     const duration = moment.duration(timeOutDate.diff(timeInDate));
@@ -84,10 +92,10 @@ export class EmployeeAttendanceSingleFormComponent implements OnInit, OnChanges 
     }
 
     const date = this.attendance.date;
-    const timeInDateStr = `${date.getFullYear()} ${(date.getMonth() + 1)} ${date.getDay()} ${timeIn.toLowerCase()}`;
+    const timeInDateStr = `${date.getFullYear()} ${(date.getMonth() + 1)} ${(date.getDay() + 1)} ${timeIn.toLowerCase()}`;
     const timeInDate = moment(timeInDateStr);
 
-    const timeOutDateStr = `${date.getFullYear()} ${(date.getMonth() + 1)} ${date.getDay()} ${timeOut.toLowerCase()}`;
+    const timeOutDateStr = `${date.getFullYear()} ${(date.getMonth() + 1)} ${(date.getDay() + 1)} ${timeOut.toLowerCase()}`;
     const timeOutDate = moment(timeOutDateStr);
 
     const duration = moment.duration(timeOutDate.diff(timeInDate));
@@ -98,18 +106,39 @@ export class EmployeeAttendanceSingleFormComponent implements OnInit, OnChanges 
 
   save() {
     if (this.attendance.timeIn && this.attendance.timeOut) {
-      this.attendance.email = this.userData.email;
+
+      const payLoad = {
+        id: this.attendance.id,
+        email: this.attendance.email,
+        day: this.attendance.day,
+        date: this.attendance.date,
+        timeIn: this.attendance.timeIn,
+        timeOut: this.attendance.timeOut,
+        total: this.attendance.total,
+        comment: this.attendance.comment
+      };
 
       const url = environment.baseUrl + '/api/employee-attendances';
-      this.http.post(url, this.attendance).subscribe(data => {
+      this.http.post(url, payLoad).subscribe(data => {
         console.log('Successfully save attendance');
         this.snackBar.open('Successfully saved data', 'Ok', { duration: 3000 });
+        this.getAttendance();
       },
         error => {
           console.error('Error while adding attendance ', error);
           this.snackBar.open('Error while saving data!!!', 'Ok', { duration: 3000 });
         });
     }
+  }
+
+  getClass(attendance: IAttendanceFormData) {
+
+    if (attendance.id) {
+      return 'submitted-bg';
+    } else {
+      return 'new-bg';
+    }
+
   }
 
 }

@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 
 @Entity
 @Table(name = "SC_EMPLOYEE_ATTENDENCE")
@@ -26,6 +29,7 @@ public class ScEmployeeAttendence implements Serializable {
 	@Column(name = "DAY")
 	private String day;
 	
+	@Temporal(TemporalType.DATE)
 	@Column(name = "DATE")
 	private Date date;
 	

@@ -32,6 +32,11 @@ public class ScEmployeeController {
 	public EmployeeResponse findEmployee(@PathVariable("id") Long id) {
 		return employeeService.findEmployee(id);
 	}
+	
+	@GetMapping(value = "/email/{email}")
+	public EmployeeResponse findEmployeeAttendence(@PathVariable("email") String email) {
+		return employeeService.findEmployee(email);
+	}
 
 	@PostMapping
 	public ActionResponse createEmployee(@RequestBody Employee employee) {

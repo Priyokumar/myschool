@@ -91,6 +91,26 @@ public class ScEmployeeService {
 
 		return res;
 	}
+	
+	public EmployeeResponse findEmployee(String email) {
+
+		EmployeeResponse res = new EmployeeResponse();
+
+		List<Filter> filters = new ArrayList<Filter>();
+		filters.add(new Filter("email", Operator.EQUAL, FieldType.STRING, email));
+
+		ScEmployee employee = commonService.findOne(filters, ScEmployee.class);
+
+		if (!ScUtil.isAllPresent(employee))
+			throw new NotFoundException("No Employee can be found !");
+
+		Employee dtoUser = setEmployeeToDto(employee);
+
+		res.setApiMessage(ApiUtil.okMessage("Success"));
+		res.setData(dtoUser);
+
+		return res;
+	}
 
 	public Employee setEmployeeToDto(ScEmployee employee) {
 

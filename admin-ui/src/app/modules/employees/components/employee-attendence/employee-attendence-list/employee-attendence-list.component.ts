@@ -6,6 +6,7 @@ import { ApiEndpoint, Utils } from 'src/app/modules/shared/model/shared.model';
 import { CommonService } from 'src/app/modules/shared/services/common.service';
 import { addDays, subDays } from 'date-fns';
 import { FormControl } from '@angular/forms';
+import { EmployeeService } from '../../../services/employee.service';
 
 @Component({
   selector: 'app-employee-attendence-list',
@@ -25,7 +26,8 @@ export class EmployeeAttendenceListComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private employeeService: EmployeeService,
   ) {
   }
 
@@ -65,7 +67,7 @@ export class EmployeeAttendenceListComponent implements OnInit {
     this.selectedDate = date;
     this.employees.forEach(employee => {
       const attendanceForm: IAttendanceFormData = {
-        employee,
+        email: employee.email,
         day: Utils.getDay(date.getDay()),
         date,
         timeIn: '',
@@ -86,6 +88,11 @@ export class EmployeeAttendenceListComponent implements OnInit {
 
   onChangeDate(event: any) {
     this.getAttendances(event.target.value.toDate());
+  }
+
+  save() {
+    this.employeeService.sendSaveInstruction('save');
+    console.log(this.attendances);
   }
 
 }
