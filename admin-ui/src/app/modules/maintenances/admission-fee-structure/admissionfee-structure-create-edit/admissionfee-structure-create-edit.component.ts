@@ -43,7 +43,7 @@ export class AdmissionfeeStructureCreateEditComponent implements OnInit {
     });
 
     this.activatedRoute.params.subscribe(params => {
-      this.admFeeStructureYearlId = params.admfeeId;
+      this.admFeeStructureYearlId = params.id;
       if (this.admFeeStructureYearlId) {
         this.getAdmFeeStructureYearly();
       }

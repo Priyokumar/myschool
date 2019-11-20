@@ -15,6 +15,7 @@ import { ClassViewComponent } from './class/class-view/class-view.component';
 import { MaterialModule } from '../shared/material/material.module';
 import { CustomDateModule } from '../shared/custom-date.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
   { path: 'admission-fees', component: AdmissionfeeStructureListComponent },
@@ -44,7 +45,8 @@ const routes: Routes = [
     MaterialModule,
     CustomDateModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ],
   entryComponents: [AdmissionFeeStructureDialogComponent]
 })

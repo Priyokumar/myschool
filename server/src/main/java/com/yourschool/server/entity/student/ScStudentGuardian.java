@@ -26,11 +26,17 @@ public class ScStudentGuardian implements Serializable {
 	@Column(name = "DOB")
 	private Date dob;
 
-	@Column(name = "RELATIONSHIP")
-	private String relationship;
+	@Column(name = "EDU_QUALIFICATION")
+	private String eduQualification;
 
 	@Column(name = "CONTACT_NO")
 	private String contactNo;
+	
+	@Column(name = "OCCUPATION")
+	private String occupation;
+	
+	@Column(name = "INCOME")
+	private Double income;
 
 	public Long getId() {
 		return id;
@@ -55,13 +61,14 @@ public class ScStudentGuardian implements Serializable {
 	public void setDob(Date dob) {
 		this.dob = dob;
 	}
+	
 
-	public String getRelationship() {
-		return relationship;
+	public String getEduQualification() {
+		return eduQualification;
 	}
 
-	public void setRelationship(String relationship) {
-		this.relationship = relationship;
+	public void setEduQualification(String eduQualification) {
+		this.eduQualification = eduQualification;
 	}
 
 	public String getContactNo() {
@@ -71,5 +78,23 @@ public class ScStudentGuardian implements Serializable {
 	public void setContactNo(String contactNo) {
 		this.contactNo = contactNo;
 	}
+
+	public String getOccupation() {
+		return occupation;
+	}
+
+	public void setOccupation(String occupation) {
+		this.occupation = occupation;
+	}
+
+	public Double getIncome() {
+		return income;
+	}
+
+	public void setIncome(Double income) {
+		this.income = income;
+	}
+	
+	
 
 }

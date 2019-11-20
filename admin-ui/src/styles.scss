@@ -31,11 +31,11 @@ button:focus {
   margin: 0;
 }
 
-.main{
+.main {
   min-height: 80vh;
 }
 
-.display-none{
+.display-none {
   display: none !important;
 }
 
@@ -50,7 +50,6 @@ button:focus {
 .letter-spacing-3 {
   letter-spacing: 3px;
 }
-
 
 .no-shadow {
   box-shadow: none !important;
@@ -74,6 +73,10 @@ button:focus {
 
 .btn-cancel {
   background: #ee3f64;
+}
+
+.z-index5 {
+  z-index: 5;
 }
 
 // Mat

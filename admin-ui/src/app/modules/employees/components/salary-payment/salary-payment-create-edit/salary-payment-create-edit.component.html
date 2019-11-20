@@ -27,15 +27,10 @@
       </div>
       <div class="col-md-4">
         <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Employee</mat-label>
-          <mat-select #selectedEmployee placeholder="Employee" [formControl]="employeeFormCtl" (selectionChange)="onSelectEmployee(selectedEmployee.value)">
-            <mat-option *ngFor="let option of employees" [value]="option.id">
-              {{option.firstName}} {{option.middleName}} {{option.lastName}}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="employeeFormCtl.hasError('required')">
-            Employee is <strong>required</strong>
-          </mat-error>
+          <input matInput placeholder="Select employee" [formControl]="employeeFormCtl"
+            (mousedown)="openEmployeeDialog()">
+          <mat-icon matSuffix class="cursor-pointer">touch_app</mat-icon>
+          <mat-hint>Click the icon to select employee.</mat-hint>
         </mat-form-field>
       </div>
       <div class="col-md-4">

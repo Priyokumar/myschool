@@ -14,6 +14,8 @@ export interface IStudent {
     dob: string;
     joiningDate: string;
     correspondentAddress: IAddress;
+    sameAsPermAddr: boolean;
+    permanentAddress: IAddress;
     fatherInfo: IGuardian;
     motherInfo: IGuardian;
     guardianInfo: IGuardian;
@@ -24,8 +26,10 @@ export interface IGuardian {
     id: number;
     name: string;
     dob: string;
-    relationship: string;
+    eduQualification: string;
     contactNo: string;
+    occupation: string;
+    income: number;
 }
 
 export const Standards: IKeyValue[] = [

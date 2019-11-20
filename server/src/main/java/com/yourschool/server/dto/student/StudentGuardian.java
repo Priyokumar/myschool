@@ -8,9 +8,13 @@ public class StudentGuardian {
 
 	private String dob;
 
-	private String relationship;
+	private String eduQualification;
 
 	private String contactNo;
+
+	private String occupation;
+
+	private Double income;
 
 	public Long getId() {
 		return id;
@@ -36,12 +40,12 @@ public class StudentGuardian {
 		this.dob = dob;
 	}
 
-	public String getRelationship() {
-		return relationship;
+	public String getEduQualification() {
+		return eduQualification;
 	}
 
-	public void setRelationship(String relationship) {
-		this.relationship = relationship;
+	public void setEduQualification(String eduQualification) {
+		this.eduQualification = eduQualification;
 	}
 
 	public String getContactNo() {
@@ -51,5 +55,23 @@ public class StudentGuardian {
 	public void setContactNo(String contactNo) {
 		this.contactNo = contactNo;
 	}
+
+	public String getOccupation() {
+		return occupation;
+	}
+
+	public void setOccupation(String occupation) {
+		this.occupation = occupation;
+	}
+
+	public Double getIncome() {
+		return income;
+	}
+
+	public void setIncome(Double income) {
+		this.income = income;
+	}
+	
+	
 
 }

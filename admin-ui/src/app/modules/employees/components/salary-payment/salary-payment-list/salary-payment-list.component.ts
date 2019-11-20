@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialog } from '@angular/material';
 import { IPaySalary } from '../../../model/employeeModels';
-import { ApiEndpoint } from 'src/app/modules/shared/model/shared.model';
+import { ApiEndpoint, IConfirmation } from 'src/app/modules/shared/model/shared.model';
+import { ConfirmationDialogComponent } from 'src/app/modules/shared/components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-salary-payment-list',
@@ -16,7 +17,12 @@ export class SalaryPaymentListComponent implements OnInit {
   public paySalaryColumns: string[] = ['id', 'name', 'payDate', 'paidAmount', 'dueAmount', 'salaryAmount', 'action'];
   public paySalaryDataSource: MatTableDataSource<IPaySalary>;
   public paySalaries: IPaySalary[] = [];
-  constructor(private http: HttpClient, private router: Router) { }
+
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit() {
     this.paySalaryDataSource = new MatTableDataSource([]);
@@ -50,24 +56,36 @@ export class SalaryPaymentListComponent implements OnInit {
 
   public onClickRow(paySalId: number) {
 
-    this.router.navigate(['/employee/pay-salaries/' + paySalId + '/view']);
+    this.router.navigate(['/admin/employees/paid-salaries/' + paySalId + '/view']);
 
   }
 
   public onDelete(paySalId: number) {
 
-    this.http.delete(ApiEndpoint.EMPLOYEE_SALARY + '/' + paySalId).subscribe(data => {
-      this.paySalaries = [];
-      this.paySalaryDataSource = new MatTableDataSource([]);
-      this.getPaySalaries();
-    }, err => {
-      console.error(err);
-      if (err.error && err.error.apiMessage) {
-        this.errorMessage = err.error.apiMessage.detail;
-      } else {
-        this.errorMessage = err.message;
-      }
-    });
+    const confirmationData: IConfirmation = {
+      title: 'Delete Salary Payment',
+      subtitle: 'Are you really sure to delete this salary payment?'
+    };
+
+    this.dialog.open(ConfirmationDialogComponent, { width: '26%', data: confirmationData, disableClose: true })
+      .afterClosed().subscribe(okData => {
+        if (okData) {
+
+          this.http.delete(ApiEndpoint.PAY_SALARY + '/' + paySalId).subscribe(data => {
+            this.paySalaries = [];
+            this.paySalaryDataSource = new MatTableDataSource([]);
+            this.getPaySalaries();
+          }, err => {
+            console.error(err);
+            if (err.error && err.error.apiMessage) {
+              this.errorMessage = err.error.apiMessage.detail;
+            } else {
+              this.errorMessage = err.message;
+            }
+          });
+
+        }
+      });
   }
 
   public getName(paySalary: IPaySalary) {

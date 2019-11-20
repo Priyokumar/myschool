@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialog } from '@angular/material';
 import { IEmployee, IDocument } from '../../../model/employeeModels';
-import { ApiEndpoint } from 'src/app/modules/shared/model/shared.model';
+import { ApiEndpoint, IConfirmation } from 'src/app/modules/shared/model/shared.model';
 import { FileUploadService } from 'src/app/modules/shared/services/file-upload.service';
+import { ConfirmationDialogComponent } from 'src/app/modules/shared/components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-employee-view',
@@ -42,10 +43,13 @@ export class EmployeeViewComponent implements OnInit {
   graduationCertFile: File;
   postGraduationCertFile: File;
 
-  constructor(private http: HttpClient,
-              private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private fileUploadService: FileUploadService) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private fileUploadService: FileUploadService,
+    private dialog: MatDialog
+  ) {
     this.activatedRoute.params.subscribe(params => {
       this.empId = params.empId;
     });
@@ -105,14 +109,24 @@ export class EmployeeViewComponent implements OnInit {
 
   delete() {
 
-    this.http.delete(ApiEndpoint.EMPLOYEES + '/' + this.empId).subscribe(data => {
-      this.router.navigate(['/admin/employees']);
-    }, err => {
-      console.error(err);
-      if (err.error && err.error.apiMessage) {
-        this.errorMessage = err.error.apiMessage.detail;
-      } else {
-        this.errorMessage = err.message;
+    const confirmationData: IConfirmation = {
+      title: 'Delete Employee',
+      subtitle: 'Are you really sure to delete this employee?'
+    };
+
+    this.dialog.open(ConfirmationDialogComponent, { width: '26%', data: confirmationData, disableClose: true })
+    .afterClosed().subscribe(okData => {
+      if (okData) {
+        this.http.delete(ApiEndpoint.EMPLOYEES + '/' + this.empId).subscribe(data => {
+          this.router.navigate(['/admin/employees']);
+        }, err => {
+          console.error(err);
+          if (err.error && err.error.apiMessage) {
+            this.errorMessage = err.error.apiMessage.detail;
+          } else {
+            this.errorMessage = err.message;
+          }
+        });
       }
     });
   }

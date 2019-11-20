@@ -5,7 +5,7 @@ export const allSideNavs: ISideNav[] = [
         title: 'Employees', path: '', icon: 'cloud_circle', hasSubmenu: true, submenu:
             [
                 { title: 'Employee List', path: '/admin/employees', icon: 'dashboard', hasSubmenu: false, submenu: [] },
-                { title: 'Attendances', path: '/admin/employees/attendence-create', icon: 'dashboard', hasSubmenu: false, submenu: [] },
+                { title: 'Attendances', path: '/admin/employees/attendences', icon: 'dashboard', hasSubmenu: false, submenu: [] },
                 { title: 'Salaries', path: '/admin/employees/salaries', icon: 'dashboard', hasSubmenu: false, submenu: [] },
                 { title: 'Paid Salaries', path: '/admin/employees/paid-salaries', icon: 'dashboard', hasSubmenu: false, submenu: [] },
             ]
@@ -114,4 +114,37 @@ export const districts: string[] = [
     'Noney',
     'Pherzawl'
 ];
+
+export const bloodGroups: string[] = [
+    'A +ve',
+    'A -ve',
+    'B +ve',
+    'B -ve',
+    'O +ve',
+    'O -ve',
+    'AB +ve',
+    'AB -ve',
+    'NA'
+];
+
+export const religions: string[] = [
+    'Sanamahism',
+    'Hinduism',
+    'Islam',
+    'Budhism',
+    'Jainism',
+    'Others'
+];
+
+export const communities: string[] = [
+    'General',
+    'SC',
+    'ST',
+    'OBC'
+];
+
+export interface IConfirmation {
+    title: string;
+    subtitle: string;
+}
 

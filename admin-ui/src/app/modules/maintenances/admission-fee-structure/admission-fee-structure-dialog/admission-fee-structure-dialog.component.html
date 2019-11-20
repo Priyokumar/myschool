@@ -9,7 +9,7 @@
           <mat-icon>clear</mat-icon>&nbsp;Cancel
         </button>
         <button class="btn btn-save mt-2" (click)="add()">
-          <mat-icon>add</mat-icon>&nbsp;Add
+          <mat-icon>add</mat-icon>&nbsp;{{actionMode === 'EDIT'?'Update':'Add'}}
         </button>
       </div>
     </div>

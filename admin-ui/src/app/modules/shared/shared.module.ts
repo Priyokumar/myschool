@@ -5,11 +5,13 @@ import { MatFormFieldModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material/material.module';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
+import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
     FileUploadComponent,
-    ImagePreviewComponent
+    ImagePreviewComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     CommonModule,
@@ -20,8 +22,12 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
   ],
   exports: [
     FileUploadComponent,
-    ImagePreviewComponent
+    ImagePreviewComponent,
+    ConfirmationDialogComponent
   ],
-  entryComponents:[ImagePreviewComponent]
+  entryComponents: [
+    ImagePreviewComponent,
+    ConfirmationDialogComponent
+  ]
 })
 export class SharedModule { }

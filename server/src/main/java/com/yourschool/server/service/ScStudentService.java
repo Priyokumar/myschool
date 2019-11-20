@@ -153,26 +153,36 @@ public class ScStudentService {
 			fatherDto.setDob(ScDateUtil.dateToString(fatherInfo.getDob()));
 			fatherDto.setId(fatherInfo.getId());
 			fatherDto.setName(fatherInfo.getName());
+			fatherDto.setEduQualification(fatherInfo.getEduQualification());
+			fatherDto.setOccupation(fatherInfo.getOccupation());
+			fatherDto.setIncome(fatherInfo.getIncome());
 			studentDto.setFatherInfo(fatherDto);
+			
 		}
 
 		ScStudentGuardian motherInfo = student.getMotherInfo();
 		if (ScUtil.isAllPresent(motherInfo)) {
 			StudentGuardian motherInfoDto = new StudentGuardian();
-			motherInfoDto.setContactNo(fatherInfo.getContactNo());
-			motherInfoDto.setDob(ScDateUtil.dateToString(fatherInfo.getDob()));
-			motherInfoDto.setId(fatherInfo.getId());
+			motherInfoDto.setContactNo(motherInfo.getContactNo());
+			motherInfoDto.setDob(ScDateUtil.dateToString(motherInfo.getDob()));
+			motherInfoDto.setId(motherInfo.getId());
 			motherInfoDto.setName(fatherInfo.getName());
+			motherInfoDto.setEduQualification(motherInfo.getEduQualification());
+			motherInfoDto.setOccupation(motherInfo.getOccupation());
+			motherInfoDto.setIncome(motherInfo.getIncome());
 			studentDto.setMotherInfo(motherInfoDto);
 		}
 
 		ScStudentGuardian guardianInfo = student.getGuardianInfo();
 		if (ScUtil.isAllPresent(guardianInfo)) {
 			StudentGuardian guardianInfoDto = new StudentGuardian();
-			guardianInfoDto.setContactNo(fatherInfo.getContactNo());
-			guardianInfoDto.setDob(ScDateUtil.dateToString(fatherInfo.getDob()));
-			guardianInfoDto.setId(fatherInfo.getId());
-			guardianInfoDto.setName(fatherInfo.getName());
+			guardianInfoDto.setContactNo(guardianInfo.getContactNo());
+			guardianInfoDto.setDob(ScDateUtil.dateToString(guardianInfo.getDob()));
+			guardianInfoDto.setId(guardianInfo.getId());
+			guardianInfoDto.setName(guardianInfo.getName());
+			guardianInfoDto.setEduQualification(guardianInfo.getEduQualification());
+			guardianInfoDto.setOccupation(guardianInfo.getOccupation());
+			guardianInfoDto.setIncome(guardianInfo.getIncome());
 			studentDto.setGuardianInfo(guardianInfoDto);
 		}
 
@@ -212,24 +222,32 @@ public class ScStudentService {
 		student.setGender(studentDto.getGender());
 		student.setNationality(studentDto.getNationality());
 		student.setPhysicallyChallenged(studentDto.getPhysicallyChallenged());
-		
+
 		student.setSameAsPermAddr(studentDto.getSameAsPermAddr());
 
+		if (student.getSameAsPermAddr() == true) {
+			if (ScUtil.isAllPresent(student.getPermanentAddress())) {
+				student.setPermanentAddress(null);
+			}
+		}
+
 		Address permAddDto = studentDto.getPermanentAddress();
-		if (ScUtil.isAllPresent(permAddDto)) {
+		if (ScUtil.isAllPresent(permAddDto) && studentDto.getSameAsPermAddr() == false) {
+			if (ScUtil.isAllPresent(permAddDto)) {
 
-			ScAddress permanentAddress = new ScAddress();
-			if (ScUtil.isAllPresent(student.getPermanentAddress()))
-				permanentAddress = student.getPermanentAddress();
-			permanentAddress.setCountry(permAddDto.getCountry());
-			permanentAddress.setDistrict(permAddDto.getDistrict());
-			permanentAddress.setFirstLine(permAddDto.getFirstLine());
-			//permanentAddress.setId(permAddDto.getId());
-			permanentAddress.setSecondLine(permAddDto.getSecondLine());
-			permanentAddress.setState(permAddDto.getState());
+				ScAddress permanentAddress = new ScAddress();
+				if (ScUtil.isAllPresent(student.getPermanentAddress()))
+					permanentAddress = student.getPermanentAddress();
+				permanentAddress.setCountry(permAddDto.getCountry());
+				permanentAddress.setDistrict(permAddDto.getDistrict());
+				permanentAddress.setFirstLine(permAddDto.getFirstLine());
+				// permanentAddress.setId(permAddDto.getId());
+				permanentAddress.setSecondLine(permAddDto.getSecondLine());
+				permanentAddress.setState(permAddDto.getState());
 
-			if (!ScUtil.isAllPresent(student.getPermanentAddress()))
-				student.setPermanentAddress(permanentAddress);
+				if (!ScUtil.isAllPresent(student.getPermanentAddress()))
+					student.setPermanentAddress(permanentAddress);
+			}
 		}
 
 		Address corrAddrDto = studentDto.getCorrespondentAddress();
@@ -241,7 +259,7 @@ public class ScStudentService {
 			correspondentAddress.setCountry(corrAddrDto.getCountry());
 			correspondentAddress.setDistrict(corrAddrDto.getDistrict());
 			correspondentAddress.setFirstLine(corrAddrDto.getFirstLine());
-			//correspondentAddress.setId(corrAddrDto.getId());
+			// correspondentAddress.setId(corrAddrDto.getId());
 			correspondentAddress.setSecondLine(corrAddrDto.getSecondLine());
 			correspondentAddress.setState(corrAddrDto.getState());
 
@@ -259,7 +277,10 @@ public class ScStudentService {
 			guardian.setDob(ScDateUtil.stringToDate(fatherInfoDto.getDob()));
 			// guardian.setId(fatherInfoDto.getId());
 			guardian.setName(fatherInfoDto.getName());
-			guardian.setRelationship(fatherInfoDto.getRelationship());
+			guardian.setEduQualification(fatherInfoDto.getEduQualification());
+			guardian.setOccupation(fatherInfoDto.getOccupation());
+			guardian.setIncome(fatherInfoDto.getIncome());
+			
 
 			if (!ScUtil.isAllPresent(student.getFatherInfo()))
 				student.setFatherInfo(guardian);
@@ -275,7 +296,9 @@ public class ScStudentService {
 			guardian.setDob(ScDateUtil.stringToDate(motherInfoDto.getDob()));
 			// guardian.setId(motherInfoDto.getId());
 			guardian.setName(motherInfoDto.getName());
-			guardian.setRelationship(motherInfoDto.getRelationship());
+			guardian.setEduQualification(motherInfoDto.getEduQualification());
+			guardian.setOccupation(motherInfoDto.getOccupation());
+			guardian.setIncome(motherInfoDto.getIncome());
 
 			if (!ScUtil.isAllPresent(student.getMotherInfo()))
 				student.setMotherInfo(guardian);
@@ -291,7 +314,9 @@ public class ScStudentService {
 			guardian.setDob(ScDateUtil.stringToDate(guardianInfoDto.getDob()));
 			// guardian.setId(guardianInfoDto.getId());
 			guardian.setName(guardianInfoDto.getName());
-			guardian.setRelationship(guardianInfoDto.getRelationship());
+			guardian.setEduQualification(guardianInfoDto.getEduQualification());
+			guardian.setOccupation(guardianInfoDto.getOccupation());
+			guardian.setIncome(guardianInfoDto.getIncome());
 
 			if (!ScUtil.isAllPresent(student.getGuardianInfo()))
 				student.setGuardianInfo(guardian);

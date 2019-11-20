@@ -25,7 +25,22 @@ export class StudentCreateEditComponent extends Student implements OnInit {
   }
 
   ngOnInit() {
-    this.sameAsPermAddrFormCtl.setValue(false);
+    this.sameAsPermAddrFormCtl.setValue(true);
+    this.nationalityFormCtl.setValue('Indian');
+
+    this.countryFormCtl.setValue('India');
+    this.stateFormCtl.setValue('Manipur');
+    this.districtFormCtl.setValue('Thoubal');
+
+    this.countryFormCtl.disable();
+    this.stateFormCtl.disable();
+
+    this.corrCountryFormCtl.setValue('India');
+    this.corrStateFormCtl.setValue('Manipur');
+    this.corrDistrictFormCtl.setValue('Thoubal');
+
+    this.corrCountryFormCtl.disable();
+    this.corrStateFormCtl.disable();
   }
 
   getStudent() {
@@ -60,7 +75,16 @@ export class StudentCreateEditComponent extends Student implements OnInit {
       rollNo: this.rollNoFormCtl.value,
       dob: datePipe.transform(this.dobFormCtl.value, 'MM/dd/yyyy'),
       joiningDate: datePipe.transform(this.joiningDateFormCtl.value, 'MM/dd/yyyy'),
+
       correspondentAddress: {
+        id: this.corrAddIdFormCtl.value,
+        firstLine: this.corrFirstLineFormCtl.value,
+        secondLine: this.corrSecondLineFormCtl.value,
+        country: this.corrCountryFormCtl.value,
+        state: this.corrStateFormCtl.value,
+        district: this.corrDistrictFormCtl.value
+      },
+      permanentAddress: {
         id: this.addIdFormCtl.value,
         firstLine: this.firstLineFormCtl.value,
         secondLine: this.secondLineFormCtl.value,
@@ -68,25 +92,32 @@ export class StudentCreateEditComponent extends Student implements OnInit {
         state: this.stateFormCtl.value,
         district: this.districtFormCtl.value
       },
+      sameAsPermAddr: this.sameAsPermAddrFormCtl.value,
       fatherInfo: {
         id: this.fInfoIdFormCtl.value,
         name: this.fatherNameFormCtl.value,
         dob: datePipe.transform(this.fatherDobFormCtl.value, 'MM/dd/yyyy'),
-        relationship: null,
+        eduQualification: this.fatherEduQualiFormCtl.value,
+        income: this.fatherAnnualIncomeFormCtl.value,
+        occupation: this.fatherOccupationFormCtl.value,
         contactNo: this.fatherContactNoFormCtl.value
       },
       motherInfo: {
         id: this.mInfoIdFormCtl.value,
         name: this.motherNameFormCtl.value,
         dob: datePipe.transform(this.motherDobFormCtl.value, 'MM/dd/yyyy'),
-        relationship: null,
+        eduQualification: this.motherEduQualiFormCtl.value,
+        income: this.motherAnnualIncomeFormCtl.value,
+        occupation: this.motherOccupationFormCtl.value,
         contactNo: this.motherContactNoFormCtl.value
       },
       guardianInfo: {
         id: this.gInfoIdFormCtl.value,
         name: this.guardianNameFormCtl.value,
         dob: datePipe.transform(this.guardianDobFormCtl.value, 'MM/dd/yyyy'),
-        relationship: null,
+        eduQualification: this.guardianEduQualiFormCtl.value,
+        income: this.guardianAnnualIncomeFormCtl.value,
+        occupation: this.gaurdianOccupationFormCtl.value,
         contactNo: this.guardianContactNoFormCtl.value
       }
     };
@@ -132,6 +163,8 @@ export class StudentCreateEditComponent extends Student implements OnInit {
     this.dobFormCtl.setValue(moment(this.student.dob as string));
     this.joiningDateFormCtl.setValue(moment(this.student.joiningDate as string));
 
+    this.sameAsPermAddrFormCtl.setValue(this.student.sameAsPermAddr);
+
     const address = this.student.correspondentAddress;
     if (address) {
       this.addIdFormCtl.setValue(address.id);
@@ -148,6 +181,9 @@ export class StudentCreateEditComponent extends Student implements OnInit {
       this.fatherNameFormCtl.setValue(fatherInfo.name);
       this.fatherDobFormCtl.setValue(moment(fatherInfo.dob as string));
       this.fatherContactNoFormCtl.setValue(fatherInfo.contactNo);
+      this.fatherAnnualIncomeFormCtl.setValue(fatherInfo.income);
+      this.fatherEduQualiFormCtl.setValue(fatherInfo.eduQualification);
+      this.fatherOccupationFormCtl.setValue(fatherInfo.occupation);
     }
 
     const motherInfo = this.student.motherInfo;
@@ -156,6 +192,9 @@ export class StudentCreateEditComponent extends Student implements OnInit {
       this.motherNameFormCtl.setValue(motherInfo.name);
       this.motherDobFormCtl.setValue(moment(motherInfo.dob as string));
       this.motherContactNoFormCtl.setValue(motherInfo.contactNo);
+      this.motherAnnualIncomeFormCtl.setValue(motherInfo.income);
+      this.motherEduQualiFormCtl.setValue(motherInfo.eduQualification);
+      this.motherOccupationFormCtl.setValue(motherInfo.occupation);
     }
 
     const guardianInfo = this.student.guardianInfo;
@@ -164,6 +203,9 @@ export class StudentCreateEditComponent extends Student implements OnInit {
       this.guardianNameFormCtl.setValue(guardianInfo.name);
       this.guardianDobFormCtl.setValue(moment(guardianInfo.dob as string));
       this.guardianContactNoFormCtl.setValue(guardianInfo.contactNo);
+      this.guardianAnnualIncomeFormCtl.setValue(guardianInfo.income);
+      this.guardianEduQualiFormCtl.setValue(guardianInfo.eduQualification);
+      this.gaurdianOccupationFormCtl.setValue(guardianInfo.occupation);
     }
   }
 

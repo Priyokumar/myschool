@@ -6,6 +6,8 @@ import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
 import { IPaySalary, IEmployee, IEmployeeSalary } from '../../../model/employeeModels';
 import { ApiEndpoint } from 'src/app/modules/shared/model/shared.model';
+import { EmployeesDialogComponent } from '../../employee/employees-dialog/employees-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-salary-payment-create-edit',
@@ -29,8 +31,14 @@ export class SalaryPaymentCreateEditComponent implements OnInit {
   dueAmountFormCtl = new FormControl('', null);
   salaryAmountFormCtl = new FormControl('', Validators.required);
   employeeFormCtl = new FormControl('', Validators.required);
+  employee: IEmployee;
 
-  constructor(private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private dialog: MatDialog
+  ) {
 
     this.paySalaryForm = new FormGroup({
 
@@ -43,7 +51,7 @@ export class SalaryPaymentCreateEditComponent implements OnInit {
     });
 
     this.activatedRoute.params.subscribe(params => {
-      this.paySalaryId = params.uid;
+      this.paySalaryId = params.paySalId;
       if (this.paySalaryId) {
         this.getPaySalary();
       }
@@ -58,6 +66,7 @@ export class SalaryPaymentCreateEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.payDateFormCtl.setValue(new Date())
     this.getEmployees();
   }
 
@@ -134,7 +143,7 @@ export class SalaryPaymentCreateEditComponent implements OnInit {
   public setForm() {
 
     this.idFormCtl.setValue(this.paySalary.id);
-    this.payDateFormCtl.setValue(moment( this.paySalary.payDate as string));
+    this.payDateFormCtl.setValue(moment(this.paySalary.payDate as string));
     this.paidAmountFormCtl.setValue(this.paySalary.paidAmount);
     this.dueAmountFormCtl.setValue(this.paySalary.dueAmount);
 
@@ -170,6 +179,7 @@ export class SalaryPaymentCreateEditComponent implements OnInit {
       this.selectedEmployeeSalary = data.data;
       if (this.selectedEmployeeSalary) {
         this.salaryAmountFormCtl.setValue(this.selectedEmployeeSalary.salaryAmount);
+        this.paidAmountFormCtl.setValue(this.selectedEmployeeSalary.salaryAmount);
       }
     }, err => {
       if (err.error && err.error.apiMessage) {
@@ -178,6 +188,15 @@ export class SalaryPaymentCreateEditComponent implements OnInit {
         this.errorMessage = err.message;
       }
       console.error(err);
+    });
+  }
+
+  openEmployeeDialog() {
+    this.dialog.open(EmployeesDialogComponent, { width: '50%', disableClose: true }).afterClosed().subscribe(data => {
+      this.employee = data;
+      const fullName = `${this.employee.firstName} ${this.employee.middleName} ${this.employee.lastName}`;
+      this.employeeFormCtl.setValue(fullName);
+      this.getEmployeeSalaryByEmpId(this.employee.id);
     });
   }
 

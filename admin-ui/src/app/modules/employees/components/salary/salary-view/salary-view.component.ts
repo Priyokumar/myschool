@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { IEmployeeSalary } from '../../../model/employeeModels';
 import { ApiEndpoint } from 'src/app/modules/shared/model/shared.model';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-salary-view',
@@ -21,7 +22,12 @@ export class SalaryViewComponent implements OnInit {
 
   salaryAmountFormCtrl = new FormControl('', null);
 
-  constructor(private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private dialog: MatDialog
+  ) {
     this.activatedRoute.params.subscribe(params => {
       this.empSalaryId = params.salId;
     });

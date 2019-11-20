@@ -2,18 +2,23 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { IStudent, RegistrationStatus, Standards, Genders } from '../../../models/student.model';
 import { IKeyValue } from 'src/app/modules/shared/model/IKeyVal';
+import { bloodGroups, religions, communities, districts } from 'src/app/modules/shared/model/shared.model';
 
 export class Student {
 
     studId: number;
     errorMessage: string;
-    hasSubmitted  = false;
+    hasSubmitted = false;
     studentForm: FormGroup;
     student: IStudent;
     registrationStatuses: IKeyValue[] = RegistrationStatus;
     standards: IKeyValue[] = Standards;
     genders: IKeyValue[] = Genders;
     yesNo: IKeyValue[] = [{ key: 'Yes', value: true }, { key: 'No', value: false }];
+    bloodGroups = bloodGroups;
+    religions = religions;
+    communities = communities;
+    districts = districts;
 
     // Registration details
     idFormCtl = new FormControl('', null);
@@ -78,10 +83,10 @@ export class Student {
     guardianNameFormCtl = new FormControl('', null);
     guardianDobFormCtl = new FormControl('', null);
     guardianContactNoFormCtl = new FormControl('', null);
-    guardianEduQualiFormCtl = new FormControl('', Validators.required);
-    gaurdianOccupationFormCtl = new FormControl('', Validators.required);
-    guardianAnnualIncomeFormCtl = new FormControl('', Validators.required);
-    gaurdianAadhaarNoFormCtl = new FormControl('', Validators.required);
+    guardianEduQualiFormCtl = new FormControl('', null);
+    gaurdianOccupationFormCtl = new FormControl('', null);
+    guardianAnnualIncomeFormCtl = new FormControl('', null);
+    gaurdianAadhaarNoFormCtl = new FormControl('', null);
 
     constructor() {
         this.studentForm = new FormGroup({

@@ -8,7 +8,7 @@
         <mat-icon>clear</mat-icon>&nbsp;Cancel
       </button>
       <button class="btn btn-save" (click)="save()" [disabled]='!admFeeStructureYearlyForm.valid'>
-        <mat-icon>save_alt</mat-icon>&nbsp;Add Admission Fee Structure
+        <mat-icon>save_alt</mat-icon>&nbsp;{{admFeeStructureYearlId ? 'Update':'Save'}}
       </button>
     </div>
   </div>

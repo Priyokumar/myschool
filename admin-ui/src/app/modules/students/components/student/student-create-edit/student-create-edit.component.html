@@ -17,7 +17,7 @@
       <span>{{errorMessage}}</span>
     </div>
   </div>
- 
+
   <div [ngClass]="['pt-1','pr-5','pl-5']">
     <mat-tab-group>
       <mat-tab>
@@ -32,7 +32,7 @@
             <p style="font-weight: bold; font-size: 14px;">Student Info</p>
           </div>
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>First name</mat-label>
               <input matInput placeholder="Placeholder" [formControl]="firstNameFormCtl">
               <mat-error *ngIf="firstNameFormCtl.hasError('required')">
@@ -41,7 +41,7 @@
             </mat-form-field>
           </div>
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Middle name</mat-label>
               <input matInput placeholder="Placeholder" [formControl]="middleNameFormCtl">
               <mat-error *ngIf="middleNameFormCtl.hasError('required')">
@@ -50,7 +50,7 @@
             </mat-form-field>
           </div>
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Last name</mat-label>
               <input matInput placeholder="Placeholder" [formControl]="lastNameFormCtl">
               <mat-error *ngIf="lastNameFormCtl.hasError('required')">
@@ -59,7 +59,7 @@
             </mat-form-field>
           </div>
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Gender</mat-label>
               <mat-select placeholder="Gender" [formControl]="genderFormCtl">
                 <mat-option *ngFor="let option of genders" [value]="option.value">
@@ -72,34 +72,42 @@
             </mat-form-field>
           </div>
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Blood group</mat-label>
-              <input matInput placeholder="Blood group" [formControl]="bloodGroupFormCtl">
+              <mat-select placeholder="Blood group" [formControl]="bloodGroupFormCtl">
+                <mat-option *ngFor="let option of bloodGroups" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-select>
               <mat-error *ngIf="bloodGroupFormCtl.hasError('required')">
                 Blood group is <strong>required</strong>
               </mat-error>
             </mat-form-field>
           </div>
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Religion</mat-label>
-              <input matInput placeholder="Religion" [formControl]="religionFormCtl">
+              <mat-select placeholder="Religion" [formControl]="religionFormCtl">
+                <mat-option *ngFor="let option of religions" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-select>
               <mat-error *ngIf="religionFormCtl.hasError('required')">
                 Religion is <strong>required</strong>
               </mat-error>
             </mat-form-field>
           </div>
-          <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+          <!-- <div class="col-md-4">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Caste</mat-label>
               <input matInput placeholder="Caste" [formControl]="casteFormCtl">
               <mat-error *ngIf="casteFormCtl.hasError('required')">
                 Caste is <strong>required</strong>
               </mat-error>
             </mat-form-field>
-          </div>
+          </div> -->
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Nationality</mat-label>
               <input matInput placeholder="Nationality" [formControl]="nationalityFormCtl">
               <mat-error *ngIf="nationalityFormCtl.hasError('required')">
@@ -108,9 +116,13 @@
             </mat-form-field>
           </div>
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Community</mat-label>
-              <input matInput placeholder="Community" [formControl]="communityFormCtl">
+              <mat-select placeholder="Community" [formControl]="communityFormCtl">
+                <mat-option *ngFor="let option of communities" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-select>
               <mat-error *ngIf="communityFormCtl.hasError('required')">
                 Community is <strong>required</strong>
               </mat-error>
@@ -118,7 +130,7 @@
           </div>
 
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Standard</mat-label>
               <mat-select placeholder="Status" [formControl]="standardFormCtl">
                 <mat-option *ngFor="let option of standards" [value]="option.value">
@@ -132,9 +144,9 @@
           </div>
 
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Date of birth</mat-label>
-              <input matInput [matDatepicker]="dobt" placeholder="mm/dd/yyyy" [formControl]="dobFormCtl">
+              <input matInput [matDatepicker]="dobt" placeholder="mm/dd/yyyy" [formControl]="dobFormCtl" readonly>
               <mat-datepicker-toggle matSuffix [for]="dobt"></mat-datepicker-toggle>
               <mat-datepicker #dobt></mat-datepicker>
               <mat-error *ngIf="dobFormCtl.hasError('required')">
@@ -144,9 +156,10 @@
           </div>
 
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Joining Date</mat-label>
-              <input matInput [matDatepicker]="joiningDatet" placeholder="mm/dd/yyyy" [formControl]="joiningDateFormCtl">
+              <input matInput [matDatepicker]="joiningDatet" placeholder="mm/dd/yyyy" [formControl]="joiningDateFormCtl"
+                readonly>
               <mat-datepicker-toggle matSuffix [for]="joiningDatet"></mat-datepicker-toggle>
               <mat-datepicker #joiningDatet></mat-datepicker>
               <mat-error *ngIf="joiningDateFormCtl.hasError('required')">
@@ -154,73 +167,22 @@
               </mat-error>
             </mat-form-field>
           </div>
+        </div>
+      </mat-tab>
 
-          <div class="col-md-12">
-            <p style="font-weight: bold; font-size: 14px;">Permanent Address</p>
-          </div>
-          <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
-              <mat-label>First line</mat-label>
-              <input matInput placeholder="First line" [formControl]="firstLineFormCtl">
-              <mat-error *ngIf="firstLineFormCtl.hasError('required')">
-                First line is <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-          </div>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="example-tab-icon">contact_mail</mat-icon>&nbsp;
+          <span style="font-size: 13px;">Address details</span>
+        </ng-template>
 
-          <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
-              <mat-label>Second line</mat-label>
-              <input matInput placeholder="Second line" [formControl]="secondLineFormCtl">
-              <mat-error *ngIf="secondLineFormCtl.hasError('required')">
-                Second line is <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-          </div>
-
-          <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
-              <mat-label>Country</mat-label>
-              <input matInput placeholder="Country" [formControl]="countryFormCtl">
-              <mat-error *ngIf="countryFormCtl.hasError('required')">
-                Country is <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-          </div>
-
-          <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
-              <mat-label>State</mat-label>
-              <input matInput placeholder="State" [formControl]="stateFormCtl">
-              <mat-error *ngIf="stateFormCtl.hasError('required')">
-                State is <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-          </div>
-
-          <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
-              <mat-label>District</mat-label>
-              <input matInput placeholder="District" [formControl]="districtFormCtl">
-              <mat-error *ngIf="districtFormCtl.hasError('required')">
-                District is <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-          </div>
-
+        <div class="row pt-3">
           <div class="col-md-12">
             <p style="font-weight: bold; font-size: 14px;">Correspondent Address</p>
           </div>
-          <div class="col-md-12 pb-2">
-            <div><label>Same as permanent address</label></div>
-            <mat-radio-group [formControl]="sameAsPermAddrFormCtl">
-              <mat-radio-button *ngFor="let option of yesNo" [value]="option.value">
-                {{option.key}} &nbsp;
-              </mat-radio-button>
-            </mat-radio-group>
-          </div>
+
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>First line</mat-label>
               <input matInput placeholder="First line" [formControl]="corrFirstLineFormCtl">
               <mat-error *ngIf="corrFirstLineFormCtl.hasError('required')">
@@ -230,7 +192,7 @@
           </div>
 
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Second line</mat-label>
               <input matInput placeholder="Second line" [formControl]="corrSecondLineFormCtl">
               <mat-error *ngIf="corrSecondLineFormCtl.hasError('required')">
@@ -240,7 +202,7 @@
           </div>
 
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Country</mat-label>
               <input matInput placeholder="Country" [formControl]="corrCountryFormCtl">
               <mat-error *ngIf="corrCountryFormCtl.hasError('required')">
@@ -250,7 +212,7 @@
           </div>
 
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>State</mat-label>
               <input matInput placeholder="State" [formControl]="corrStateFormCtl">
               <mat-error *ngIf="corrStateFormCtl.hasError('required')">
@@ -260,13 +222,85 @@
           </div>
 
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>District</mat-label>
-              <input matInput placeholder="District" [formControl]="corrDistrictFormCtl">
+              <mat-select placeholder="District" [formControl]="corrDistrictFormCtl">
+                <mat-option *ngFor="let option of districts" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-select>
               <mat-error *ngIf="corrDistrictFormCtl.hasError('required')">
                 District is <strong>required</strong>
               </mat-error>
             </mat-form-field>
+          </div>
+
+          <div class="col-md-12 pb-2">
+            <div><label>Same as permanent address</label></div>
+            <mat-radio-group [formControl]="sameAsPermAddrFormCtl">
+              <mat-radio-button *ngFor="let option of yesNo" [value]="option.value">
+                {{option.key}} &nbsp;
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <div class="row" *ngIf="sameAsPermAddrFormCtl.value === false">
+            <div class="col-md-12">
+              <p style="font-weight: bold; font-size: 14px;">Permanent Address</p>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>First line</mat-label>
+                <input matInput placeholder="First line" [formControl]="firstLineFormCtl">
+                <mat-error *ngIf="firstLineFormCtl.hasError('required')">
+                  First line is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Second line</mat-label>
+                <input matInput placeholder="Second line" [formControl]="secondLineFormCtl">
+                <mat-error *ngIf="secondLineFormCtl.hasError('required')">
+                  Second line is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Country</mat-label>
+                <input matInput placeholder="Country" [formControl]="countryFormCtl">
+                <mat-error *ngIf="countryFormCtl.hasError('required')">
+                  Country is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>State</mat-label>
+                <input matInput placeholder="State" [formControl]="stateFormCtl">
+                <mat-error *ngIf="stateFormCtl.hasError('required')">
+                  State is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>District</mat-label>
+                <mat-select placeholder="District" [formControl]="districtFormCtl">
+                  <mat-option *ngFor="let option of districts" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="districtFormCtl.hasError('required')">
+                  District is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
           </div>
         </div>
       </mat-tab>
@@ -283,7 +317,7 @@
             <p style="font-weight: bold; font-size: 14px;">Father's details</p>
           </div>
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Father's Name</mat-label>
               <input matInput placeholder="Placeholder" [formControl]="fatherNameFormCtl">
               <mat-error *ngIf="fatherNameFormCtl.hasError('required')">
@@ -293,9 +327,9 @@
           </div>
 
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Date of birth</mat-label>
-              <input matInput [matDatepicker]="fdobt" placeholder="mm/dd/yyyy" [formControl]="fatherDobFormCtl">
+              <input matInput [matDatepicker]="fdobt" placeholder="mm/dd/yyyy" [formControl]="fatherDobFormCtl" readonly>
               <mat-datepicker-toggle matSuffix [for]="fdobt"></mat-datepicker-toggle>
               <mat-datepicker #fdobt></mat-datepicker>
               <mat-error *ngIf="fatherDobFormCtl.hasError('required')">
@@ -305,7 +339,7 @@
           </div>
 
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Education Qualification</mat-label>
               <input matInput placeholder="Education Qualification" [formControl]="fatherEduQualiFormCtl">
               <mat-error *ngIf="fatherEduQualiFormCtl.hasError('required')">
@@ -314,7 +348,7 @@
             </mat-form-field>
           </div>
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Occupation</mat-label>
               <input matInput placeholder="Occupation" [formControl]="fatherOccupationFormCtl">
               <mat-error *ngIf="fatherOccupationFormCtl.hasError('required')">
@@ -323,16 +357,16 @@
             </mat-form-field>
           </div>
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Annual Income</mat-label>
               <input matInput placeholder="Annual Income" [formControl]="fatherAnnualIncomeFormCtl">
               <mat-error *ngIf="fatherAnnualIncomeFormCtl.hasError('required')">
                 Annual Income is <strong>required</strong>
               </mat-error>
-            </mat-form-field> 
+            </mat-form-field>
           </div>
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Aadhaar No</mat-label>
               <input matInput placeholder="Aadhaar No" [formControl]="fatherAadhaarNoFormCtl">
               <mat-error *ngIf="fatherAadhaarNoFormCtl.hasError('required')">
@@ -342,7 +376,7 @@
           </div>
 
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Contact No.</mat-label>
               <input matInput placeholder="Placeholder" [formControl]="fatherContactNoFormCtl">
               <mat-error *ngIf="fatherContactNoFormCtl.hasError('required')">
@@ -357,7 +391,7 @@
             <p style="font-weight: bold; font-size: 14px;">Mother's details</p>
           </div>
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Mother's Name</mat-label>
               <input matInput placeholder="Placeholder" [formControl]="motherNameFormCtl">
               <mat-error *ngIf="motherNameFormCtl.hasError('required')">
@@ -367,9 +401,9 @@
           </div>
 
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Date of birth</mat-label>
-              <input matInput [matDatepicker]="mdobt" placeholder="mm/dd/yyyy" [formControl]="motherDobFormCtl">
+              <input matInput [matDatepicker]="mdobt" placeholder="mm/dd/yyyy" [formControl]="motherDobFormCtl" readonly>
               <mat-datepicker-toggle matSuffix [for]="mdobt"></mat-datepicker-toggle>
               <mat-datepicker #mdobt></mat-datepicker>
               <mat-error *ngIf="motherDobFormCtl.hasError('required')">
@@ -379,7 +413,7 @@
           </div>
 
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Education Qualification</mat-label>
               <input matInput placeholder="Education Qualification" [formControl]="motherEduQualiFormCtl">
               <mat-error *ngIf="motherEduQualiFormCtl.hasError('required')">
@@ -388,16 +422,16 @@
             </mat-form-field>
           </div>
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Occupation</mat-label>
               <input matInput placeholder="Occupation" [formControl]="motherOccupationFormCtl">
               <mat-error *ngIf="motherOccupationFormCtl.hasError('required')">
                 Occupation is <strong>required</strong>
               </mat-error>
             </mat-form-field>
-          </div> 
+          </div>
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Annual Income</mat-label>
               <input matInput placeholder="Annual Income" [formControl]="motherAnnualIncomeFormCtl">
               <mat-error *ngIf="motherAnnualIncomeFormCtl.hasError('required')">
@@ -406,7 +440,7 @@
             </mat-form-field>
           </div>
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Aadhaar No</mat-label>
               <input matInput placeholder="Aadhaar No" [formControl]="motherAadhaarNoFormCtl">
               <mat-error *ngIf="motherAadhaarNoFormCtl.hasError('required')">
@@ -416,7 +450,7 @@
           </div>
 
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Contact No.</mat-label>
               <input matInput placeholder="Placeholder" [formControl]="motherContactNoFormCtl">
               <mat-error *ngIf="motherContactNoFormCtl.hasError('required')">
@@ -430,7 +464,7 @@
             <p style="font-weight: bold; font-size: 14px;">Guardian's details</p>
           </div>
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Guardian's Name</mat-label>
               <input matInput placeholder="Placeholder" [formControl]="guardianNameFormCtl">
               <mat-error *ngIf="guardianNameFormCtl.hasError('required')">
@@ -440,9 +474,9 @@
           </div>
 
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Date of birth</mat-label>
-              <input matInput [matDatepicker]="gdobt" placeholder="mm/dd/yyyy" [formControl]="guardianDobFormCtl">
+              <input matInput [matDatepicker]="gdobt" placeholder="mm/dd/yyyy" [formControl]="guardianDobFormCtl" readonly>
               <mat-datepicker-toggle matSuffix [for]="gdobt"></mat-datepicker-toggle>
               <mat-datepicker #gdobt></mat-datepicker>
               <mat-error *ngIf="guardianDobFormCtl.hasError('required')">
@@ -452,7 +486,7 @@
           </div>
 
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Education Qualification</mat-label>
               <input matInput placeholder="Education Qualification" [formControl]="guardianEduQualiFormCtl">
               <mat-error *ngIf="guardianEduQualiFormCtl.hasError('required')">
@@ -461,7 +495,7 @@
             </mat-form-field>
           </div>
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Occupation</mat-label>
               <input matInput placeholder="Occupation" [formControl]="gaurdianOccupationFormCtl">
               <mat-error *ngIf="gaurdianOccupationFormCtl.hasError('required')">
@@ -470,16 +504,16 @@
             </mat-form-field>
           </div>
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Annual Income</mat-label>
               <input matInput placeholder="Annual Income" [formControl]="guardianAnnualIncomeFormCtl">
               <mat-error *ngIf="guardianAnnualIncomeFormCtl.hasError('required')">
                 Annual Income is <strong>required</strong>
               </mat-error>
-            </mat-form-field> 
+            </mat-form-field>
           </div>
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Aadhaar No</mat-label>
               <input matInput placeholder="Aadhaar No" [formControl]="gaurdianAadhaarNoFormCtl">
               <mat-error *ngIf="gaurdianAadhaarNoFormCtl.hasError('required')">
@@ -489,7 +523,7 @@
           </div>
 
           <div class="col-md-4">
-            <mat-form-field appearance="fill" class="w-100">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Contact No.</mat-label>
               <input matInput placeholder="Placeholder" [formControl]="guardianContactNoFormCtl">
               <mat-error *ngIf="guardianContactNoFormCtl.hasError('required')">

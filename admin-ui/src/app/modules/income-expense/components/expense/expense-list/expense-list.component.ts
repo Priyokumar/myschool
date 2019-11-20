@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { IExpense } from '../../../models/income-expense.model';
-import { ApiEndpoint } from 'src/app/modules/shared/model/shared.model';
+import { ApiEndpoint, IConfirmation } from 'src/app/modules/shared/model/shared.model';
+import { ConfirmationDialogComponent } from 'src/app/modules/shared/components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-expense-list',
@@ -16,7 +17,12 @@ export class ExpenseListComponent implements OnInit {
   public expenseColumns: string[] = ['id', 'refNo', 'amount', 'expenseType', 'expenseDetails', 'comments', 'expenseDate', 'action'];
   public expenseDataSource: MatTableDataSource<IExpense>;
   public expenses: IExpense[] = [];
-  constructor(private http: HttpClient, private router: Router) { }
+
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private dialog: MatDialog,
+  ) { }
 
   ngOnInit() {
     this.getExpenses();
@@ -61,17 +67,29 @@ export class ExpenseListComponent implements OnInit {
 
   public onDeleteRow(expenseId: number) {
 
-    this.http.delete(ApiEndpoint.EXPENSES + '/' + expenseId).subscribe(data => {
-      this.expenseDataSource = new MatTableDataSource([]);
-      this.getExpenses();
-    }, err => {
-      console.error(err);
-      if (err.error && err.error.apiMessage) {
-        this.errorMessage = err.error.apiMessage.detail;
-      } else {
-        this.errorMessage = err.message;
-      }
-    });
+    const confirmationData: IConfirmation = {
+      title: 'Delete Expense',
+      subtitle: 'Are you really sure to delete this expense?'
+    };
+
+    this.dialog.open(ConfirmationDialogComponent, { width: '26%', data: confirmationData, disableClose: true })
+      .afterClosed().subscribe(okData => {
+        if (okData) {
+
+          this.http.delete(ApiEndpoint.EXPENSES + '/' + expenseId).subscribe(data => {
+            this.expenseDataSource = new MatTableDataSource([]);
+            this.getExpenses();
+          }, err => {
+            console.error(err);
+            if (err.error && err.error.apiMessage) {
+              this.errorMessage = err.error.apiMessage.detail;
+            } else {
+              this.errorMessage = err.message;
+            }
+          });
+
+        }
+      });
   }
 
 

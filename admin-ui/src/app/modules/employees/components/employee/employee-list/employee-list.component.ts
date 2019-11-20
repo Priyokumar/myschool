@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { MatTableDataSource } from '@angular/material';
-import { ApiEndpoint } from 'src/app/modules/shared/model/shared.model';
+import { MatTableDataSource, MatDialog } from '@angular/material';
+import { ApiEndpoint, IConfirmation } from 'src/app/modules/shared/model/shared.model';
 import { IEmployee } from '../../../model/employeeModels';
+import { ConfirmationDialogComponent } from 'src/app/modules/shared/components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-employee-list',
@@ -18,7 +19,11 @@ export class EmployeeListComponent implements OnInit {
   employees: IEmployee[] = [];
   basicEmployeeDetails: IBasicEmployeeDetails[] = [];
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit() {
     this.getEmployees();
@@ -62,18 +67,29 @@ export class EmployeeListComponent implements OnInit {
 
   public onDeleteEmployee(empId: number) {
 
-    this.http.delete(ApiEndpoint.EMPLOYEES + '/' + empId).subscribe(data => {
-      this.employees = [];
-      this.employeesDataSource = new MatTableDataSource([]);
-      this.getEmployees();
-    }, err => {
-      console.error(err);
-      if (err.error && err.error.apiMessage) {
-        this.errorMessage = err.error.apiMessage.detail;
-      } else {
-        this.errorMessage = err.message;
-      }
-    });
+    const confirmationData: IConfirmation = {
+      title: 'Delete Employee',
+      subtitle: 'Are you really sure to delete this employee?'
+    };
+
+    this.dialog.open(ConfirmationDialogComponent, { width: '26%', data: confirmationData, disableClose: true })
+      .afterClosed().subscribe(okData => {
+        if (okData) {
+
+          this.http.delete(ApiEndpoint.EMPLOYEES + '/' + empId).subscribe(data => {
+            this.employees = [];
+            this.employeesDataSource = new MatTableDataSource([]);
+            this.getEmployees();
+          }, err => {
+            console.error(err);
+            if (err.error && err.error.apiMessage) {
+              this.errorMessage = err.error.apiMessage.detail;
+            } else {
+              this.errorMessage = err.message;
+            }
+          });
+        }
+      });
   }
 
   setBasicEmployeeDetails() {

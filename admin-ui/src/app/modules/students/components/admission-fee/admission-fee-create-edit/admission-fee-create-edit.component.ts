@@ -126,7 +126,9 @@ export class AdmissionFeeCreateEditComponent extends Admission implements OnInit
         registrationNo: null,
         registrationStatus: null,
         rollNo: null,
-        standard: null
+        standard: null,
+        permanentAddress: null,
+        sameAsPermAddr: null
       },
       fees: null
     };

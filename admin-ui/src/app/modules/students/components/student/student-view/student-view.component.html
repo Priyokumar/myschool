@@ -69,9 +69,17 @@
           <div class="col-md-4">
             <p>Joining Date : {{student.joiningDate}}</p>
           </div>
-          <!-- ============== Personal Info ===================== -->
+        </div>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="example-tab-icon">contact_phone</mat-icon>&nbsp;
+          <span style="font-size: 13px;">Address details</span>
+        </ng-template>
+        <div class="row pt-3">
           <div class="col-md-12">
-            <p style="font-weight: bold; font-size: 14px;">Address</p>
+            <p style="font-weight: bold; font-size: 14px;">Correspondance Address</p>
           </div>
           <div class="col-md-4">
             <p>First line : {{student.correspondentAddress?.firstLine}}</p>
@@ -85,12 +93,28 @@
           <div class="col-md-4">
             <p>District : {{student.correspondentAddress?.district}}</p>
           </div>
+
+          <div class="col-md-12">
+            <p style="font-weight: bold; font-size: 14px;">Permanent Address</p>
+          </div>
+          <div class="col-md-4">
+            <p>First line : {{student.permanentAddress?.firstLine}}</p>
+          </div>
+          <div class="col-md-4">
+            <p>Second line : {{student.permanentAddress?.secondLine}}</p>
+          </div>
+          <div class="col-md-4">
+            <p>Country : {{student.permanentAddress?.country}}</p>
+          </div>
+          <div class="col-md-4">
+            <p>District : {{student.permanentAddress?.district}}</p>
+          </div>
         </div>
       </mat-tab>
 
       <mat-tab>
         <ng-template mat-tab-label>
-          <mat-icon>contact_phone</mat-icon>
+          <mat-icon>wc</mat-icon>
           <span style="font-size: 13px;">Parent's and Guardian's Info</span>
         </ng-template>
 
@@ -106,8 +130,24 @@
             <p>Date of birth : {{student.fatherInfo?.dob}}</p>
           </div>
           <div class="col-md-4">
+            <p>Education Qualification : {{student.fatherInfo?.eduQualification}}</p>
+          </div>
+          <div class="col-md-4">
+            <p>Occupation : {{student.fatherInfo?.eduQualification}}</p>
+          </div>
+
+          <div class="col-md-4">
             <p>Contact No. : {{student.fatherInfo?.contactNo}}</p>
           </div>
+
+          <div class="col-md-4">
+            <p>Contact No. : {{student.fatherInfo?.contactNo}}</p>
+          </div>
+
+          <div class="col-md-4">
+            <p>Contact No. : {{student.fatherInfo?.contactNo}}</p>
+          </div>
+
 
           <div class="col-md-12">
             <p style="font-weight: bold; font-size: 14px;">Mother's details</p>

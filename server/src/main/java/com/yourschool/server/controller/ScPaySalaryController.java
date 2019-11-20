@@ -45,6 +45,9 @@ public class ScPaySalaryController {
 
 	@DeleteMapping(value = "/{id}")
 	public ActionResponse deletePaySalary(@PathVariable("id") Long id) {
+		System.out.println("\n\n\n\n\n");
+		System.out.println("delete");
+		System.out.println("\n\n\n\n\n");
 		return paySalaryService.deletePaySalary(id);
 	}
 }
