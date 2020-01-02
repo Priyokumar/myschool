@@ -359,13 +359,13 @@
           <div class="col-md-4">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Annual Income</mat-label>
-              <input matInput placeholder="Annual Income" [formControl]="fatherAnnualIncomeFormCtl">
+              <input matInput type="number" placeholder="Annual Income" [formControl]="fatherAnnualIncomeFormCtl">
               <mat-error *ngIf="fatherAnnualIncomeFormCtl.hasError('required')">
                 Annual Income is <strong>required</strong>
               </mat-error>
             </mat-form-field>
           </div>
-          <div class="col-md-4">
+          <!-- <div class="col-md-4">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Aadhaar No</mat-label>
               <input matInput placeholder="Aadhaar No" [formControl]="fatherAadhaarNoFormCtl">
@@ -373,7 +373,7 @@
                 Aadhaar No is <strong>required</strong>
               </mat-error>
             </mat-form-field>
-          </div>
+          </div> -->
 
           <div class="col-md-4">
             <mat-form-field appearance="outline" class="w-100">
@@ -433,13 +433,13 @@
           <div class="col-md-4">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Annual Income</mat-label>
-              <input matInput placeholder="Annual Income" [formControl]="motherAnnualIncomeFormCtl">
+              <input matInput type="number" placeholder="Annual Income" [formControl]="motherAnnualIncomeFormCtl">
               <mat-error *ngIf="motherAnnualIncomeFormCtl.hasError('required')">
                 Annual Income is <strong>required</strong>
               </mat-error>
             </mat-form-field>
           </div>
-          <div class="col-md-4">
+         <!--  <div class="col-md-4">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Aadhaar No</mat-label>
               <input matInput placeholder="Aadhaar No" [formControl]="motherAadhaarNoFormCtl">
@@ -447,7 +447,7 @@
                 Aadhaar No is <strong>required</strong>
               </mat-error>
             </mat-form-field>
-          </div>
+          </div> -->
 
           <div class="col-md-4">
             <mat-form-field appearance="outline" class="w-100">
@@ -506,13 +506,13 @@
           <div class="col-md-4">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Annual Income</mat-label>
-              <input matInput placeholder="Annual Income" [formControl]="guardianAnnualIncomeFormCtl">
+              <input type="number" matInput placeholder="Annual Income" [formControl]="guardianAnnualIncomeFormCtl">
               <mat-error *ngIf="guardianAnnualIncomeFormCtl.hasError('required')">
                 Annual Income is <strong>required</strong>
               </mat-error>
             </mat-form-field>
           </div>
-          <div class="col-md-4">
+         <!--  <div class="col-md-4">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Aadhaar No</mat-label>
               <input matInput placeholder="Aadhaar No" [formControl]="gaurdianAadhaarNoFormCtl">
@@ -520,7 +520,7 @@
                 Aadhaar No is <strong>required</strong>
               </mat-error>
             </mat-form-field>
-          </div>
+          </div> -->
 
           <div class="col-md-4">
             <mat-form-field appearance="outline" class="w-100">

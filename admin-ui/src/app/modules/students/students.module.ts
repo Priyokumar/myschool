@@ -14,6 +14,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { MaterialModule } from '../shared/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomDateModule } from '../shared/custom-date.module';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
   { path: '', component: StudentListComponent },
@@ -48,7 +49,8 @@ const routes: Routes = [
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    CustomDateModule
+    CustomDateModule,
+    SharedModule
   ],
   entryComponents: [SearchStudentDialogComponent]
 })

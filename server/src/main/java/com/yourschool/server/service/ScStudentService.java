@@ -9,12 +9,14 @@ import org.springframework.stereotype.Service;
 
 import com.yourschool.server.dto.ActionResponse;
 import com.yourschool.server.dto.ApiUtil;
+import com.yourschool.server.dto.Document;
 import com.yourschool.server.dto.employee.Address;
 import com.yourschool.server.dto.error.NotFoundException;
 import com.yourschool.server.dto.student.Student;
 import com.yourschool.server.dto.student.StudentGuardian;
 import com.yourschool.server.dto.student.StudentResponse;
 import com.yourschool.server.dto.student.StudentsResponse;
+import com.yourschool.server.entity.ScDocument;
 import com.yourschool.server.entity.employee.ScAddress;
 import com.yourschool.server.entity.student.ScStudent;
 import com.yourschool.server.entity.student.ScStudentGuardian;
@@ -121,6 +123,7 @@ public class ScStudentService {
 		studentDto.setPhysicallyChallenged(student.getPhysicallyChallenged());
 		studentDto.setReligion(student.getReligion());
 		studentDto.setSameAsPermAddr(student.getSameAsPermAddr());
+		studentDto.setProfilePic(setDocDtoDoc(student.getProfilePic()));
 
 		ScAddress permanentAddress = student.getPermanentAddress();
 		if (ScUtil.isAllPresent(permanentAddress)) {
@@ -323,6 +326,17 @@ public class ScStudentService {
 		}
 
 		return student;
+	}
+	
+	private Document setDocDtoDoc(ScDocument scDoc) {
+		if(ScUtil.isAllPresent(scDoc)) {
+			Document doc = new Document();
+			doc.setId(scDoc.getId());
+			String docUrl = "/document/"+doc.getId()+"/view";
+			doc.setDocUrl(docUrl);
+			return doc;
+		}
+		return null;
 	}
 
 }

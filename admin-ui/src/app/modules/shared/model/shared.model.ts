@@ -61,6 +61,7 @@ export class ApiEndpoint {
     public static EMPLOYEE_ATTENDENCES = ApiEndpoint.BASE_URL + '/employee-attendences';
     public static PAY_SALARY = ApiEndpoint.BASE_URL + '/api/pay-salaries';
     public static DOCUMENT = ApiEndpoint.BASE_URL + '/document';
+    public static STANDARD = ApiEndpoint.BASE_URL + '/api/standard';
 
 
 }
@@ -148,3 +149,7 @@ export interface IConfirmation {
     subtitle: string;
 }
 
+export interface Document {
+    id: number;
+    docUrl: string;
+}

@@ -33,14 +33,16 @@
             <p style="font-weight: bold; font-size: 14px;">Student Info</p>
           </div>
           <div class="col-md-4">
-            <button class="btn btn-edit w-100" style="padding-bottom: 27px; margin-top: 10px;" (click)="searchStudent()">
-              <mat-icon>search</mat-icon>&nbsp;Search Students
-            </button>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Search student</mat-label>
+              <mat-icon matSuffix class="search-icon">search</mat-icon>
+              <input matInput placeholder="Search student"  (mousedown)="searchStudent()">
+            </mat-form-field>
           </div>
           <div class="col-md-4">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>First name</mat-label>
-              <input matInput placeholder="Placeholder" [formControl]="firstNameFormCtl">
+              <input matInput placeholder="Placeholder" [formControl]="firstNameFormCtl" (keydown)="searchStudent()">
               <mat-error *ngIf="firstNameFormCtl.hasError('required')">
                 First name is <strong>required</strong>
               </mat-error>

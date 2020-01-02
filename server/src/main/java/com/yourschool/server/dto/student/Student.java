@@ -1,5 +1,6 @@
 package com.yourschool.server.dto.student;
 
+import com.yourschool.server.dto.Document;
 import com.yourschool.server.dto.employee.Address;
 import com.yourschool.server.dto.employee.RecordAudit;
 
@@ -29,6 +30,7 @@ public class Student {
 
 	private String joiningDate;
 	
+	private Document profilePic;
 
 	private String gender;
 
@@ -264,6 +266,14 @@ public class Student {
 
 	public void setSameAsPermAddr(Boolean sameAsPermAddr) {
 		this.sameAsPermAddr = sameAsPermAddr;
+	}
+
+	public Document getProfilePic() {
+		return profilePic;
+	}
+
+	public void setProfilePic(Document profilePic) {
+		this.profilePic = profilePic;
 	}
 
 }

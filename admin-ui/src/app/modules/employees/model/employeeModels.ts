@@ -1,4 +1,5 @@
 import { IUser } from '../../shared/model/security';
+import { Document } from '../../shared/model/shared.model';
 
 export interface IEmployeeAttendence {
     id: number;
@@ -40,11 +41,6 @@ export interface IPersonalInfo {
     xIICertDoc?: Document;
     graduationCertDoc?: Document;
     postGraduationCertDoc?: Document;
-}
-
-export interface Document {
-    id: number;
-    docUrl: string;
 }
 
 export interface IAcademicBackground {

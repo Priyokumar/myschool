@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 import { IStudent } from '../../../models/student.model';
 import { ApiEndpoint, IConfirmation } from 'src/app/modules/shared/model/shared.model';
 import { MatDialog } from '@angular/material';
 import { ConfirmationDialogComponent } from 'src/app/modules/shared/components/confirmation-dialog/confirmation-dialog.component';
+import { FileUploadService } from 'src/app/modules/shared/services/file-upload.service';
 
 @Component({
   selector: 'app-student-view',
@@ -16,12 +17,16 @@ export class StudentViewComponent implements OnInit {
   errorMessage: string;
   studId: string;
   student: IStudent;
+  percentage: number;
+  uploadingFile: boolean;
+  profilePicUrl = '../../../../../../assets/images/avatar.png';
 
   constructor(
     private http: HttpClient,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private fileUploadService: FileUploadService
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.studId = params.id;
@@ -38,7 +43,9 @@ export class StudentViewComponent implements OnInit {
     this.http.get(ApiEndpoint.STUDENTS + '/' + this.studId).subscribe(data => {
       resp = data;
       this.student = resp.data;
-
+      if (this.student.profilePic) {
+        this.profilePicUrl = ApiEndpoint.DOCUMENT + '/' + this.student.profilePic.id + '/view';
+      }
     }, err => {
       console.error(err);
       if (err.error && err.error.apiMessage) {
@@ -76,6 +83,28 @@ export class StudentViewComponent implements OnInit {
 
   edit() {
     this.router.navigate(['/admin/students/' + this.studId + '/edit']);
+  }
+
+  onSelectFile(file: File) {
+
+    this.fileUploadService.uploadDoc(file, this.studId, 'STUDENT', 'PROFILE_PIC', 'PROFILE_PIC').subscribe(event => {
+      console.log(event);
+      if (event.type === HttpEventType.UploadProgress) {
+        this.percentage = Math.round(100 * event.loaded / event.total);
+      } else if (event instanceof HttpResponse) {
+
+        this.uploadingFile = false;
+        let body: string | any = event.body as string;
+        body = JSON.parse(body);
+
+        const docUrl = ApiEndpoint.DOCUMENT + '/' + body.actionMessage + '/view';
+        this.profilePicUrl = docUrl;
+        console.log('File has been uploaded');
+      }
+    }, error => {
+      console.error(error);
+    });
+
   }
 
 }

@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.yourschool.server.entity.ScDocument;
 import com.yourschool.server.entity.employee.ScAddress;
 import com.yourschool.server.entity.employee.ScRecordAudit;
 
@@ -78,6 +79,10 @@ public class ScStudent implements Serializable {
 	
 	@Column(name = "PHYSICALLY_CHALLENGED")
 	private Boolean physicallyChallenged;
+	
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "PROFILE_PIC")
+	private ScDocument profilePic;
 
 	@Embedded
 	private ScRecordAudit recordAudit = new ScRecordAudit();
@@ -310,7 +315,13 @@ public class ScStudent implements Serializable {
 	public void setSameAsPermAddr(Boolean sameAsPermAddr) {
 		this.sameAsPermAddr = sameAsPermAddr;
 	}
-	
-	
+
+	public ScDocument getProfilePic() {
+		return profilePic;
+	}
+
+	public void setProfilePic(ScDocument profilePic) {
+		this.profilePic = profilePic;
+	}
 	
 }

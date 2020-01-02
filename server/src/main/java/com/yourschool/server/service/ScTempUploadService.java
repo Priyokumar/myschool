@@ -25,6 +25,7 @@ import com.yourschool.server.dto.error.NotFoundException;
 import com.yourschool.server.entity.ScDocument;
 import com.yourschool.server.entity.employee.ScEmployee;
 import com.yourschool.server.entity.employee.ScPersonalInfo;
+import com.yourschool.server.entity.student.ScStudent;
 import com.yourschool.server.service.common.CommonService;
 import com.yourschool.server.util.ScUtil;
 import com.yourschool.server.vo.DocumentFor;
@@ -126,6 +127,9 @@ public class ScTempUploadService {
 			if (docFor.equals(DocumentFor.EMPLOYEE))
 				updateEmployeeDocs(id, docFor, type, doc);
 
+			if (docFor.equals(DocumentFor.STUDENT))
+				this.updateStudentDocs(id, docFor, type, doc);
+
 			res.setActionMessage(doc.getId().toString());
 
 		} catch (Exception e) {
@@ -141,7 +145,7 @@ public class ScTempUploadService {
 		ScEmployee employee = commonService.findById(id, ScEmployee.class);
 
 		if (!ScUtil.isAllPresent(docFor, type))
-			throw new NotFoundException("No Employee found");
+			throw new NotFoundException("Could not update document.");
 
 		ScPersonalInfo personalInfo = employee.getPersonalInfo();
 		if (!ScUtil.isAllPresent(personalInfo)) {
@@ -176,6 +180,13 @@ public class ScTempUploadService {
 			personalInfo.setPostGraduationCertDoc(doc);
 
 		commonService.save(employee);
+	}
+
+	private void updateStudentDocs(Long id, String docFor, String type, ScDocument doc) {
+
+		ScStudent student = commonService.findById(id, ScStudent.class);
+		student.setProfilePic(doc);
+		commonService.save(student);
 	}
 
 	public void deleteAll() {

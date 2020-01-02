@@ -1,4 +1,5 @@
 import { IAddress } from '../../employees/model/employeeModels';
+import { Document } from '../../shared/model/shared.model';
 
 export interface IStudent {
 
@@ -13,6 +14,7 @@ export interface IStudent {
     rollNo: string;
     dob: string;
     joiningDate: string;
+    profilePic?: Document;
     correspondentAddress: IAddress;
     sameAsPermAddr: boolean;
     permanentAddress: IAddress;
@@ -36,7 +38,7 @@ export const Standards: IKeyValue[] = [
 
     { key: 'NUSSERY', value: 'Nussery' },
     { key: 'KG', value: 'KG' },
-    { key: 'CLASS_I', value: 'Class I' },
+    { key: 'CLASS_I', value: 'Class I' }, 
     { key: 'CLASS_II', value: 'Class II' },
     { key: 'CLASS_III', value: 'Class III' },
     { key: 'CLASS_IV', value: 'Class IV' },

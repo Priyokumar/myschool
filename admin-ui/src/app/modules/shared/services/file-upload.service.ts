@@ -20,7 +20,7 @@ export class FileUploadService {
     return this.subject.asObservable();
   }
 
-  uploadDoc(file: File, id: number, docFor: string, type: string, name: string): Observable<HttpEvent<{}>> {
+  uploadDoc(file: File, id: number | string, docFor: string, type: string, name: string): Observable<HttpEvent<{}>> {
 
     const formdata: FormData = new FormData();
 

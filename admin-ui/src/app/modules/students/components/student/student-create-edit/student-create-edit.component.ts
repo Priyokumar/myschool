@@ -165,14 +165,24 @@ export class StudentCreateEditComponent extends Student implements OnInit {
 
     this.sameAsPermAddrFormCtl.setValue(this.student.sameAsPermAddr);
 
-    const address = this.student.correspondentAddress;
-    if (address) {
-      this.addIdFormCtl.setValue(address.id);
-      this.firstLineFormCtl.setValue(address.firstLine);
-      this.secondLineFormCtl.setValue(address.secondLine);
-      this.countryFormCtl.setValue(address.id);
-      this.stateFormCtl.setValue(address.country);
-      this.districtFormCtl.setValue(address.district);
+    const permanentAddress = this.student.permanentAddress;
+    if (permanentAddress) {
+      this.addIdFormCtl.setValue(permanentAddress.id);
+      this.firstLineFormCtl.setValue(permanentAddress.firstLine);
+      this.secondLineFormCtl.setValue(permanentAddress.secondLine);
+      this.countryFormCtl.setValue(permanentAddress.country);
+      this.stateFormCtl.setValue(permanentAddress.state);
+      this.districtFormCtl.setValue(permanentAddress.district);
+    }
+
+    const correspondentAddress = this.student.correspondentAddress;
+    if (correspondentAddress) {
+      this.corrAddIdFormCtl.setValue(correspondentAddress.id);
+      this.corrFirstLineFormCtl.setValue(correspondentAddress.firstLine);
+      this.corrSecondLineFormCtl.setValue(correspondentAddress.secondLine);
+      this.corrCountryFormCtl.setValue(correspondentAddress.country);
+      this.corrStateFormCtl.setValue(correspondentAddress.state);
+      this.corrDistrictFormCtl.setValue(correspondentAddress.district);
     }
 
     const fatherInfo = this.student.fatherInfo;
