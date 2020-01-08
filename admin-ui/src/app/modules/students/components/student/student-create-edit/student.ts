@@ -1,8 +1,9 @@
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as moment from 'moment';
-import { IStudent, RegistrationStatus, Standards, Genders } from '../../../models/student.model';
+import { IStudent, Genders, StudentStatuses } from '../../../models/student.model';
 import { IKeyValue } from 'src/app/modules/shared/model/IKeyVal';
 import { bloodGroups, religions, communities, districts } from 'src/app/modules/shared/model/shared.model';
+import { IStandard } from 'src/app/modules/maintenances/model/standard';
 
 export class Student {
 
@@ -11,8 +12,8 @@ export class Student {
     hasSubmitted = false;
     studentForm: FormGroup;
     student: IStudent;
-    registrationStatuses: IKeyValue[] = RegistrationStatus;
-    standards: IKeyValue[] = Standards;
+    statuses: string[] = StudentStatuses;
+    standards: IStandard[] = [];
     genders: IKeyValue[] = Genders;
     yesNo: IKeyValue[] = [{ key: 'Yes', value: true }, { key: 'No', value: false }];
     bloodGroups = bloodGroups;
@@ -24,7 +25,7 @@ export class Student {
     idFormCtl = new FormControl('', null);
     registrationNoFormCtl = new FormControl('', null);
     registrationDateFormCtl = new FormControl('', null);
-    registrationStatusFormCtl = new FormControl('', null);
+    statusFormCtl = new FormControl('', null);
 
     // Student basic details
     firstNameFormCtl = new FormControl('', Validators.required);
@@ -44,11 +45,11 @@ export class Student {
     // Permanent Address details
     sameAsPermAddrFormCtl = new FormControl('', null);
     addIdFormCtl = new FormControl('', null);
-    firstLineFormCtl = new FormControl('', Validators.required);
+    firstLineFormCtl = new FormControl('', null);
     secondLineFormCtl = new FormControl('', null);
-    countryFormCtl = new FormControl('', Validators.required);
-    stateFormCtl = new FormControl('', Validators.required);
-    districtFormCtl = new FormControl('', Validators.required);
+    countryFormCtl = new FormControl('', null);
+    stateFormCtl = new FormControl('', null);
+    districtFormCtl = new FormControl('', null);
 
     // Correspondent Address
     corrAddIdFormCtl = new FormControl('', null);
@@ -60,23 +61,23 @@ export class Student {
 
     // Student Father details
     fInfoIdFormCtl = new FormControl('', null);
-    fatherNameFormCtl = new FormControl('', Validators.required);
-    fatherDobFormCtl = new FormControl('', Validators.required);
-    fatherContactNoFormCtl = new FormControl('', Validators.required);
-    fatherEduQualiFormCtl = new FormControl('', Validators.required);
-    fatherOccupationFormCtl = new FormControl('', Validators.required);
-    fatherAnnualIncomeFormCtl = new FormControl('', Validators.required);
-    fatherAadhaarNoFormCtl = new FormControl('', Validators.required);
+    fatherNameFormCtl = new FormControl('', null);
+    fatherDobFormCtl = new FormControl('', null);
+    fatherContactNoFormCtl = new FormControl('', null);
+    fatherEduQualiFormCtl = new FormControl('', null);
+    fatherOccupationFormCtl = new FormControl('', null);
+    fatherAnnualIncomeFormCtl = new FormControl('', null);
+    fatherAadhaarNoFormCtl = new FormControl('', null);
 
     // Student Mother details
     mInfoIdFormCtl = new FormControl('', null);
-    motherNameFormCtl = new FormControl('', Validators.required);
-    motherDobFormCtl = new FormControl('', Validators.required);
-    motherContactNoFormCtl = new FormControl('', Validators.required);
-    motherEduQualiFormCtl = new FormControl('', Validators.required);
-    motherOccupationFormCtl = new FormControl('', Validators.required);
-    motherAnnualIncomeFormCtl = new FormControl('', Validators.required);
-    motherAadhaarNoFormCtl = new FormControl('', Validators.required);
+    motherNameFormCtl = new FormControl('', null);
+    motherDobFormCtl = new FormControl('', null);
+    motherContactNoFormCtl = new FormControl('', null);
+    motherEduQualiFormCtl = new FormControl('', null);
+    motherOccupationFormCtl = new FormControl('', null);
+    motherAnnualIncomeFormCtl = new FormControl('', null);
+    motherAadhaarNoFormCtl = new FormControl('', null);
 
     // Student Guardian details
     gInfoIdFormCtl = new FormControl('', null);
@@ -126,6 +127,5 @@ export class Student {
         this.registrationNoFormCtl.disable();
         this.registrationDateFormCtl.disable();
         this.registrationDateFormCtl.setValue(moment());
-        this.registrationStatusFormCtl.disable();
     }
 }

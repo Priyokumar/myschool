@@ -1,30 +1,36 @@
-<div class="shadow form-min-height ml-3 mr-3 mt-1 pb-5">
+<div class="shadow-sm form-min-height">
   <div class="row p-1" style="background-color: #dddddd">
-    <div class="col-md-6">
+    <div class="col-md-4">
       <span style="font-weight: bold; font-size: 14px; line-height: 35px;">Students</span>
     </div>
-    <div class="col-md-6 text-right">
+    <div class="col-md-8 text-right">
+      <mat-form-field class="w-50">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+        <mat-icon matSuffix>filter_list</mat-icon>
+      </mat-form-field>&nbsp;
       <button class="btn btn-save" [routerLink]="['/admin/students/add']">
         <mat-icon>add</mat-icon>&nbsp;New Registration
       </button>
     </div>
   </div>
   <div class="row">
-    <!-- Employess -->
-    <div class="col-md-12 table-header mb-5">
-      <!-- Table -->
-      <div class="no-shadow w-100">
-        <table mat-table [dataSource]="studentsDataSource" matSort class="">
+    <div class="col-md-12 p-0 table-header">
+      <div class="no-shadow w-100">      
+        <table mat-table [dataSource]="studentsDataSource" matSort>
 
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>#</th>
-            <td style="padding-left: 25px !important;" mat-cell *matCellDef="let row; let i = index">{{i+1}}</td>
+          <ng-container matColumnDef="firstName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>First Name</th>
+            <td mat-cell *matCellDef="let row" class="name-class" (click)="onClickRow(row.id)">{{row.firstName}}</td>
           </ng-container>
 
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-            <td mat-cell *matCellDef="let row" class="name-class" (click)="onClickRow(row.id)">{{row.firstName
-              +" "+row.lastName}}</td>
+          <ng-container matColumnDef="middleName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Middle Name</th>
+            <td mat-cell *matCellDef="let row" class="name-class" (click)="onClickRow(row.id)">{{row.lastName}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="lastName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Name</th>
+            <td mat-cell *matCellDef="let row" class="name-class" (click)="onClickRow(row.id)">{{row.lastName}}</td>
           </ng-container>
 
           <ng-container matColumnDef="registrationNo">
@@ -37,9 +43,9 @@
             <td mat-cell *matCellDef="let row"> {{row.registrationDate}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="registrationStatus">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Registration Status</th>
-            <td mat-cell *matCellDef="let row"> {{row.registrationStatus}} </td>
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+            <td mat-cell *matCellDef="let row"> {{row.status}} </td>
           </ng-container>
 
           <ng-container matColumnDef="action">
@@ -50,14 +56,16 @@
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="studentsColumns;sticky: true"></tr>
-          <tr mat-row *matRowDef="let row; columns: studentsColumns ; let i = index;">
+          <tr mat-row *matRowDef="let row; columns: studentsColumns">
           </tr>
         </table>
-        <div class="d-flex justify-content-center align-items-center" style="height: 40vh;" *ngIf="students.length <= 0">
+        <mat-paginator [pageSizeOptions]="[12, 20,30,40,50,60,70,80,90,100]" showFirstLastButtons></mat-paginator>
+        <div class="d-flex justify-content-center align-items-center" style="height: 40vh;"
+          *ngIf="students.length <= 0">
           <div>
             <h4 class="font-grey font-300">No student to display.</h4>
           </div>
-        </div> 
+        </div>
       </div>
 
     </div>

@@ -1,8 +1,11 @@
 package com.yourschool.server.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +26,9 @@ import com.yourschool.server.entity.student.ScStudentGuardian;
 import com.yourschool.server.service.common.CommonService;
 import com.yourschool.server.util.ScDateUtil;
 import com.yourschool.server.util.ScUtil;
+import com.yourschool.server.vo.FieldType;
+import com.yourschool.server.vo.Filter;
+import com.yourschool.server.vo.Operator;
 
 @Service
 public class ScStudentService {
@@ -30,11 +36,44 @@ public class ScStudentService {
 	@Autowired
 	private CommonService commonService;
 
-	public StudentsResponse findAllStudents() {
+	public StudentsResponse findAllStudents(Map<String, String> allParams) {
+
+		List<Filter> filters = null;
+		if (allParams != null && !allParams.isEmpty()) {
+
+			filters = new ArrayList<Filter>();
+
+			for (Entry<String, String> entry : allParams.entrySet()) {
+				String key = entry.getKey();
+				String value = entry.getValue();
+				filters.add(new Filter(key, Operator.EQUAL, FieldType.STRING, value));
+			}
+		}
 
 		StudentsResponse res = new StudentsResponse();
 
-		List<ScStudent> students = commonService.findAll(ScStudent.class);
+		List<ScStudent> students = null;
+		if (!ScUtil.isAllPresent(filters))
+			students = commonService.findAll(ScStudent.class);
+		else
+			students = commonService.find(filters, ScStudent.class);
+
+		List<Student> dtoStudents = new ArrayList<>();
+		students.forEach(student -> {
+			dtoStudents.add(setStudentToDto(student));
+		});
+
+		res.setApiMessage(ApiUtil.okMessage("Success"));
+		res.setData(dtoStudents);
+		return res;
+	}
+
+	public StudentsResponse findStudentsByStandard(String standard) {
+
+		StudentsResponse res = new StudentsResponse();
+
+		List<Filter> filters = Arrays.asList(new Filter("standard", Operator.EQUAL, FieldType.STRING, standard));
+		List<ScStudent> students = commonService.find(filters, ScStudent.class);
 
 		List<Student> dtoStudents = new ArrayList<>();
 		students.forEach(student -> {
@@ -105,8 +144,7 @@ public class ScStudentService {
 
 		studentDto.setRegistrationDate(ScDateUtil.dateToString(student.getRegistrationDate()));
 		studentDto.setRegistrationNo(student.getRegistrationNo());
-		studentDto.setRegistrationStatus(student.getRegistrationStatus());
-
+		studentDto.setStatus(student.getStatus());
 		studentDto.setAge(student.getAge());
 		studentDto.setDob(ScDateUtil.dateToString(student.getDob()));
 		studentDto.setFirstName(student.getFirstName());
@@ -160,7 +198,7 @@ public class ScStudentService {
 			fatherDto.setOccupation(fatherInfo.getOccupation());
 			fatherDto.setIncome(fatherInfo.getIncome());
 			studentDto.setFatherInfo(fatherDto);
-			
+
 		}
 
 		ScStudentGuardian motherInfo = student.getMotherInfo();
@@ -202,12 +240,12 @@ public class ScStudentService {
 		if (!ScUtil.isAllPresent(student))
 			throw new NotFoundException("No student can be found !");
 
-		if (ScUtil.isAllPresent(student.getId())) {
-			student.setRegistrationStatus(studentDto.getRegistrationStatus());
-		} else {
+		if (!ScUtil.isAllPresent(student.getId())) {
 			student.setRegistrationNo(ScUtil.getGeneratedNumber("REG"));
-			student.setRegistrationStatus("SUBMITTED");
 			student.setRegistrationDate(new Date());
+			student.setStatus("Registered");
+		} else {
+			student.setStatus(studentDto.getStatus());
 		}
 
 		student.setDob(ScDateUtil.stringToDate(studentDto.getDob()));
@@ -283,7 +321,6 @@ public class ScStudentService {
 			guardian.setEduQualification(fatherInfoDto.getEduQualification());
 			guardian.setOccupation(fatherInfoDto.getOccupation());
 			guardian.setIncome(fatherInfoDto.getIncome());
-			
 
 			if (!ScUtil.isAllPresent(student.getFatherInfo()))
 				student.setFatherInfo(guardian);
@@ -327,12 +364,12 @@ public class ScStudentService {
 
 		return student;
 	}
-	
+
 	private Document setDocDtoDoc(ScDocument scDoc) {
-		if(ScUtil.isAllPresent(scDoc)) {
+		if (ScUtil.isAllPresent(scDoc)) {
 			Document doc = new Document();
 			doc.setId(scDoc.getId());
-			String docUrl = "/document/"+doc.getId()+"/view";
+			String docUrl = "/document/" + doc.getId() + "/view";
 			doc.setDocUrl(docUrl);
 			return doc;
 		}

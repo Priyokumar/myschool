@@ -82,11 +82,11 @@ export interface IEmployee {
     lastName: string;
     email: string;
     mobileNo: string;
-    status: string;
+    status?: string;
     dob: string;
     joiningDate: string;
-    employeeType: string;
-    designation: string;
+    employeeType: number;
+    designation: number;
     profilePic?: Document;
 
     personalInfo: IPersonalInfo;
@@ -131,4 +131,17 @@ export interface IAttendanceFormData {
     timeOut: string;
     total?: string;
     comment: string;
+}
+
+export interface IDesignation {
+    id: number;
+    name: string;
+    description: string;
+}
+
+export interface IEmployeeType {
+    id: number;
+    name: string;
+    description: string;
+    designations: IDesignation[];
 }

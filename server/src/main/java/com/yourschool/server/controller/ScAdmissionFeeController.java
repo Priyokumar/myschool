@@ -1,5 +1,8 @@
 package com.yourschool.server.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,9 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yourschool.server.dto.ActionResponse;
+import com.yourschool.server.dto.admissionFee.AdmissionMonthly;
 import com.yourschool.server.dto.admissionFee.Admission;
 import com.yourschool.server.dto.admissionFee.AdmissionFeeResponse;
 import com.yourschool.server.dto.admissionFee.AdmissionFeesResponse;
@@ -25,8 +30,8 @@ public class ScAdmissionFeeController {
 	private ScAdmissionFeeService admissionFeeService;
 
 	@GetMapping
-	private AdmissionFeesResponse findAllAdmissionFee() {
-		return admissionFeeService.findAllAdmissionFee();
+	private AdmissionFeesResponse findAllAdmissionFee(@RequestParam Map<String, String> allParams) {
+		return admissionFeeService.findAllAdmissionFee(allParams);
 	}
 
 	@GetMapping(value = "/{id}")
@@ -52,6 +57,11 @@ public class ScAdmissionFeeController {
 	@GetMapping(value = "fees/{standard}/{year}")
 	private FeesResponse findFeesByStandard(@PathVariable("standard") String standard, @PathVariable("year") String year) {
 		return admissionFeeService.findFeesByStandard(standard, year);
+	}
+	
+	@GetMapping(value = "year/{year}")
+	private List<AdmissionMonthly> admissionsByYear(@PathVariable("year") int year) {
+		return admissionFeeService.getAdmissionDashboardData(year);
 	}
 
 }

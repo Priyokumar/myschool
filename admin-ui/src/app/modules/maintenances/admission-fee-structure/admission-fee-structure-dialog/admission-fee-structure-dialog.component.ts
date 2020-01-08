@@ -1,9 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { IKeyValue } from 'src/app/modules/shared/model/IKeyVal';
-import { Standards } from 'src/app/modules/students/models/student.model';
 import { IAdmissionFeeMaintenance } from 'src/app/modules/students/models/maintenance';
+import { ApiEndpoint } from 'src/app/modules/shared/model/shared.model';
+import { HttpClient } from '@angular/common/http';
+import { IStandard } from '../../model/standard';
 
 @Component({
   selector: 'app-admission-fee-structure-dialog',
@@ -19,11 +20,13 @@ export class AdmissionFeeStructureDialogComponent implements OnInit {
 
   actionMode = 'CREATE';
   admFeeMaintForm: FormGroup;
+  standards: IStandard[] = [];
 
-  standards: IKeyValue[] = Standards;
-
-  constructor(public dialogRef: MatDialogRef<AdmissionFeeStructureDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: IAdmissionFeeMaintenance) {
+  constructor(
+    public dialogRef: MatDialogRef<AdmissionFeeStructureDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: IAdmissionFeeMaintenance,
+    private http: HttpClient
+    ) {
 
     dialogRef.disableClose = true;
     this.admFeeMaintForm = new FormGroup({
@@ -42,6 +45,7 @@ export class AdmissionFeeStructureDialogComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getStandard();
   }
 
   public add() {
@@ -57,6 +61,15 @@ export class AdmissionFeeStructureDialogComponent implements OnInit {
 
   public cancel() {
     this.dialogRef.close();
+  }
+
+  getStandard() {
+
+    this.http.get<any>(ApiEndpoint.STANDARD).subscribe(data => {
+      this.standards = data.data;
+    }, err => {
+      console.error(err);
+    });
   }
 
 }

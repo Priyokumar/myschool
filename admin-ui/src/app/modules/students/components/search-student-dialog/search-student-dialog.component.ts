@@ -1,5 +1,4 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 import { IStudent } from '../../models/student.model';
@@ -12,17 +11,15 @@ import { ApiEndpoint } from 'src/app/modules/shared/model/shared.model';
 })
 export class SearchStudentDialogComponent implements OnInit {
 
-  firstNameFormCtl = new FormControl('', null);
-  lastNameFormCtl = new FormControl('', null);
-  registrationNoFctrl = new FormControl(null, null);
+  public errorMessage: string;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  students: IStudent[] = [];
-  studentColumns: string[] = ['id', 'firstName', 'middleName', 'lastName', 'class', 'registrationNo', 'status'];
-  studentDataSource: MatTableDataSource<IStudent>;
-
-  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
-  errorMessage: string;
+  // tslint:disable-next-line: max-line-length
+  public studentsColumns: string[] = ['firstName', 'middleName', 'lastName', 'registrationNo', 'registrationDate', 'registrationStatus'];
+  public studentsDataSource: MatTableDataSource<IStudent>;
+  public students: IStudent[] = [];
+  fetchingStudents = false;
 
   constructor(
     public dialogRef: MatDialogRef<SearchStudentDialogComponent>,
@@ -30,21 +27,33 @@ export class SearchStudentDialogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.studentDataSource = new MatTableDataSource(this.students);
+    this.getStudents();
   }
 
-  public searchStudent() {
+  private getStudents() {
+
+    this.fetchingStudents = true;
     this.http.get<any>(ApiEndpoint.STUDENTS).subscribe(data => {
+
       this.students = data.data;
-      this.studentDataSource = new MatTableDataSource(this.students);
+      this.studentsDataSource = new MatTableDataSource(this.students);
+      this.studentsDataSource.paginator = this.paginator;
+      this.studentsDataSource.sort = this.sort;
+      this.fetchingStudents = false;
+
     }, err => {
-      console.error(err);
+      this.fetchingStudents = false;
       if (err.error && err.error.apiMessage) {
         this.errorMessage = err.error.apiMessage.detail;
       } else {
         this.errorMessage = err.message;
       }
+      console.error(err);
     });
+  }
+
+  applyFilter(filterValue: string) {
+    this.studentsDataSource.filter = filterValue.trim().toLowerCase();
   }
 
   public select(student: IStudent) {

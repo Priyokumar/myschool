@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatDialog, MatRadioChange } from '@angular/material';
 import { Employee } from './employee';
 import { DatePipe } from '@angular/common';
 
 import * as moment from 'moment';
 import { ApiEndpoint } from 'src/app/modules/shared/model/shared.model';
-import { IEmployee } from '../../../model/employeeModels';
+import { IEmployee, IEmployeeType, IDesignation } from '../../../model/employeeModels';
+import { MatSelectChange } from '@angular/material';
 
 @Component({
   selector: 'app-employee-create-edit',
@@ -25,9 +25,11 @@ export class EmployeeCreateEditComponent extends Employee implements OnInit {
   }
 
   ngOnInit() {
+
     if (this.empId) {
       this.getEmployee();
     }
+    this.getEmployeeTypes();
 
     this.corrCountry.setValue('India');
     this.corrState.setValue('Manipur');
@@ -40,6 +42,16 @@ export class EmployeeCreateEditComponent extends Employee implements OnInit {
     this.permtCountry.setValue('India');
     this.permtState.setValue('Manipur');
     this.permtDistrict.setValue('Thoubal');
+  }
+
+  private getEmployeeTypes() {
+    this.http.get<IEmployeeType[]>(ApiEndpoint.EMPLOYEE_TYPE).subscribe(data => {
+
+      this.employeeTypes = data;
+
+    }, error => {
+      console.error(error);
+    });
   }
 
   getEmployee() {
@@ -59,6 +71,14 @@ export class EmployeeCreateEditComponent extends Employee implements OnInit {
     });
   }
 
+  onChangeEmployeeType(id: number) {
+
+    this.designations = this.employeeTypes.find(employeeType => {
+      return employeeType.id === id;
+    }).designations;
+
+  }
+
   uploadPhoto(file: File) {
     console.log(file);
   }
@@ -73,7 +93,6 @@ export class EmployeeCreateEditComponent extends Employee implements OnInit {
       lastName: this.lastName.value,
       email: this.email.value,
       mobileNo: this.mobileNo.value,
-      status: this.status.value,
       dob: datePipe.transform(this.dob.value, 'MM/dd/yyyy'),
       joiningDate: datePipe.transform(this.joiningDate.value, 'MM/dd/yyyy'),
       employeeType: this.employeeType.value,
@@ -159,11 +178,16 @@ export class EmployeeCreateEditComponent extends Employee implements OnInit {
     this.lastName.setValue(this.employee.lastName);
     this.email.setValue(this.employee.email);
     this.mobileNo.setValue(this.employee.mobileNo);
-    this.status.setValue(this.employee.status);
     this.dob.setValue(moment(this.employee.dob as string));
     this.joiningDate.setValue(moment(this.employee.joiningDate as string));
     this.employeeType.setValue(this.employee.employeeType);
-    this.designation.setValue(this.employee.designation);
+
+    this.http.get<IDesignation[]>(ApiEndpoint.EMPLOYEE_TYPE + '/' + this.employee.employeeType + '/designations').subscribe(data => {
+      this.designations = data;
+      this.designation.setValue(this.employee.designation);
+    }, error => {
+      console.error(error);
+    });
 
     const pinfo = this.employee.personalInfo;
     if (pinfo) {

@@ -25,6 +25,7 @@ export class StudentCreateEditComponent extends Student implements OnInit {
   }
 
   ngOnInit() {
+    this.getStandards();
     this.sameAsPermAddrFormCtl.setValue(true);
     this.nationalityFormCtl.setValue('Indian');
 
@@ -41,6 +42,15 @@ export class StudentCreateEditComponent extends Student implements OnInit {
 
     this.corrCountryFormCtl.disable();
     this.corrStateFormCtl.disable();
+  }
+
+  getStandards() {
+
+    this.http.get<any>(ApiEndpoint.STANDARD).subscribe(data => {
+      this.standards = data.data;
+    }, err => {
+      console.error(err);
+    });
   }
 
   getStudent() {
@@ -67,7 +77,7 @@ export class StudentCreateEditComponent extends Student implements OnInit {
       id: this.idFormCtl.value,
       registrationNo: this.registrationNoFormCtl.value,
       registrationDate: datePipe.transform(this.registrationDateFormCtl.value, 'MM/dd/yyyy'),
-      registrationStatus: this.registrationStatusFormCtl.value,
+      status: this.statusFormCtl.value,
       firstName: this.firstNameFormCtl.value,
       middleName: this.middleNameFormCtl.value,
       lastName: this.lastNameFormCtl.value,
@@ -153,7 +163,7 @@ export class StudentCreateEditComponent extends Student implements OnInit {
     this.idFormCtl.setValue(this.student.id);
     this.registrationNoFormCtl.setValue(this.student.registrationNo);
     this.registrationDateFormCtl.setValue(moment(this.student.registrationDate as string));
-    this.registrationStatusFormCtl.setValue(this.student.registrationStatus);
+    this.statusFormCtl.setValue(this.student.status);
 
     this.firstNameFormCtl.setValue(this.student.firstName);
     this.middleNameFormCtl.setValue(this.student.middleName);

@@ -76,12 +76,12 @@
                     <p>Joining Date : {{employee.joiningDate}}</p>
                   </div>
 
-                  <div class="col-md-4">
-                    <p>Employee Type : {{employee.employeeType}}</p>
+                  <div class="col-md-4" >
+                    <p>Employee Type : <app-employee-type [id]="employee.employeeType"></app-employee-type> </p>
                   </div>
 
                   <div class="col-md-4">
-                    <p>Designation : {{employee.designation}}</p>
+                    <p>Designation : <app-designation [id]="employee.designation"></app-designation></p>
                   </div>
                 </div>
               </div>

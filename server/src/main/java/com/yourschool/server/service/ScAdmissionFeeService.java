@@ -1,14 +1,22 @@
 package com.yourschool.server.service;
 
+import java.math.BigInteger;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yourschool.server.dto.ActionResponse;
 import com.yourschool.server.dto.ApiUtil;
+import com.yourschool.server.dto.admissionFee.AdmissionMonthly;
 import com.yourschool.server.dto.admissionFee.Admission;
 import com.yourschool.server.dto.admissionFee.AdmissionFeeResponse;
 import com.yourschool.server.dto.admissionFee.AdmissionFeesResponse;
@@ -26,6 +34,9 @@ import com.yourschool.server.util.ScDateUtil;
 import com.yourschool.server.util.ScUtil;
 import com.yourschool.server.vo.ApiMessageType;
 import com.yourschool.server.vo.FeeStatus;
+import com.yourschool.server.vo.FieldType;
+import com.yourschool.server.vo.Filter;
+import com.yourschool.server.vo.Operator;
 import com.yourschool.server.vo.RefType;
 
 @Service
@@ -37,11 +48,30 @@ public class ScAdmissionFeeService {
 	@Autowired
 	private ScMaintAdmissionFeeService maintAdmissionFeeService;
 
-	public AdmissionFeesResponse findAllAdmissionFee() {
+	@PersistenceContext
+	private EntityManager em;
+
+	public AdmissionFeesResponse findAllAdmissionFee(Map<String, String> allParams) {
+
+		List<Filter> filters = null;
+		if (allParams != null && !allParams.isEmpty()) {
+
+			filters = new ArrayList<Filter>();
+
+			for (Entry<String, String> entry : allParams.entrySet()) {
+				String key = entry.getKey();
+				String value = entry.getValue();
+				filters.add(new Filter(key, Operator.EQUAL, FieldType.STRING, value));
+			}
+		}
 
 		AdmissionFeesResponse res = new AdmissionFeesResponse();
 
-		List<ScAdmission> admissions = commonService.findAll(ScAdmission.class);
+		List<ScAdmission> admissions = null;
+		if (!ScUtil.isAllPresent(filters))
+			admissions = commonService.findAll(ScAdmission.class);
+		else
+			admissions = commonService.find(filters, ScAdmission.class);
 
 		List<Admission> dtoadmissions = new ArrayList<>();
 		admissions.forEach(admission -> {
@@ -168,7 +198,7 @@ public class ScAdmissionFeeService {
 
 			studBasicDetail.setRegistrationDate(ScDateUtil.dateToString(student.getRegistrationDate()));
 			studBasicDetail.setRegistrationNo(student.getRegistrationNo());
-			studBasicDetail.setRegistrationStatus(student.getRegistrationStatus());
+			studBasicDetail.setRegistrationStatus(student.getStatus());
 			studBasicDetail.setFirstName(student.getFirstName());
 			studBasicDetail.setId(student.getId());
 			studBasicDetail.setLastName(student.getLastName());
@@ -199,7 +229,7 @@ public class ScAdmissionFeeService {
 		return dtoAdmission;
 	}
 
-	public List<ScFee> generateFees(String standard,String year) {
+	public List<ScFee> generateFees(String standard, String year) {
 
 		Double feeAmount = 0.0;
 
@@ -268,5 +298,27 @@ public class ScAdmissionFeeService {
 		dtoFee.setStatus(fee.getStatus());
 
 		return dtoFee;
+	}
+
+	public List<AdmissionMonthly> getAdmissionDashboardData(int year) {
+		
+		List<AdmissionMonthly> admisionsMonthly = new ArrayList<>();
+		
+		try {
+			for (int i = 1; i <= 12; i++) {
+			
+				Query q = em.createNativeQuery("SELECT COUNT(*) FROM sc_admission WHERE  EXTRACT(MONTH FROM admission_date) = "+ i +" AND  EXTRACT(YEAR FROM admission_date) = "+year);
+				BigInteger count =  (BigInteger) q.getSingleResult();
+				int cou = count.intValue();
+				
+				admisionsMonthly.add(new AdmissionMonthly(ScDateUtil.getMonth(i), cou));
+					
+			}
+		} catch (Exception e) {
+			throw new InternalServerException(e.getMessage());
+		}
+		
+		return admisionsMonthly;
+		
 	}
 }

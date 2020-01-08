@@ -16,6 +16,7 @@ export class ClassViewComponent implements OnInit {
   standardId: number;
   standard: IStandard;
   errorMessage: string;
+  students: any;
 
   constructor(
     private http: HttpClient,
@@ -31,15 +32,15 @@ export class ClassViewComponent implements OnInit {
       }
     });
 
-   }
+  }
 
   ngOnInit() {
   }
 
   getStandard() {
-
     this.http.get<any>(ApiEndpoint.STANDARD + '/' + this.standardId).subscribe(data => {
       this.standard = data.data;
+      this.getStudents();
     }, err => {
       console.error(err);
       if (err.error && err.error.apiMessage) {
@@ -78,6 +79,14 @@ export class ClassViewComponent implements OnInit {
 
   edit() {
     this.router.navigate(['admin/maintenances/classes/' + this.standardId + '/edit']);
+  }
+
+  private getStudents() {
+    this.http.get<any>(ApiEndpoint.STUDENTS, { params: { standard: this.standard.name } }).subscribe(data => {
+      this.students = data.data;
+    }, err => {
+      console.error(err);
+    });
   }
 
 }

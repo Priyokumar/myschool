@@ -1,13 +1,13 @@
 export const allSideNavs: ISideNav[] = [
 
-    { title: 'Dashboard', path: '/dashboard', icon: 'home', hasSubmenu: false, submenu: [] },
+    { title: 'Dashboard', path: '/admin/dashboard', icon: 'home', hasSubmenu: false, submenu: [] },
     {
         title: 'Employees', path: '', icon: 'cloud_circle', hasSubmenu: true, submenu:
             [
                 { title: 'Employee List', path: '/admin/employees', icon: 'dashboard', hasSubmenu: false, submenu: [] },
-                { title: 'Attendances', path: '/admin/employees/attendences', icon: 'dashboard', hasSubmenu: false, submenu: [] },
-                { title: 'Salaries', path: '/admin/employees/salaries', icon: 'dashboard', hasSubmenu: false, submenu: [] },
-                { title: 'Paid Salaries', path: '/admin/employees/paid-salaries', icon: 'dashboard', hasSubmenu: false, submenu: [] },
+                // { title: 'Attendances', path: '/admin/employees/attendences', icon: 'dashboard', hasSubmenu: false, submenu: [] },
+                // { title: 'Salaries', path: '/admin/employees/salaries', icon: 'dashboard', hasSubmenu: false, submenu: [] },
+                // { title: 'Paid Salaries', path: '/admin/employees/paid-salaries', icon: 'dashboard', hasSubmenu: false, submenu: [] },
             ]
     },
     {
@@ -22,16 +22,16 @@ export const allSideNavs: ISideNav[] = [
             [
                 { title: 'Student', path: '/admin/students', icon: 'dashboard', hasSubmenu: false, submenu: [] },
                 { title: 'Admission', path: '/admin/students/admissions', icon: 'dashboard', hasSubmenu: false, submenu: [] },
-                { title: 'Attendence', path: '/admin/students/attendances', icon: 'dashboard', hasSubmenu: false, submenu: [] },
+                // { title: 'Attendence', path: '/admin/students/attendances', icon: 'dashboard', hasSubmenu: false, submenu: [] },
             ]
     },
-    {
+    /* {
         title: 'Incomes And Expenses', path: '', icon: 'wc', hasSubmenu: true, submenu:
             [
                 { title: 'Incomes', path: '/admin/incomes-expenses/incomes', icon: 'dashboard', hasSubmenu: false, submenu: [] },
                 { title: 'Expenses', path: '/admin/incomes-expenses/expenses', icon: 'dashboard', hasSubmenu: false, submenu: [] },
             ]
-    }
+    } */
 ];
 
 export interface ISideNav {
@@ -62,6 +62,7 @@ export class ApiEndpoint {
     public static PAY_SALARY = ApiEndpoint.BASE_URL + '/api/pay-salaries';
     public static DOCUMENT = ApiEndpoint.BASE_URL + '/document';
     public static STANDARD = ApiEndpoint.BASE_URL + '/api/standard';
+    public static EMPLOYEE_TYPE = ApiEndpoint.BASE_URL + '/api/employee-type';
 
 
 }

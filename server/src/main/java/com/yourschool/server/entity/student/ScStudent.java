@@ -34,9 +34,9 @@ public class ScStudent implements Serializable {
 
 	@Column(name = "REGISTRATION_DATE")
 	private Date registrationDate;
-
-	@Column(name = "REGISTRATION_STATUS")
-	private String registrationStatus;
+	
+	@Column(name = "status")
+	private String status;
 
 	@Column(name = "FIRST_NAME")
 	private String firstName;
@@ -156,14 +156,6 @@ public class ScStudent implements Serializable {
 
 	public void setRegistrationDate(Date registrationDate) {
 		this.registrationDate = registrationDate;
-	}
-
-	public String getRegistrationStatus() {
-		return registrationStatus;
-	}
-
-	public void setRegistrationStatus(String registrationStatus) {
-		this.registrationStatus = registrationStatus;
 	}
 
 	public String getFirstName() {
@@ -323,5 +315,15 @@ public class ScStudent implements Serializable {
 	public void setProfilePic(ScDocument profilePic) {
 		this.profilePic = profilePic;
 	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	
 	
 }

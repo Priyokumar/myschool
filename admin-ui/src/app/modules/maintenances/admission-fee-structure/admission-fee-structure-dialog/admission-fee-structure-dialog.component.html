@@ -28,8 +28,8 @@
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Standard</mat-label>
             <mat-select placeholder="Menu" [formControl]="standardFctrl">
-              <mat-option *ngFor="let option of standards" [value]="option.value">
-                {{option.value}}
+              <mat-option *ngFor="let option of standards" [value]="option.name">
+                {{option.name}}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="standardFctrl.hasError('required')">

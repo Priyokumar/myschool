@@ -174,9 +174,11 @@ public class ScMaintAdmissionFeeService {
 		MaintAdmissionFeeResponse res = new MaintAdmissionFeeResponse();
 
 		ScMaintenanceAdmissionFee maintenanceAdmissionFee = getMaintAdmissionFeeByStandard(standard, year);
-
-		MaintenanceAdmissionFee manageAdmFeeDto = maintAdmissionFeeToDto(maintenanceAdmissionFee);
-
+		
+		MaintenanceAdmissionFee manageAdmFeeDto = null;
+		if(ScUtil.isAllPresent(maintenanceAdmissionFee)) {
+			manageAdmFeeDto = maintAdmissionFeeToDto(maintenanceAdmissionFee);
+		}
 		res.setApiMessage(ApiUtil.okMessage("Success"));
 		res.setData(manageAdmFeeDto);
 

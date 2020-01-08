@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatTableDataSource, MatDialog } from '@angular/material';
-import { IEmployee, IDocument } from '../../../model/employeeModels';
+import { IEmployee, IDocument, IEmployeeType } from '../../../model/employeeModels';
 import { ApiEndpoint, IConfirmation } from 'src/app/modules/shared/model/shared.model';
 import { FileUploadService } from 'src/app/modules/shared/services/file-upload.service';
 import { ConfirmationDialogComponent } from 'src/app/modules/shared/components/confirmation-dialog/confirmation-dialog.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-employee-view',
@@ -42,6 +43,9 @@ export class EmployeeViewComponent implements OnInit {
   xIICertFile: File;
   graduationCertFile: File;
   postGraduationCertFile: File;
+
+  employeeType = '';
+  designation = '';
 
   constructor(
     private http: HttpClient,
@@ -115,20 +119,20 @@ export class EmployeeViewComponent implements OnInit {
     };
 
     this.dialog.open(ConfirmationDialogComponent, { width: '26%', data: confirmationData, disableClose: true })
-    .afterClosed().subscribe(okData => {
-      if (okData) {
-        this.http.delete(ApiEndpoint.EMPLOYEES + '/' + this.empId).subscribe(data => {
-          this.router.navigate(['/admin/employees']);
-        }, err => {
-          console.error(err);
-          if (err.error && err.error.apiMessage) {
-            this.errorMessage = err.error.apiMessage.detail;
-          } else {
-            this.errorMessage = err.message;
-          }
-        });
-      }
-    });
+      .afterClosed().subscribe(okData => {
+        if (okData) {
+          this.http.delete(ApiEndpoint.EMPLOYEES + '/' + this.empId).subscribe(data => {
+            this.router.navigate(['/admin/employees']);
+          }, err => {
+            console.error(err);
+            if (err.error && err.error.apiMessage) {
+              this.errorMessage = err.error.apiMessage.detail;
+            } else {
+              this.errorMessage = err.message;
+            }
+          });
+        }
+      });
   }
 
   edit() {

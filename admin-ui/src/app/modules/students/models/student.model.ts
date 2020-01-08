@@ -6,7 +6,7 @@ export interface IStudent {
     id: number;
     registrationNo: string;
     registrationDate: string;
-    registrationStatus: string;
+    status?: string;
     firstName: string;
     middleName: string;
     lastName: string;
@@ -51,13 +51,13 @@ export const Standards: IKeyValue[] = [
 
 ];
 
-export const RegistrationStatus: IKeyValue[] = [
+export const StudentStatuses: string[] = [
 
-    { key: 'SUBMITTED', value: 'Submitted' },
-    { key: 'ADMISSION_PENDIND', value: 'Admission Pending' },
-    { key: 'REGISTERED', value: 'Registered' },
-    { key: 'EXPIRED', value: 'Expired' }
-
+    'Registered',
+    'Admitted',
+    'Expired Admission',
+    'Renewed Admission',
+    'Expired'
 ];
 
 export const Genders: IKeyValue[] = [

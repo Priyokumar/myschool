@@ -4,7 +4,7 @@
       <span style="font-weight: bold; font-size: 14px; line-height: 35px;">Admission</span>
     </div>
     <div class="col-md-6 text-right">
-      <button class="btn btn-cancel" routerLink="/student/admissions">
+      <button class="btn btn-cancel" routerLink="/admin/students/admissions">
         <mat-icon>clear</mat-icon>&nbsp;Cancel
       </button>
       <button class="btn btn-save" (click)="save()" [disabled]='!admissionForm.valid'>
@@ -18,7 +18,7 @@
     </div>
   </div>
 
-  <div [ngClass]="['pt-1','pr-5','pl-5']">
+  <div [ngClass]="['pt-1','pr-5','pl-5']" class="bg-white">
     <mat-tab-group>
       <mat-tab>
         <ng-template mat-tab-label>
@@ -78,27 +78,25 @@
               </mat-error>
             </mat-form-field>
           </div>
+
           <div class="col-md-4">
             <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Registration Status</mat-label>
-              <mat-select placeholder="Status" [formControl]="registrationStatusFormCtl">
-                <mat-option *ngFor="let option of registrationStatuses" [value]="option.value">
-                  {{option.value}}
+              <mat-label>Status</mat-label>
+              <mat-select placeholder="Status" [formControl]="statusFormCtl">
+                <mat-option *ngFor="let option of statuses" [value]="option">
+                  {{option}}
                 </mat-option>
               </mat-select>
-              <mat-error *ngIf="registrationStatusFormCtl.hasError('required')">
-                Registration Status is <strong>required</strong>
+              <mat-error *ngIf="statusFormCtl.hasError('required')">
+                Status is <strong>required</strong>
               </mat-error>
             </mat-form-field>
-          </div>
+          </div> 
 
-
-
-          <!-- Admission Info -->
           <div class="col-md-12">
             <p style="font-weight: bold; font-size: 14px;">Admission Info</p>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-4" *ngIf="admId">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Admission Reference No</mat-label>
               <input matInput placeholder="Admission Reference No" [formControl]="admissionRefNoFormCtl">
@@ -116,7 +114,7 @@
               </mat-error>
             </mat-form-field>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-4" *ngIf="admId">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Admission Date</mat-label>
               <input matInput placeholder="Placeholder" [formControl]="admissionDateFormCtl">
@@ -138,15 +136,7 @@
               </mat-error>
             </mat-form-field>
           </div>
-          <div class="col-md-4">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Status</mat-label>
-              <input matInput placeholder="Placeholder" [formControl]="statusFormCtl">
-              <mat-error *ngIf="statusFormCtl.hasError('required')">
-                Status is <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-          </div>
+         
           <div class="col-md-4">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Admission Amount</mat-label>

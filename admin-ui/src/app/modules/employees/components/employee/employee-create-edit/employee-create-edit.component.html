@@ -87,20 +87,6 @@
 
           <div class="col-md-4 pb-3">
             <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Status</mat-label>
-              <mat-select placeholder="Status" [formControl]="status">
-                <mat-option *ngFor="let option of employeeStatuses" [value]="option">
-                  {{option}}
-                </mat-option>
-              </mat-select>
-              <mat-error *ngIf="status.hasError('required')">
-                Status is <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-          </div>
-
-          <div class="col-md-4 pb-3">
-            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Date of birth</mat-label>
               <input matInput [matDatepicker]="dobt" placeholder="mm/dd/yyyy" [formControl]="dob" readonly>
               <mat-datepicker-toggle matSuffix [for]="dobt"></mat-datepicker-toggle>
@@ -128,8 +114,8 @@
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Employee Type</mat-label>
               <mat-select placeholder="Status" [formControl]="employeeType">
-                <mat-option *ngFor="let option of employeeTypes" [value]="option">
-                  {{option}}
+                <mat-option *ngFor="let option of employeeTypes" [value]="option.id" (click)="onChangeEmployeeType(option.id)">
+                  {{option.name}}
                 </mat-option>
               </mat-select>
               <mat-error *ngIf="employeeType.hasError('required')">
@@ -142,11 +128,11 @@
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Designation</mat-label>
               <mat-select placeholder="Designation" [formControl]="designation">
-                <mat-option *ngFor="let option of designations" [value]="option">
-                  {{option}}
+                <mat-option *ngFor="let option of designations" [value]="option.id" >
+                  {{option.name}}
                 </mat-option>
               </mat-select>
-              <mat-error *ngIf="status.hasError('required')">
+              <mat-error *ngIf="designation.hasError('required')">
                 Designation is <strong>required</strong>
               </mat-error>
             </mat-form-field>
@@ -258,7 +244,7 @@
                   {{option}}
                 </mat-option>
               </mat-select>
-              <mat-error *ngIf="status.hasError('required')">
+              <mat-error *ngIf="corrDistrict.hasError('required')">
                 District is <strong>required</strong>
               </mat-error>
             </mat-form-field>
@@ -321,7 +307,7 @@
                     {{option}}
                   </mat-option>
                 </mat-select>
-                <mat-error *ngIf="status.hasError('required')">
+                <mat-error *ngIf="permtDistrict.hasError('required')">
                   District is <strong>required</strong>
                 </mat-error>
               </mat-form-field>
@@ -399,7 +385,7 @@
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Score (Percentage)</mat-label>
               <input matInput [formControl]="scoreFormCtl" type="number">
-              <mat-error *ngIf="passOutYearFormCtl.hasError('required')">
+              <mat-error *ngIf="scoreFormCtl.hasError('required')">
                 Score (Percentage) is <strong>required</strong>
               </mat-error>
             </mat-form-field>
@@ -463,7 +449,7 @@
                   {{option}}
                 </mat-option>
               </mat-select>
-              <mat-error *ngIf="status.hasError('required')">
+              <mat-error *ngIf="permtDistrict.hasError('required')">
                 Designation is <strong>required</strong>
               </mat-error>
             </mat-form-field>

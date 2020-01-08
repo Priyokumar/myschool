@@ -24,9 +24,9 @@ public class Employee {
 
 	private String joiningDate;
 
-	private String employeeType;
+	private Long employeeType;
 
-	private String designation;
+	private Long designation;
 
 	private Boolean sameAsPermanentAddress = false;
 
@@ -124,19 +124,19 @@ public class Employee {
 		this.joiningDate = joiningDate;
 	}
 
-	public String getEmployeeType() {
+	public Long getEmployeeType() {
 		return employeeType;
 	}
 
-	public void setEmployeeType(String employeeType) {
+	public void setEmployeeType(Long employeeType) {
 		this.employeeType = employeeType;
 	}
 
-	public String getDesignation() {
+	public Long getDesignation() {
 		return designation;
 	}
 
-	public void setDesignation(String designation) {
+	public void setDesignation(Long designation) {
 		this.designation = designation;
 	}
 

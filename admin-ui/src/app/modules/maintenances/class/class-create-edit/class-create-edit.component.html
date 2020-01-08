@@ -46,32 +46,6 @@
           </mat-error>
         </mat-form-field>
       </div>
-
-      <div class="col-md-12">
-        <br>
-        <h5>Sections</h5>
-        <hr>
-      </div>
-
-      <div class="col-md-4"> 
-        <mat-menu #appMenu="matMenu">
-          <div>
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Name</mat-label>
-              <input matInput placeholder="Placeholder" [formControl]="sectiontrl">
-              <mat-error *ngIf="sectiontrl.hasError('required')">
-                Section is <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-          </div>
-          <div>Help</div>
-        </mat-menu>
-        
-        <button mat-raised-button color="primary" [matMenuTriggerFor]="appMenu">
-          Add section
-        </button>
-      </div>
-
     </div>
   </div>
 </div>

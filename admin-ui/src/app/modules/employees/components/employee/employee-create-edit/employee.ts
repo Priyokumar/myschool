@@ -1,5 +1,5 @@
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { IEmployee, EmployeeStatus, EmployeeType, IAddress, IPersonalInfo } from '../../../model/employeeModels';
+import { IEmployee, EmployeeStatus, IAddress, IPersonalInfo, IEmployeeType, IDesignation } from '../../../model/employeeModels';
 import { districts } from 'src/app/modules/shared/model/shared.model';
 import { IKeyValue } from 'src/app/modules/shared/model/IKeyVal';
 
@@ -12,18 +12,21 @@ export class Employee {
     public employee: IEmployee;
 
     public employeeStatuses = [EmployeeStatus.IN_ACTIVE, EmployeeStatus.ACTIVE, EmployeeStatus.EXPIRED];
-    public employeeTypes = [EmployeeType.TEACHING_STAFF, EmployeeType.FINANCE, EmployeeType.CLERK];
+    // public employeeTypes = [EmployeeType.TEACHING_STAFF, EmployeeType.FINANCE, EmployeeType.CLERK];
+    public employeeTypes: IEmployeeType[] = [];
 
     public correspondentAddress: IAddress;
     public permanentAddress: IAddress;
     public personalInfo: IPersonalInfo;
 
     districts = districts;
-    designations: string[] = [
+    /* designations: string[] = [
         'Junior Teaching Staff',
         'Teaching Staff',
         'Senior Teaching Staff'
-    ];
+    ]; */
+
+    designations: IDesignation[] = [];
 
     yesNo: IKeyValue[] = [
         { key: 'Yes', value: true },
@@ -37,7 +40,6 @@ export class Employee {
             middleName: this.middleName,
             lastName: this.lastName,
             email: this.email,
-            status: this.status,
             dob: this.dob,
             joiningDate: this.joiningDate,
             employeeType: this.employeeType,
@@ -88,7 +90,6 @@ export class Employee {
     public lastName = new FormControl('', Validators.required);
     public email = new FormControl('', [Validators.required, Validators.email]);
     public mobileNo = new FormControl('', [Validators.required]);
-    public status = new FormControl('', Validators.required);
     public dob = new FormControl('', Validators.required);
     public joiningDate = new FormControl('', Validators.required);
     public employeeType = new FormControl('', Validators.required);
@@ -97,7 +98,7 @@ export class Employee {
     // Personal Info
     public pid = new FormControl('', null);
     public panCard = new FormControl('', null);
-    public aadharCard = new FormControl('', Validators.required);
+    public aadharCard = new FormControl('', null);
     public voterId = new FormControl('', null);
     public drivingLicence = new FormControl('', null);
 
@@ -111,12 +112,12 @@ export class Employee {
 
     // Highest Qualification
     public acaIdFormCtl = new FormControl('', null);
-    public qualificationNameFormCtl = new FormControl('', Validators.required);
-    public boardFormCtl = new FormControl('', Validators.required);
-    public schoolInstitueFormCtl = new FormControl('', Validators.required);
-    public startYearFormCtl = new FormControl('', Validators.required);
-    public passOutYearFormCtl = new FormControl('', Validators.required);
-    public scoreFormCtl = new FormControl('', Validators.required);
+    public qualificationNameFormCtl = new FormControl('', null);
+    public boardFormCtl = new FormControl('', null);
+    public schoolInstitueFormCtl = new FormControl('', null);
+    public startYearFormCtl = new FormControl('', null);
+    public passOutYearFormCtl = new FormControl('', null);
+    public scoreFormCtl = new FormControl('', null);
 
     // Correspondence Address
     public corAddId = new FormControl('', null);

@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material';
 import { IAdmission, AdmissionStatuses, IFee } from '../../../models/admission-fee.model';
 import { IKeyValue } from 'src/app/modules/shared/model/IKeyVal';
-import { RegistrationStatus, Standards, IStudent } from '../../../models/student.model';
+import { Standards, IStudent, StudentStatuses } from '../../../models/student.model';
 import { IAdmissionFeeMaintenance } from '../../../models/maintenance';
 
 export class Admission {
@@ -13,8 +13,7 @@ export class Admission {
     hasSubmitted = false;
     admissionForm: FormGroup;
     admission: IAdmission;
-    admissionStatuses: IKeyValue[] = AdmissionStatuses;
-    registrationStatuses: IKeyValue[] = RegistrationStatus;
+    statuses: string[] = StudentStatuses;
     standards: IKeyValue[] = Standards;
     fees: IFee[];
     student: IStudent;
@@ -53,8 +52,6 @@ export class Admission {
     regIdIdFormCtl = new FormControl('', null);
     registrationNoFormCtl = new FormControl('', null);
     registrationDateFormCtl = new FormControl('', null);
-    registrationStatusFormCtl = new FormControl('', null);
-
 
     constructor() {
         this.admissionForm = new FormGroup({
@@ -83,7 +80,6 @@ export class Admission {
         this.rollNoFormCtl.disable();
         this.registrationNoFormCtl.disable();
         this.registrationDateFormCtl.disable();
-        this.registrationStatusFormCtl.disable();
         this.dueAmountFormCtl.disable();
         this.promiseToPayDateFormCtl.disable();
     }

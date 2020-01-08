@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource, MatDialog } from '@angular/material';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { MatTableDataSource, MatDialog, MatPaginator, MatSort, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ApiEndpoint, IConfirmation } from 'src/app/modules/shared/model/shared.model';
@@ -14,14 +14,18 @@ import { ConfirmationDialogComponent } from 'src/app/modules/shared/components/c
 export class StudentListComponent implements OnInit {
 
   public errorMessage: string;
-  public studentsColumns: string[] = ['id', 'name', 'registrationNo', 'registrationDate', 'registrationStatus', 'action'];
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+
+  // tslint:disable-next-line: max-line-length
+  public studentsColumns: string[] = ['firstName','middleName','lastName', 'registrationNo', 'registrationDate', 'status', 'action'];
   public studentsDataSource: MatTableDataSource<IStudent>;
   public students: IStudent[] = [];
 
   constructor(
     private http: HttpClient,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -38,6 +42,8 @@ export class StudentListComponent implements OnInit {
 
         this.students = resp.data;
         this.studentsDataSource = new MatTableDataSource(this.students);
+        this.studentsDataSource.paginator = this.paginator;
+        this.studentsDataSource.sort = this.sort;
 
         if (!this.students) {
           this.errorMessage = 'No Student found';
@@ -57,6 +63,10 @@ export class StudentListComponent implements OnInit {
       console.error(err);
     });
 
+  }
+
+  applyFilter(filterValue: string) {
+    this.studentsDataSource.filter = filterValue.trim().toLowerCase();
   }
 
   public onClickRow(studId: number) {

@@ -11,8 +11,8 @@ public class Student {
 	private String registrationNo;
 
 	private String registrationDate;
-
-	private String registrationStatus;
+	
+	private String status;
 
 	private String firstName;
 
@@ -82,14 +82,6 @@ public class Student {
 
 	public void setRegistrationDate(String registrationDate) {
 		this.registrationDate = registrationDate;
-	}
-
-	public String getRegistrationStatus() {
-		return registrationStatus;
-	}
-
-	public void setRegistrationStatus(String registrationStatus) {
-		this.registrationStatus = registrationStatus;
 	}
 
 	public String getFirstName() {
@@ -274,6 +266,14 @@ public class Student {
 
 	public void setProfilePic(Document profilePic) {
 		this.profilePic = profilePic;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

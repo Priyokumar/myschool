@@ -75,7 +75,7 @@ export class AdmissionFeeCreateEditComponent extends Admission implements OnInit
     this.academicYearFormCtl.setValue(this.admission.academicYear);
     this.admissionDateFormCtl.setValue(moment(this.admission.admissionDate as string));
     this.standardFormCtl.setValue(this.admission.standard);
-    this.statusFormCtl.setValue(this.admission.status);
+    this.statusFormCtl.setValue(this.admission.student.status);
     this.admissionAmountFormCtl.setValue(this.admission.admissionAmount);
     this.paidAmountFormCtl.setValue(this.admission.paidAmount);
     this.dueAmountFormCtl.setValue(this.admission.dueAmount);
@@ -89,7 +89,6 @@ export class AdmissionFeeCreateEditComponent extends Admission implements OnInit
       this.rollNoFormCtl.setValue(student.rollNo);
       this.registrationNoFormCtl.setValue(student.registrationNo);
       this.registrationDateFormCtl.setValue(student.registrationDate);
-      this.registrationStatusFormCtl.setValue(student.registrationStatus);
     }
 
     this.fees = this.admission.fees;
@@ -124,7 +123,6 @@ export class AdmissionFeeCreateEditComponent extends Admission implements OnInit
         motherInfo: null,
         registrationDate: null,
         registrationNo: null,
-        registrationStatus: null,
         rollNo: null,
         standard: null,
         permanentAddress: null,
@@ -160,14 +158,13 @@ export class AdmissionFeeCreateEditComponent extends Admission implements OnInit
   }
 
   public searchStudent() {
-    const dialogRef = this.matDialog.open(SearchStudentDialogComponent, { width: '60%' })
+    const dialogRef = this.matDialog.open(SearchStudentDialogComponent, { width: '70%' })
       .afterClosed().subscribe(data => {
         if (data) {
           this.student = data;
 
           this.registrationDateFormCtl.setValue(moment(this.student.registrationDate as string));
           this.registrationNoFormCtl.setValue(this.student.registrationNo);
-          this.registrationStatusFormCtl.setValue(this.student.registrationStatus);
           this.studIdFormCtl.setValue(this.student.id);
           this.firstNameFormCtl.setValue(this.student.firstName);
           this.lastNameFormCtl.setValue(this.student.lastName);

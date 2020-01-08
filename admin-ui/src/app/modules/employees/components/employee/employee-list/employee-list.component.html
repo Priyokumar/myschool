@@ -32,9 +32,18 @@
             <td mat-cell *matCellDef="let row" class="name-class" (click)="onClickRow(row.id)">{{row.name}}</td>
           </ng-container>
 
+          <ng-container matColumnDef="employeeType">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee Type</th>
+            <td mat-cell *matCellDef="let row">
+              <app-employee-type [id]="row.employeeType"></app-employee-type>
+            </td>
+          </ng-container> 
+
           <ng-container matColumnDef="designation">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Desigination</th>
-            <td mat-cell *matCellDef="let row"> {{row.designation}} </td>
+            <td mat-cell *matCellDef="let row">
+              <app-designation [id]="row.designation"></app-designation>
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="status">
@@ -57,7 +66,7 @@
           <div>
             <h4 class="font-grey font-300">{{errorMessage}}</h4>
           </div>
-        </div> 
+        </div>
       </div>
 
     </div>

@@ -1,14 +1,15 @@
 <div class="shadow form-min-height ml-3 mr-3 mt-1 pb-5">
   <div class="row p-1" style="background-color: #dddddd">
     <div class="col-md-6">
-      <span style="font-weight: bold; font-size: 14px; line-height: 35px;">New Registration</span>
+      <span
+        style="font-weight: bold; font-size: 14px; line-height: 35px;">{{studId ? 'Update Student':'New Registration'}}</span>
     </div>
     <div class="col-md-6 text-right">
       <button class="btn btn-cancel" routerLink="/admin/students">
         <mat-icon>clear</mat-icon>&nbsp;Cancel
       </button>
       <button class="btn btn-save" (click)="save()" [disabled]='!studentForm.valid'>
-        <mat-icon>save_alt</mat-icon>&nbsp;Save Employee
+        <mat-icon>save_alt</mat-icon>&nbsp;{{studId ? 'Update':'Save'}}
       </button>
     </div>
   </div>
@@ -58,6 +59,40 @@
               </mat-error>
             </mat-form-field>
           </div>
+          <div class="col-md-4" *ngIf="studId">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Registration Number</mat-label>
+              <input matInput placeholder="Placeholder" [formControl]="registrationNoFormCtl">
+              <mat-error *ngIf="registrationNoFormCtl.hasError('required')">
+                Registration Number is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4" *ngIf="studId">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Registration Date</mat-label>
+              <input matInput [matDatepicker]="regDate" placeholder="mm/dd/yyyy"
+                [formControl]="registrationDateFormCtl">
+              <mat-datepicker-toggle matSuffix [for]="regDate"></mat-datepicker-toggle>
+              <mat-datepicker #regDate></mat-datepicker>
+              <mat-error *ngIf="registrationDateFormCtl.hasError('required')">
+                Registration Date is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4" *ngIf="studId">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Status</mat-label>
+              <mat-select placeholder="Status" [formControl]="statusFormCtl">
+                <mat-option *ngFor="let option of statuses" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="statusFormCtl.hasError('required')">
+                Status is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
           <div class="col-md-4">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Gender</mat-label>
@@ -97,15 +132,6 @@
               </mat-error>
             </mat-form-field>
           </div>
-          <!-- <div class="col-md-4">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Caste</mat-label>
-              <input matInput placeholder="Caste" [formControl]="casteFormCtl">
-              <mat-error *ngIf="casteFormCtl.hasError('required')">
-                Caste is <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-          </div> -->
           <div class="col-md-4">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Nationality</mat-label>
@@ -132,9 +158,9 @@
           <div class="col-md-4">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Standard</mat-label>
-              <mat-select placeholder="Status" [formControl]="standardFormCtl">
-                <mat-option *ngFor="let option of standards" [value]="option.value">
-                  {{option.value}}
+              <mat-select placeholder="Standard" [formControl]="standardFormCtl">
+                <mat-option *ngFor="let option of standards" [value]="option.name">
+                  {{option.name}}
                 </mat-option>
               </mat-select>
               <mat-error *ngIf="standardFormCtl.hasError('required')">
@@ -329,7 +355,8 @@
           <div class="col-md-4">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Date of birth</mat-label>
-              <input matInput [matDatepicker]="fdobt" placeholder="mm/dd/yyyy" [formControl]="fatherDobFormCtl" readonly>
+              <input matInput [matDatepicker]="fdobt" placeholder="mm/dd/yyyy" [formControl]="fatherDobFormCtl"
+                readonly>
               <mat-datepicker-toggle matSuffix [for]="fdobt"></mat-datepicker-toggle>
               <mat-datepicker #fdobt></mat-datepicker>
               <mat-error *ngIf="fatherDobFormCtl.hasError('required')">
@@ -403,7 +430,8 @@
           <div class="col-md-4">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Date of birth</mat-label>
-              <input matInput [matDatepicker]="mdobt" placeholder="mm/dd/yyyy" [formControl]="motherDobFormCtl" readonly>
+              <input matInput [matDatepicker]="mdobt" placeholder="mm/dd/yyyy" [formControl]="motherDobFormCtl"
+                readonly>
               <mat-datepicker-toggle matSuffix [for]="mdobt"></mat-datepicker-toggle>
               <mat-datepicker #mdobt></mat-datepicker>
               <mat-error *ngIf="motherDobFormCtl.hasError('required')">
@@ -439,7 +467,7 @@
               </mat-error>
             </mat-form-field>
           </div>
-         <!--  <div class="col-md-4">
+          <!--  <div class="col-md-4">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Aadhaar No</mat-label>
               <input matInput placeholder="Aadhaar No" [formControl]="motherAadhaarNoFormCtl">
@@ -476,7 +504,8 @@
           <div class="col-md-4">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Date of birth</mat-label>
-              <input matInput [matDatepicker]="gdobt" placeholder="mm/dd/yyyy" [formControl]="guardianDobFormCtl" readonly>
+              <input matInput [matDatepicker]="gdobt" placeholder="mm/dd/yyyy" [formControl]="guardianDobFormCtl"
+                readonly>
               <mat-datepicker-toggle matSuffix [for]="gdobt"></mat-datepicker-toggle>
               <mat-datepicker #gdobt></mat-datepicker>
               <mat-error *ngIf="guardianDobFormCtl.hasError('required')">
@@ -512,7 +541,7 @@
               </mat-error>
             </mat-form-field>
           </div>
-         <!--  <div class="col-md-4">
+          <!--  <div class="col-md-4">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Aadhaar No</mat-label>
               <input matInput placeholder="Aadhaar No" [formControl]="gaurdianAadhaarNoFormCtl">
