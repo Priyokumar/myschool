@@ -97,6 +97,7 @@ export class EmployeeCreateEditComponent extends Employee implements OnInit {
       joiningDate: datePipe.transform(this.joiningDate.value, 'MM/dd/yyyy'),
       employeeType: this.employeeType.value,
       designation: this.designation.value,
+      status: this.status.value,
 
       personalInfo: {
         id: this.pid.value,
@@ -181,6 +182,7 @@ export class EmployeeCreateEditComponent extends Employee implements OnInit {
     this.dob.setValue(moment(this.employee.dob as string));
     this.joiningDate.setValue(moment(this.employee.joiningDate as string));
     this.employeeType.setValue(this.employee.employeeType);
+    this.status.setValue(this.employee.status);
 
     this.http.get<IDesignation[]>(ApiEndpoint.EMPLOYEE_TYPE + '/' + this.employee.employeeType + '/designations').subscribe(data => {
       this.designations = data;
@@ -235,8 +237,15 @@ export class EmployeeCreateEditComponent extends Employee implements OnInit {
       this.empHistIdFormCtl.setValue(lastEmployeeHistory.id);
       this.employerNameFormCtl.setValue(lastEmployeeHistory.employerName);
       this.addressFormCtl.setValue(lastEmployeeHistory.address);
-      this.startDateFormCtl.setValue(moment(lastEmployeeHistory.startDate as string));
-      this.endDateFormCtl.setValue(moment(lastEmployeeHistory.endDate as string));
+
+      if (lastEmployeeHistory.startDate) {
+        this.startDateFormCtl.setValue(moment(lastEmployeeHistory.startDate as string));
+      }
+
+      if (lastEmployeeHistory.endDate) {
+        this.endDateFormCtl.setValue(moment(lastEmployeeHistory.endDate as string));
+      }
+
       this.empHistDesignationFormCtl.setValue(lastEmployeeHistory.designation);
     }
   }

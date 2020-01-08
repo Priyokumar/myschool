@@ -10,22 +10,12 @@ export class Employee {
     public hasSubmitted = false;
     public employeeForm: FormGroup;
     public employee: IEmployee;
-
     public employeeStatuses = [EmployeeStatus.IN_ACTIVE, EmployeeStatus.ACTIVE, EmployeeStatus.EXPIRED];
-    // public employeeTypes = [EmployeeType.TEACHING_STAFF, EmployeeType.FINANCE, EmployeeType.CLERK];
     public employeeTypes: IEmployeeType[] = [];
-
     public correspondentAddress: IAddress;
     public permanentAddress: IAddress;
     public personalInfo: IPersonalInfo;
-
     districts = districts;
-    /* designations: string[] = [
-        'Junior Teaching Staff',
-        'Teaching Staff',
-        'Senior Teaching Staff'
-    ]; */
-
     designations: IDesignation[] = [];
 
     yesNo: IKeyValue[] = [
@@ -88,12 +78,13 @@ export class Employee {
     public firstName = new FormControl('', Validators.required);
     public middleName = new FormControl('', null);
     public lastName = new FormControl('', Validators.required);
-    public email = new FormControl('', [Validators.required, Validators.email]);
+    public email = new FormControl('', [Validators.email]);
     public mobileNo = new FormControl('', [Validators.required]);
     public dob = new FormControl('', Validators.required);
     public joiningDate = new FormControl('', Validators.required);
     public employeeType = new FormControl('', Validators.required);
     public designation = new FormControl('', Validators.required);
+    public status = new FormControl('', null);
 
     // Personal Info
     public pid = new FormControl('', null);

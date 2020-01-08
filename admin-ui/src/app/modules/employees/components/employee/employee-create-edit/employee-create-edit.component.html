@@ -8,7 +8,7 @@
         <mat-icon>clear</mat-icon>&nbsp;Cancel
       </button>
       <button class="btn btn-save" (click)="save()" [disabled]='!employeeForm.valid'>
-        <mat-icon>save_alt</mat-icon>&nbsp;Save Employee
+        <mat-icon>save_alt</mat-icon>&nbsp;{{empId? 'Update':'Save'}}
       </button>
     </div>
   </div>
@@ -114,7 +114,8 @@
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Employee Type</mat-label>
               <mat-select placeholder="Status" [formControl]="employeeType">
-                <mat-option *ngFor="let option of employeeTypes" [value]="option.id" (click)="onChangeEmployeeType(option.id)">
+                <mat-option *ngFor="let option of employeeTypes" [value]="option.id"
+                  (click)="onChangeEmployeeType(option.id)">
                   {{option.name}}
                 </mat-option>
               </mat-select>
@@ -128,12 +129,26 @@
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Designation</mat-label>
               <mat-select placeholder="Designation" [formControl]="designation">
-                <mat-option *ngFor="let option of designations" [value]="option.id" >
+                <mat-option *ngFor="let option of designations" [value]="option.id">
                   {{option.name}}
                 </mat-option>
               </mat-select>
               <mat-error *ngIf="designation.hasError('required')">
                 Designation is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-4 pb-3" *ngIf="empId">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Status</mat-label>
+              <mat-select placeholder="Status" [formControl]="status">
+                <mat-option *ngFor="let option of employeeStatuses" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="employeeType.hasError('required')">
+                Status is <strong>required</strong>
               </mat-error>
             </mat-form-field>
           </div>

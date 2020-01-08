@@ -35,7 +35,7 @@ export class AdmissionFeeCreateEditComponent extends Admission implements OnInit
       this.promiseToPayDateFormCtl.enable();
       this.promiseToPayDateFormCtl.setValidators(Validators.required);
       this.promiseToPayDateFormCtl.updateValueAndValidity();
-      if (admAmout < paidAmount) {
+      if (admAmout >= paidAmount) {
         this.promiseToPayDateFormCtl.disable();
         this.promiseToPayDateFormCtl.setValidators(null);
         this.promiseToPayDateFormCtl.updateValueAndValidity();
@@ -165,6 +165,7 @@ export class AdmissionFeeCreateEditComponent extends Admission implements OnInit
 
           this.registrationDateFormCtl.setValue(moment(this.student.registrationDate as string));
           this.registrationNoFormCtl.setValue(this.student.registrationNo);
+          this.statusFormCtl.setValue(this.student.status);
           this.studIdFormCtl.setValue(this.student.id);
           this.firstNameFormCtl.setValue(this.student.firstName);
           this.lastNameFormCtl.setValue(this.student.lastName);

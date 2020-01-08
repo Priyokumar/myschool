@@ -120,6 +120,7 @@ public class ScEmployeeService {
 		Employee dtoEmployee = new Employee();
 
 		dtoEmployee.setId(employee.getId());
+		dtoEmployee.setEmpCode(employee.getEmpCode());
 		dtoEmployee.setProfilePic(setDocDtoDoc(employee.getProfilePic()));
 		dtoEmployee.setDesignation(employee.getDesignation());
 		dtoEmployee.setDob(ScDateUtil.dateToString(employee.getDob()));
@@ -240,6 +241,12 @@ public class ScEmployeeService {
 
 		if (!ScUtil.isAllPresent(employee))
 			throw new NotFoundException("No users can be found !");
+		
+		if(ScUtil.isAllPresent(id)) {
+			employee.setStatus(employeeDto.getStatus());
+		}else {
+			employee.setStatus("In active");
+		}
 
 		employee.setId(employeeDto.getId());
 		employee.setDesignation(employeeDto.getDesignation());
@@ -251,7 +258,6 @@ public class ScEmployeeService {
 		employee.setJoiningDate(ScDateUtil.stringToDate(employeeDto.getJoiningDate()));
 		employee.setLastName(employeeDto.getLastName());
 		employee.setMiddleName(employeeDto.getMiddleName());
-		employee.setStatus(employeeDto.getStatus());
 		employee.setGender(employeeDto.getGender());
 		employee.setSameAsPermanentAddress(employeeDto.getSameAsPermanentAddress());
 		
@@ -341,6 +347,13 @@ public class ScEmployeeService {
 		}
 		employee = commonService.save(employee);
 		createOrUpdateEmployeeSalary(employee);
+		
+		if(!ScUtil.isAllPresent(employee.getEmpCode())) {
+			
+			String empCode = "EMP" + employee.getId();
+			employee.setEmpCode(empCode);
+			employee = commonService.save(employee);
+		}
 
 		res.setApiMessage(ApiUtil.okMessage("Success"));
 		res.setActionMessage(employee.getId().toString());

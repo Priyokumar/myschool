@@ -5,6 +5,8 @@ import com.yourschool.server.dto.Document;
 public class Employee {
 
 	private Long id;
+	
+	private String empCode;
 
 	private String firstName;
 
@@ -203,5 +205,15 @@ public class Employee {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+
+	public String getEmpCode() {
+		return empCode;
+	}
+
+	public void setEmpCode(String empCode) {
+		this.empCode = empCode;
+	}
+	
+	
 
 }

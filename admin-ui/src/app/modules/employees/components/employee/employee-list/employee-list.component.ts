@@ -14,7 +14,7 @@ import { ConfirmationDialogComponent } from 'src/app/modules/shared/components/c
 export class EmployeeListComponent implements OnInit {
 
   errorMessage: string;
-  employeesColumns: string[] = ['id', 'name', 'employeeType', 'designation', 'status', 'action'];
+  employeesColumns: string[] = ['id', 'name', 'empCode', 'employeeType', 'designation', 'status', 'action'];
   employeesDataSource: MatTableDataSource<IBasicEmployeeDetails>;
   employees: IEmployee[] = [];
   basicEmployeeDetails: IBasicEmployeeDetails[] = [];
@@ -105,6 +105,7 @@ export class EmployeeListComponent implements OnInit {
         employeeType: employee.employeeType,
         designation: employee.designation,
         id: employee.id,
+        empCode: employee.empCode,
         name,
         status: employee.status
       };
@@ -124,6 +125,7 @@ export class EmployeeListComponent implements OnInit {
 
 interface IBasicEmployeeDetails {
   id: number;
+  empCode: string;
   name: string;
   designation: number;
   status: string;

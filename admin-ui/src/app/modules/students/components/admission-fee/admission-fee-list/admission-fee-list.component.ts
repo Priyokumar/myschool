@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource, MatDialog } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource, MatDialog, MatPaginator, MatSort } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { IAdmission } from '../../../models/admission-fee.model';
@@ -17,6 +17,8 @@ export class AdmissionFeeListComponent implements OnInit {
   public admissionColumns: string[] = ['id', 'name', 'registrationNo', 'Class', 'Admission Number', 'action'];
   public admissionsDataSource: MatTableDataSource<IAdmission>;
   public admissions: IAdmission[] = [];
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(
     private http: HttpClient,
@@ -57,6 +59,10 @@ export class AdmissionFeeListComponent implements OnInit {
       console.error(err);
     });
 
+  }
+
+  applyFilter(filterValue: string) {
+    this.admissionsDataSource.filter = filterValue.trim().toLowerCase();
   }
 
   public onClickRow(admId: number) {

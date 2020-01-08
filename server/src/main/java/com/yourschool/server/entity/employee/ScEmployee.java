@@ -40,6 +40,9 @@ public class ScEmployee implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "SC_ID")
 	private Long id;
+	
+	@Column(name = "EMP_CODE")
+	private String empCode;
 
 	@Column(name = "FIRST_NAME")
 	private String firstName;
@@ -289,6 +292,14 @@ public class ScEmployee implements Serializable {
 
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+
+	public String getEmpCode() {
+		return empCode;
+	}
+
+	public void setEmpCode(String empCode) {
+		this.empCode = empCode;
 	}
 	
 }

@@ -32,6 +32,11 @@
             <td mat-cell *matCellDef="let row" class="name-class" (click)="onClickRow(row.id)">{{row.name}}</td>
           </ng-container>
 
+          <ng-container matColumnDef="empCode">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee Code</th>
+            <td mat-cell *matCellDef="let row" class="name-class" (click)="onClickRow(row.id)">{{row.empCode}}</td>
+          </ng-container>
+
           <ng-container matColumnDef="employeeType">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee Type</th>
             <td mat-cell *matCellDef="let row">

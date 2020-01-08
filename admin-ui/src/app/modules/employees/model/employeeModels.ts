@@ -77,6 +77,7 @@ export interface IEmployeeSalary {
 export interface IEmployee {
 
     id: number;
+    empCode?: string;
     firstName: string;
     middleName: string;
     lastName: string;

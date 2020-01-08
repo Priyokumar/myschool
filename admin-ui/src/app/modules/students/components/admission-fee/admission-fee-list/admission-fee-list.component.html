@@ -1,9 +1,13 @@
 <div class="shadow form-min-height mt-1">
   <div class="row p-1" style="background-color: #dddddd">
-    <div class="col-md-6">
+    <div class="col-md-4">
       <span style="font-weight: bold; font-size: 14px; line-height: 35px;">Admissions</span>
     </div>
-    <div class="col-md-6 text-right">
+    <div class="col-md-8 text-right">
+      <mat-form-field class="w-50">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+        <mat-icon matSuffix>filter_list</mat-icon>
+      </mat-form-field>&nbsp;
       <button class="btn btn-save" [routerLink]="['/admin/students/admissions/add']">
         <mat-icon>add</mat-icon>&nbsp;New Admission
       </button>
@@ -53,6 +57,7 @@
           <tr mat-row *matRowDef="let row; columns: admissionColumns ; let i = index;">
           </tr>
         </table>
+        <mat-paginator [pageSizeOptions]="[12, 20,30,40,50,60,70,80,90,100]" showFirstLastButtons></mat-paginator>
         <div class="d-flex justify-content-center align-items-center" style="height: 40vh;" *ngIf="admissions.length <= 0">
           <div>
             <h4 class="font-grey font-300">No admission to display.</h4>
