@@ -36,6 +36,9 @@ public class ScAdmission implements Serializable {
 
 	@Column(name = "ADMISSION_REF_NO")
 	private String admissionRefNo;
+	
+	@Column(name = "status")
+	private String status;
 
 	@Column(name = "ACADEMIC_YEAR")
 	private String academicYear;
@@ -45,9 +48,6 @@ public class ScAdmission implements Serializable {
 
 	@Column(name = "STANDARD")
 	private String standard;
-
-	@Column(name = "STATUS")
-	private String status;
 
 	@Column(name = "ADMISSION_AMOUNT")
 	private Double admissionAmount;
@@ -113,14 +113,6 @@ public class ScAdmission implements Serializable {
 		this.standard = standard;
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
 	public Double getAdmissionAmount() {
 		return admissionAmount;
 	}
@@ -175,6 +167,14 @@ public class ScAdmission implements Serializable {
 
 	public void setRecordAudit(ScRecordAudit recordAudit) {
 		this.recordAudit = recordAudit;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

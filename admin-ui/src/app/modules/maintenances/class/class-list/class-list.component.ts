@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { IStandard } from '../../model/standard';
-import { MatTableDataSource, MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { ApiEndpoint, IConfirmation } from 'src/app/modules/shared/model/shared.model';
+import { ApiEndpoint, IConfirmation, SnackBarConfig } from 'src/app/modules/shared/model/shared.model';
 import { ConfirmationDialogComponent } from 'src/app/modules/shared/components/confirmation-dialog/confirmation-dialog.component';
+import { SnackbarInfoComponent } from 'src/app/modules/shared/snackbar-info/snackbar-info.component';
 
 @Component({
   selector: 'app-class-list',
@@ -19,7 +20,8 @@ export class ClassListComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -29,14 +31,11 @@ export class ClassListComponent implements OnInit {
   private getStandards() {
 
     this.http.get<any>(ApiEndpoint.STANDARD).subscribe(data => {
-
       if (data && !data.apiMessage.error) {
-
         this.standards = data.data;
         if (!this.standards) {
           this.errorMessage = 'No standards found';
         }
-
       } else {
         this.errorMessage = data.apiMessage.detail;
       }
@@ -47,10 +46,8 @@ export class ClassListComponent implements OnInit {
       } else {
         this.errorMessage = err.message;
       }
-
       console.error(err);
     });
-
   }
 
   public onClickRow(standardId: number) {
@@ -67,8 +64,23 @@ export class ClassListComponent implements OnInit {
     this.dialog.open(ConfirmationDialogComponent, { width: '26%', data: confirmationData, disableClose: true })
       .afterClosed().subscribe(okData => {
         if (okData) {
-
-          this.http.delete(ApiEndpoint.STANDARD + '/' + standardId).subscribe(data => {
+          this.http.delete<any>(ApiEndpoint.STANDARD + '/' + standardId).subscribe(data => {
+            if (data.apiMessage && data.apiMessage.error) {
+              this.snackBar.openFromComponent(
+                SnackbarInfoComponent,
+                {
+                  data: SnackBarConfig.dangerData(data.apiMessage.detail),
+                  ...SnackBarConfig.flashTopDangerSnackBar()
+                });
+              return;
+            } else {
+              this.snackBar.openFromComponent(
+                SnackbarInfoComponent,
+                {
+                  data: SnackBarConfig.successData(data.apiMessage.detail),
+                  ...SnackBarConfig.flashTopSuccessSnackBar()
+                });
+            }
             this.getStandards();
           }, err => {
             console.error(err);
@@ -77,6 +89,12 @@ export class ClassListComponent implements OnInit {
             } else {
               this.errorMessage = err.message;
             }
+            this.snackBar.openFromComponent(
+              SnackbarInfoComponent,
+              {
+                data: SnackBarConfig.dangerData(this.errorMessage),
+                ...SnackBarConfig.flashTopDangerSnackBar()
+              });
           });
         }
       });

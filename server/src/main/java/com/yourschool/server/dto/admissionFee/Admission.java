@@ -10,14 +10,14 @@ public class Admission {
 	private Long id;
 
 	private String admissionRefNo;
+	
+	private String status;
 
 	private String academicYear;
 
 	private String admissionDate;
 
 	private String standard;
-
-	private String status;
 
 	private Double admissionAmount;
 
@@ -71,14 +71,6 @@ public class Admission {
 
 	public void setStandard(String standard) {
 		this.standard = standard;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
 	}
 
 	public Double getAdmissionAmount() {
@@ -136,5 +128,15 @@ public class Admission {
 	public void setRecordAudit(RecordAudit recordAudit) {
 		this.recordAudit = recordAudit;
 	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	
 
 }

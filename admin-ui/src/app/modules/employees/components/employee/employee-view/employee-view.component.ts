@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatTableDataSource, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatDialog, MatSnackBar } from '@angular/material';
 import { IEmployee, IDocument, IEmployeeType } from '../../../model/employeeModels';
-import { ApiEndpoint, IConfirmation } from 'src/app/modules/shared/model/shared.model';
+import { ApiEndpoint, IConfirmation, SnackBarConfig } from 'src/app/modules/shared/model/shared.model';
 import { FileUploadService } from 'src/app/modules/shared/services/file-upload.service';
 import { ConfirmationDialogComponent } from 'src/app/modules/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { Observable } from 'rxjs';
+import { SnackbarInfoComponent } from 'src/app/modules/shared/snackbar-info/snackbar-info.component';
 
 @Component({
   selector: 'app-employee-view',
@@ -52,7 +53,8 @@ export class EmployeeViewComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private fileUploadService: FileUploadService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.empId = params.empId;
@@ -121,7 +123,25 @@ export class EmployeeViewComponent implements OnInit {
     this.dialog.open(ConfirmationDialogComponent, { width: '26%', data: confirmationData, disableClose: true })
       .afterClosed().subscribe(okData => {
         if (okData) {
-          this.http.delete(ApiEndpoint.EMPLOYEES + '/' + this.empId).subscribe(data => {
+          this.http.delete<any>(ApiEndpoint.EMPLOYEES + '/' + this.empId).subscribe(data => {
+
+            if (data.apiMessage && data.apiMessage.error) {
+              this.snackBar.openFromComponent(
+                SnackbarInfoComponent,
+                {
+                  data: SnackBarConfig.dangerData(data.apiMessage.detail),
+                  ...SnackBarConfig.flashTopDangerSnackBar()
+                });
+              return;
+            } else {
+              this.snackBar.openFromComponent(
+                SnackbarInfoComponent,
+                {
+                  data: SnackBarConfig.successData(data.apiMessage.detail),
+                  ...SnackBarConfig.flashTopSuccessSnackBar()
+                });
+            }
+
             this.router.navigate(['/admin/employees']);
           }, err => {
             console.error(err);
@@ -130,6 +150,12 @@ export class EmployeeViewComponent implements OnInit {
             } else {
               this.errorMessage = err.message;
             }
+            this.snackBar.openFromComponent(
+              SnackbarInfoComponent,
+              {
+                data: SnackBarConfig.dangerData(this.errorMessage),
+                ...SnackBarConfig.flashTopDangerSnackBar()
+              });
           });
         }
       });

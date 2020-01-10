@@ -24,19 +24,19 @@ public class ScEmployeTypeController {
 		return employeeTypeService.findEmployeeTypes();
 	}
 	
-	@GetMapping(value = "/{id}")
-	public EmployeeType findEmployeeType(@PathVariable("id") Long id) {
-		return employeeTypeService.findEmployeeTypeById(id);
+	@GetMapping(value = "/{name}")
+	public EmployeeType findEmployeeType(@PathVariable("name") String name) {
+		return employeeTypeService.findEmployeeTypeById(name);
 	}
 	
-	@GetMapping(value = "/{id}/designations")
-	public List<Designation>  findDesignationsByEmployeeType(@PathVariable("id") Long id) {
-		return employeeTypeService.findDesignationsByEmployeeType(id);
+	@GetMapping(value = "/{name}/designations")
+	public List<Designation>  findDesignationsByEmployeeType(@PathVariable("name") String name) {
+		return employeeTypeService.findDesignationsByEmployeeType(name);
 	}
 	
-	@GetMapping(value = "/designations/{id}")
-	public Designation  findDesignationById(@PathVariable("id") Long id) {
-		return employeeTypeService.findDesignationById(id);
+	@GetMapping(value = "/designations/{name}")
+	public Designation  findDesignationById(@PathVariable("name") String name) {
+		return employeeTypeService.findDesignationById(name);
 	}
 
 }

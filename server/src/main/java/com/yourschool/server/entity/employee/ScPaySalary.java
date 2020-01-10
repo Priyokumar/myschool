@@ -33,7 +33,7 @@ public class ScPaySalary implements Serializable {
 	@Column(name = "DUE_AMOUNT")
 	private Double dueAmount;
 	
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER,optional = true)
 	@JoinColumn(name = "EMPLOYEE_SALARY")
 	private ScEmployeeSalary employeeSalary;
 	

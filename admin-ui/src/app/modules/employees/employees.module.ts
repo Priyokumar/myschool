@@ -36,9 +36,6 @@ import { EmployeeAttendanceSingleFormComponent } from './components/employee-att
 import { EmployeeService } from './services/employee.service';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { EmployeesDialogComponent } from './components/employee/employees-dialog/employees-dialog.component';
-import { EmployeeTypeComponent } from './components/employee/employee-type.component';
-import { DesignationComponent } from './components/employee/designation.component';
-
 
 const routes: Routes = [
   { path: '', component: EmployeeListComponent },
@@ -90,8 +87,6 @@ const routes: Routes = [
     TeachingStaffCreateEditComponent,
     EmployeeAttendanceSingleFormComponent,
     EmployeesDialogComponent,
-    EmployeeTypeComponent,
-    DesignationComponent
 
   ],
   imports: [

@@ -5,9 +5,10 @@ import { Employee } from './employee';
 import { DatePipe } from '@angular/common';
 
 import * as moment from 'moment';
-import { ApiEndpoint } from 'src/app/modules/shared/model/shared.model';
+import { ApiEndpoint, SnackBarConfig } from 'src/app/modules/shared/model/shared.model';
 import { IEmployee, IEmployeeType, IDesignation } from '../../../model/employeeModels';
-import { MatSelectChange } from '@angular/material';
+import { MatSelectChange, MatSnackBar } from '@angular/material';
+import { SnackbarInfoComponent } from 'src/app/modules/shared/snackbar-info/snackbar-info.component';
 
 @Component({
   selector: 'app-employee-create-edit',
@@ -16,7 +17,12 @@ import { MatSelectChange } from '@angular/material';
 })
 export class EmployeeCreateEditComponent extends Employee implements OnInit {
 
-  constructor(private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private snackBar: MatSnackBar
+  ) {
     super();
 
     this.activatedRoute.params.subscribe(params => {
@@ -71,10 +77,10 @@ export class EmployeeCreateEditComponent extends Employee implements OnInit {
     });
   }
 
-  onChangeEmployeeType(id: number) {
+  onChangeEmployeeType(name: string) {
 
     this.designations = this.employeeTypes.find(employeeType => {
-      return employeeType.id === id;
+      return employeeType.name === name;
     }).designations;
 
   }
@@ -150,6 +156,23 @@ export class EmployeeCreateEditComponent extends Employee implements OnInit {
 
     this.saveOrUpdateHttpObservable(this.empId, employeePayloadData).subscribe((data: any) => {
 
+      if (data.apiMessage && data.apiMessage.error) {
+        this.snackBar.openFromComponent(
+          SnackbarInfoComponent,
+          {
+            data: SnackBarConfig.dangerData(data.apiMessage.detail),
+            ...SnackBarConfig.flashTopDangerSnackBar()
+          });
+        return;
+      } else {
+        this.snackBar.openFromComponent(
+          SnackbarInfoComponent,
+          {
+            data: SnackBarConfig.successData(data.apiMessage.detail),
+            ...SnackBarConfig.flashTopSuccessSnackBar()
+          });
+      }
+
       this.hasSubmitted = true;
       this.router.navigate(['admin/employees/' + data.actionMessage + '/view']);
 
@@ -160,8 +183,13 @@ export class EmployeeCreateEditComponent extends Employee implements OnInit {
       } else {
         this.errorMessage = err.message;
       }
+      this.snackBar.openFromComponent(
+        SnackbarInfoComponent,
+        {
+          data: SnackBarConfig.dangerData(this.errorMessage),
+          ...SnackBarConfig.flashTopDangerSnackBar()
+        });
     });
-
   }
 
   private saveOrUpdateHttpObservable(empdId: number, employeePayloadData: IEmployee) {
@@ -179,8 +207,13 @@ export class EmployeeCreateEditComponent extends Employee implements OnInit {
     this.lastName.setValue(this.employee.lastName);
     this.email.setValue(this.employee.email);
     this.mobileNo.setValue(this.employee.mobileNo);
-    this.dob.setValue(moment(this.employee.dob as string));
-    this.joiningDate.setValue(moment(this.employee.joiningDate as string));
+    if (this.employee.dob) {
+      this.dob.setValue(moment(this.employee.dob as string));
+    }
+    if (this.employee.joiningDate) {
+      this.joiningDate.setValue(moment(this.employee.joiningDate as string));
+    }
+
     this.employeeType.setValue(this.employee.employeeType);
     this.status.setValue(this.employee.status);
 
@@ -228,10 +261,13 @@ export class EmployeeCreateEditComponent extends Employee implements OnInit {
       this.boardFormCtl.setValue(highestQualification.board);
       this.schoolInstitueFormCtl.setValue(highestQualification.schoolInstitue);
       this.scoreFormCtl.setValue(highestQualification.score);
-      this.startYearFormCtl.setValue(moment(highestQualification.startYear as string));
-      this.passOutYearFormCtl.setValue(moment(highestQualification.passOutYear as string));
+      if (highestQualification.startYear) {
+        this.startYearFormCtl.setValue(moment(highestQualification.startYear as string));
+      }
+      if (highestQualification.passOutYear) {
+        this.passOutYearFormCtl.setValue(moment(highestQualification.passOutYear as string));
+      }
     }
-
     const lastEmployeeHistory = this.employee.lastEmployeeHistory;
     if (lastEmployeeHistory) {
       this.empHistIdFormCtl.setValue(lastEmployeeHistory.id);

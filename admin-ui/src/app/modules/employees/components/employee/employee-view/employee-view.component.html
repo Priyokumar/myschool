@@ -1,7 +1,7 @@
-<div class="shadow form-min-height ml-3 mr-3 mt-1 pb-5">
-  <div class="row p-1" style="background-color: #dddddd">
+<div class="shadow form-min-height">
+  <div class="row p-1 bg-gold">
     <div class="col-md-6">
-      <span style="font-weight: bold; font-size: 14px; line-height: 35px;">Employee Details</span>
+      <span class="font-400 font-banner" style="line-height: 35px;">Employee Details</span>
     </div>
     <div class="col-md-6 text-right">
       <button class="btn btn-save" routerLink="/admin/employees">
@@ -24,7 +24,7 @@
     </div>
   </div>
 
-  <div [ngClass]="['pt-1','pr-5','pl-5']" *ngIf="employee">
+  <div [ngClass]="['pt-1','pr-5','pl-5']" class="bg-white" *ngIf="employee">
     <mat-tab-group>
       <mat-tab>
         <ng-template mat-tab-label>
@@ -77,11 +77,11 @@
                   </div>
 
                   <div class="col-md-4" >
-                    <p>Employee Type : <app-employee-type [id]="employee.employeeType"></app-employee-type> </p>
+                    <p>Employee Type : {{employee.employeeType}} </p>
                   </div>
 
                   <div class="col-md-4">
-                    <p>Designation : <app-designation [id]="employee.designation"></app-designation></p>
+                    <p>Designation : {{employee.designation}}</p>
                   </div>
                 </div>
               </div>

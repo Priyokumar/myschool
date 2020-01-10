@@ -26,7 +26,7 @@ public class ScEmployeeSalary implements Serializable {
 	@Column(name = "SALARY_AMOUNT")
 	private Double salaryAmount;
 
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER, optional = true)
 	@JoinColumn(name = "EMPLOYEE")
 	private ScEmployee employee;
 

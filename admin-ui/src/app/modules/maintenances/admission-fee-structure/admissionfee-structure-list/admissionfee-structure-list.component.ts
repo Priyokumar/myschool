@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MatTableDataSource, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { IAdmissionFeeMaintenanceYearly } from 'src/app/modules/students/models/maintenance';
-import { ApiEndpoint, IConfirmation } from 'src/app/modules/shared/model/shared.model';
+import { ApiEndpoint, IConfirmation, SnackBarConfig } from 'src/app/modules/shared/model/shared.model';
 import { ConfirmationDialogComponent } from 'src/app/modules/shared/components/confirmation-dialog/confirmation-dialog.component';
+import { SnackbarInfoComponent } from 'src/app/modules/shared/snackbar-info/snackbar-info.component';
 
 @Component({
   selector: 'app-admissionfee-structure-list',
   templateUrl: './admissionfee-structure-list.component.html',
-  styleUrls: ['./admissionfee-structure-list.component.css']
+  styleUrls: ['./admissionfee-structure-list.component.scss']
 })
 export class AdmissionfeeStructureListComponent implements OnInit {
 
@@ -21,7 +22,8 @@ export class AdmissionfeeStructureListComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -74,7 +76,25 @@ export class AdmissionfeeStructureListComponent implements OnInit {
       .afterClosed().subscribe(okData => {
         if (okData) {
 
-          this.http.delete(ApiEndpoint.ADDMISSION_FEE_MAINTENANCE + '/' + admFeeStructureId).subscribe(data => {
+          this.http.delete<any>(ApiEndpoint.ADDMISSION_FEE_MAINTENANCE + '/' + admFeeStructureId).subscribe(data => {
+
+            if (data.apiMessage && data.apiMessage.error) {
+              this.snackBar.openFromComponent(
+                SnackbarInfoComponent,
+                {
+                  data: SnackBarConfig.dangerData(data.apiMessage.detail),
+                  ...SnackBarConfig.flashTopDangerSnackBar()
+                });
+              return;
+            } else {
+              this.snackBar.openFromComponent(
+                SnackbarInfoComponent,
+                {
+                  data: SnackBarConfig.successData(data.apiMessage.detail),
+                  ...SnackBarConfig.flashTopSuccessSnackBar()
+                });
+            }
+
             this.admFeeStructureDataSource = new MatTableDataSource([]);
             this.getAdmFeeStructures();
           }, err => {
@@ -84,6 +104,12 @@ export class AdmissionfeeStructureListComponent implements OnInit {
             } else {
               this.errorMessage = err.message;
             }
+            this.snackBar.openFromComponent(
+              SnackbarInfoComponent,
+              {
+                data: SnackBarConfig.dangerData(this.errorMessage),
+                ...SnackBarConfig.flashTopDangerSnackBar()
+              });
           });
 
         }

@@ -1,7 +1,7 @@
-<div class="shadow form-min-height ml-3 mr-3 mt-1 pb-5">
-  <div class="row p-1" style="background-color: #dddddd">
+<div class="shadow form-min-height">
+  <div class="row p-1 bg-gold">
     <div class="col-md-6">
-      <span style="font-weight: bold; font-size: 14px; line-height: 35px;">Student Details</span>
+      <span class="font-400 font-banner" style="line-height: 35px;">Student Details</span>
     </div>
     <div class="col-md-6 text-right">
       <button class="btn btn-save" routerLink="/admin/students">
@@ -44,8 +44,7 @@
             <div class="col-md-10">
               <div class="row">
                 <div class="col-md-12">
-                  <p style="font-weight: bold; font-size: 14px;">Registration Info</p>
-                  <hr>
+                  <div class="font-500 font-title-lg pb-1">Registration Info</div>
                 </div>
                 <div class="col-md-4">
                   <p>Registration Number : {{student.registrationNo}}</p>
@@ -54,12 +53,13 @@
                   <p>Registration Date : {{student.registrationDate}}</p>
                 </div>
                 <div class="col-md-4">
-                  <p>Registration Status : {{student.status}}</p>
+                  <p>Status : <span class="pl-2 pr-2 rounded font-white"  
+                    [ngClass]="{'bg-green': student.status === 'Active','bg-red':student.status === 'Inactive'}">{{student.status}}</span></p>
                 </div>
 
                 <div class="col-md-12">
-                  <p style="font-weight: bold; font-size: 14px;">Student Info</p>
-                  <hr>
+                  <br>
+                  <div class="font-500 font-title-lg pb-1">Student Info</div>
                 </div>
                 <div class="col-md-4">
                   <p>First name : {{student.firstName}}</p>
@@ -71,7 +71,25 @@
                   <p>Last name : {{student.lastName}}</p>
                 </div>
                 <div class="col-md-4">
-                  <p>Standard : {{student.standard}}</p>
+                  <p>Gender : {{student.gender}}</p>
+                </div>
+                <div class="col-md-4">
+                  <p>Blood Group : {{student.bloodGroup}}</p>
+                </div>
+                <div class="col-md-4">
+                  <p>Religion : {{student.religion}}</p>
+                </div>
+                <div class="col-md-4">
+                  <p>Community : {{student.community}}</p>
+                </div>
+                <div class="col-md-4">
+                  <p>Nationality : {{student.nationality}}</p>
+                </div>
+                <div class="col-md-4">
+                  <p>Class : {{student.standard}}</p>
+                </div>
+                <div class="col-md-4">
+                  <p>Roll Number : {{student.rollNo?student.rollNo:'NA'}}</p>
                 </div>
                 <div class="col-md-4">
                   <p>Date of birth : {{student.dob}}</p>

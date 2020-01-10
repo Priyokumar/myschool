@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ApiEndpoint, IConfirmation } from 'src/app/modules/shared/model/shared.model';
+import { ApiEndpoint, IConfirmation, SnackBarConfig } from 'src/app/modules/shared/model/shared.model';
 import { IStandard } from '../../model/standard';
 import { ConfirmationDialogComponent } from 'src/app/modules/shared/components/confirmation-dialog/confirmation-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
+import { SnackbarInfoComponent } from 'src/app/modules/shared/snackbar-info/snackbar-info.component';
 
 @Component({
   selector: 'app-class-view',
@@ -22,7 +23,8 @@ export class ClassViewComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {
 
     this.activatedRoute.params.subscribe(params => {
@@ -62,7 +64,25 @@ export class ClassViewComponent implements OnInit {
       .afterClosed().subscribe(okData => {
         if (okData) {
 
-          this.http.delete(ApiEndpoint.STANDARD + '/' + this.standardId).subscribe(data => {
+          this.http.delete<any>(ApiEndpoint.STANDARD + '/' + this.standardId).subscribe(data => {
+
+            if (data.apiMessage && data.apiMessage.error) {
+              this.snackBar.openFromComponent(
+                SnackbarInfoComponent,
+                {
+                  data: SnackBarConfig.dangerData(data.apiMessage.detail),
+                  ...SnackBarConfig.flashTopDangerSnackBar()
+                });
+              return;
+            } else {
+              this.snackBar.openFromComponent(
+                SnackbarInfoComponent,
+                {
+                  data: SnackBarConfig.successData(data.apiMessage.detail),
+                  ...SnackBarConfig.flashTopSuccessSnackBar()
+                });
+            }
+
             this.router.navigate(['/admin/maintenances/classes']);
           }, err => {
             console.error(err);
@@ -71,6 +91,12 @@ export class ClassViewComponent implements OnInit {
             } else {
               this.errorMessage = err.message;
             }
+            this.snackBar.openFromComponent(
+              SnackbarInfoComponent,
+              {
+                data: SnackBarConfig.dangerData(this.errorMessage),
+                ...SnackBarConfig.flashTopDangerSnackBar()
+              });
           });
 
         }

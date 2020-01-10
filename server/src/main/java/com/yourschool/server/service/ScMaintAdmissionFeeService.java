@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yourschool.server.dto.ActionResponse;
+import com.yourschool.server.dto.ApiMessage;
 import com.yourschool.server.dto.ApiUtil;
 import com.yourschool.server.dto.error.NotFoundException;
 import com.yourschool.server.dto.maintenance.MaintAdmissionFeeResponse;
@@ -70,6 +71,18 @@ public class ScMaintAdmissionFeeService {
 			Long id) {
 
 		ActionResponse res = new ActionResponse();
+		
+		String year = maintAdmissionFeeYearlyDto.getYear();
+		List<Filter> filters = new ArrayList<>();
+		filters.add(new Filter("year", Operator.EQUAL, FieldType.NUMBER, year));
+		ScMaintenanceAdmissionFeeYearly existingData = commonService.findOne(filters, ScMaintenanceAdmissionFeeYearly.class);
+		
+		if(ScUtil.isAllPresent(existingData)) {
+			ApiMessage apiMessage = new ApiMessage(true, 500, "Admission fee structure for the year - " + year+" is already exists", "Internal server error");
+			res.setApiMessage(apiMessage);
+			return res;
+		}
+		
 		ScMaintenanceAdmissionFeeYearly maintAdmissionFeeYearly = new ScMaintenanceAdmissionFeeYearly();
 
 		if (ScUtil.isAllPresent(id))

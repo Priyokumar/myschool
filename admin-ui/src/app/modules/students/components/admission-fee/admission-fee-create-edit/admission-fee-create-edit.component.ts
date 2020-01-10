@@ -4,11 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
-import { MatDialog, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatTableDataSource, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { SearchStudentDialogComponent } from '../../search-student-dialog/search-student-dialog.component';
 import { Validators } from '@angular/forms';
-import { ApiEndpoint } from 'src/app/modules/shared/model/shared.model';
+import { ApiEndpoint, SnackBarConfig } from 'src/app/modules/shared/model/shared.model';
 import { IAdmission } from '../../../models/admission-fee.model';
+import { SnackbarInfoComponent } from 'src/app/modules/shared/snackbar-info/snackbar-info.component';
 
 @Component({
   selector: 'app-admission-fee-create-edit',
@@ -18,7 +19,13 @@ import { IAdmission } from '../../../models/admission-fee.model';
 export class AdmissionFeeCreateEditComponent extends Admission implements OnInit {
 
 
-  constructor(private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute, private matDialog: MatDialog) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private matDialog: MatDialog,
+    private snackBar: MatSnackBar
+  ) {
     super();
     this.activatedRoute.params.subscribe(params => {
       this.admId = params.id;
@@ -72,10 +79,11 @@ export class AdmissionFeeCreateEditComponent extends Admission implements OnInit
 
     this.idFormCtl.setValue(this.admission.id);
     this.admissionRefNoFormCtl.setValue(this.admission.admissionRefNo);
+    this.admissionStatusFormCtl.setValue(this.admission.status);
     this.academicYearFormCtl.setValue(this.admission.academicYear);
     this.admissionDateFormCtl.setValue(moment(this.admission.admissionDate as string));
     this.standardFormCtl.setValue(this.admission.standard);
-    this.statusFormCtl.setValue(this.admission.student.status);
+    this.studentStatusFormCtl.setValue(this.admission.student.status);
     this.admissionAmountFormCtl.setValue(this.admission.admissionAmount);
     this.paidAmountFormCtl.setValue(this.admission.paidAmount);
     this.dueAmountFormCtl.setValue(this.admission.dueAmount);
@@ -102,10 +110,10 @@ export class AdmissionFeeCreateEditComponent extends Admission implements OnInit
     const admissionPayloadData: IAdmission = {
       id: this.idFormCtl.value,
       admissionRefNo: this.admissionRefNoFormCtl.value,
+      status: this.admissionStatusFormCtl.value,
       academicYear: this.academicYearFormCtl.value,
       admissionDate: datePipe.transform(this.admissionDateFormCtl.value, 'MM/dd/yyyy'),
       standard: this.standardFormCtl.value,
-      status: this.statusFormCtl.value,
       admissionAmount: this.admissionAmountFormCtl.value,
       paidAmount: this.paidAmountFormCtl.value,
       dueAmount: this.dueAmountFormCtl.value,
@@ -115,6 +123,15 @@ export class AdmissionFeeCreateEditComponent extends Admission implements OnInit
         dob: null,
         fatherInfo: null,
         firstName: null,
+        gender: null,
+        bloodGroup: null,
+        community: null,
+        nationality: null,
+        physicallyChallenged: null,
+        religion: null,
+        profilePic: null,
+        status: null,
+        aadhaarNo: null,
         guardianInfo: null,
         id: this.studIdFormCtl.value,
         joiningDate: null,
@@ -128,12 +145,29 @@ export class AdmissionFeeCreateEditComponent extends Admission implements OnInit
         permanentAddress: null,
         sameAsPermAddr: null
       },
-      fees: null
+      fees: this.fees
     };
 
     console.log(admissionPayloadData);
 
     this.saveOrUpdateHttpObservable(this.admId, admissionPayloadData).subscribe(data => {
+
+      if (data.apiMessage && data.apiMessage.error) {
+        this.snackBar.openFromComponent(
+          SnackbarInfoComponent,
+          {
+            data: SnackBarConfig.dangerData(data.apiMessage.detail),
+            ...SnackBarConfig.flashTopDangerSnackBar()
+          });
+        return;
+      } else {
+        this.snackBar.openFromComponent(
+          SnackbarInfoComponent,
+          {
+            data: SnackBarConfig.successData(data.apiMessage.detail),
+            ...SnackBarConfig.flashTopSuccessSnackBar()
+          });
+      }
 
       this.hasSubmitted = true;
       this.router.navigate(['/admin/students/admissions']);
@@ -151,9 +185,9 @@ export class AdmissionFeeCreateEditComponent extends Admission implements OnInit
 
   private saveOrUpdateHttpObservable(admid: number, admissionPayloadData: IAdmission) {
     if (this.admId) {
-      return this.http.put(ApiEndpoint.ADMISSIONS + '/' + admid, admissionPayloadData);
+      return this.http.put<any>(ApiEndpoint.ADMISSIONS + '/' + admid, admissionPayloadData);
     } else {
-      return this.http.post(ApiEndpoint.ADMISSIONS, admissionPayloadData);
+      return this.http.post<any>(ApiEndpoint.ADMISSIONS, admissionPayloadData);
     }
   }
 
@@ -165,7 +199,7 @@ export class AdmissionFeeCreateEditComponent extends Admission implements OnInit
 
           this.registrationDateFormCtl.setValue(moment(this.student.registrationDate as string));
           this.registrationNoFormCtl.setValue(this.student.registrationNo);
-          this.statusFormCtl.setValue(this.student.status);
+          this.studentStatusFormCtl.setValue(this.student.status);
           this.studIdFormCtl.setValue(this.student.id);
           this.firstNameFormCtl.setValue(this.student.firstName);
           this.lastNameFormCtl.setValue(this.student.lastName);
@@ -174,7 +208,7 @@ export class AdmissionFeeCreateEditComponent extends Admission implements OnInit
       });
   }
 
-  public generateFees() {
+  private generateFees() {
 
     const acaYear = this.academicYearFormCtl.value;
     const standard = this.standardFormCtl.value;
@@ -196,6 +230,7 @@ export class AdmissionFeeCreateEditComponent extends Admission implements OnInit
     this.paidAmountFormCtl.setValue(null);
     this.dueAmountFormCtl.setValue(null);
     this.getAddmissionFeeMaitenance(standard, this.academicYearFormCtl.value);
+    this.generateFees();
   }
 
   public getAddmissionFeeMaitenance(standard: string, academicYear: string) {
@@ -214,6 +249,10 @@ export class AdmissionFeeCreateEditComponent extends Admission implements OnInit
         this.errorMessage = err.message;
       }
     });
+  }
+
+  pay(exptdateOfPayment: number) {
+
   }
 
 }

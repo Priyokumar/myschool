@@ -6,12 +6,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material/material.module';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
+import { SnackbarInfoComponent } from './snackbar-info/snackbar-info.component';
 
 @NgModule({
   declarations: [
     FileUploadComponent,
     ImagePreviewComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    SnackbarInfoComponent
   ],
   imports: [
     CommonModule,
@@ -23,11 +25,13 @@ import { ConfirmationDialogComponent } from './components/confirmation-dialog/co
   exports: [
     FileUploadComponent,
     ImagePreviewComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    SnackbarInfoComponent
   ],
   entryComponents: [
     ImagePreviewComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    SnackbarInfoComponent
   ]
 })
 export class SharedModule { }

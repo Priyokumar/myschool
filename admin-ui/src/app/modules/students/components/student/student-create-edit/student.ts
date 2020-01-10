@@ -31,7 +31,7 @@ export class Student {
     firstNameFormCtl = new FormControl('', Validators.required);
     middleNameFormCtl = new FormControl('', null);
     lastNameFormCtl = new FormControl('', Validators.required);
-    standardFormCtl = new FormControl('', Validators.required);
+    standardFormCtl = new FormControl('', null);
     rollNoFormCtl = new FormControl('', null);
     dobFormCtl = new FormControl('', Validators.required);
     joiningDateFormCtl = new FormControl('', null);
@@ -53,11 +53,11 @@ export class Student {
 
     // Correspondent Address
     corrAddIdFormCtl = new FormControl('', null);
-    corrFirstLineFormCtl = new FormControl('', Validators.required);
+    corrFirstLineFormCtl = new FormControl('', null);
     corrSecondLineFormCtl = new FormControl('', null);
-    corrCountryFormCtl = new FormControl('', Validators.required);
-    corrStateFormCtl = new FormControl('', Validators.required);
-    corrDistrictFormCtl = new FormControl('', Validators.required);
+    corrCountryFormCtl = new FormControl('', null);
+    corrStateFormCtl = new FormControl('', null);
+    corrDistrictFormCtl = new FormControl('', null);
 
     // Student Father details
     fInfoIdFormCtl = new FormControl('', null);

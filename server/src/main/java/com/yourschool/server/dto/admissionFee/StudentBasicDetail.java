@@ -8,7 +8,7 @@ public class StudentBasicDetail {
 
 	private String registrationDate;
 
-	private String registrationStatus;
+	private String status;
 
 	private String firstName;
 
@@ -44,12 +44,12 @@ public class StudentBasicDetail {
 		this.registrationDate = registrationDate;
 	}
 
-	public String getRegistrationStatus() {
-		return registrationStatus;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setRegistrationStatus(String registrationStatus) {
-		this.registrationStatus = registrationStatus;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public String getFirstName() {

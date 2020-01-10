@@ -4,8 +4,10 @@ import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
-import { ApiEndpoint } from 'src/app/modules/shared/model/shared.model';
+import { ApiEndpoint, SnackBarConfig } from 'src/app/modules/shared/model/shared.model';
 import { IStudent } from '../../../models/student.model';
+import { SnackbarInfoComponent } from 'src/app/modules/shared/snackbar-info/snackbar-info.component';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-student-create-edit',
@@ -14,7 +16,12 @@ import { IStudent } from '../../../models/student.model';
 })
 export class StudentCreateEditComponent extends Student implements OnInit {
 
-  constructor(private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private snackBar: MatSnackBar
+  ) {
     super();
     this.activatedRoute.params.subscribe(params => {
       this.studId = params.id;
@@ -81,6 +88,13 @@ export class StudentCreateEditComponent extends Student implements OnInit {
       firstName: this.firstNameFormCtl.value,
       middleName: this.middleNameFormCtl.value,
       lastName: this.lastNameFormCtl.value,
+      gender: this.genderFormCtl.value,
+      aadhaarNo:null,
+      bloodGroup: this.bloodGroupFormCtl.value,
+      community: this.communityFormCtl.value,
+      nationality: this.nationalityFormCtl.value,
+      physicallyChallenged: null,
+      religion: this.religionFormCtl.value,
       standard: this.standardFormCtl.value,
       rollNo: this.rollNoFormCtl.value,
       dob: datePipe.transform(this.dobFormCtl.value, 'MM/dd/yyyy'),
@@ -136,6 +150,23 @@ export class StudentCreateEditComponent extends Student implements OnInit {
 
     this.saveOrUpdateHttpObservable(this.studId, studentPayloadData).subscribe(data => {
 
+      if (data.apiMessage && data.apiMessage.error) {
+        this.snackBar.openFromComponent(
+          SnackbarInfoComponent,
+          {
+            data: SnackBarConfig.dangerData(data.apiMessage.detail),
+            ...SnackBarConfig.flashTopDangerSnackBar()
+          });
+        return;
+      } else {
+        this.snackBar.openFromComponent(
+          SnackbarInfoComponent,
+          {
+            data: SnackBarConfig.successData(data.apiMessage.detail),
+            ...SnackBarConfig.flashTopSuccessSnackBar()
+          });
+      }
+
       this.hasSubmitted = true;
       this.router.navigate(['/admin/students']);
 
@@ -146,15 +177,21 @@ export class StudentCreateEditComponent extends Student implements OnInit {
       } else {
         this.errorMessage = err.message;
       }
+      this.snackBar.openFromComponent(
+        SnackbarInfoComponent,
+        {
+          data: SnackBarConfig.dangerData(this.errorMessage),
+          ...SnackBarConfig.flashTopDangerSnackBar()
+        });
     });
 
   }
 
   private saveOrUpdateHttpObservable(studRegdId: number, studentPayloadData: IStudent) {
     if (this.studId) {
-      return this.http.put(ApiEndpoint.STUDENTS + '/' + studRegdId, studentPayloadData);
+      return this.http.put<any>(ApiEndpoint.STUDENTS + '/' + studRegdId, studentPayloadData);
     } else {
-      return this.http.post(ApiEndpoint.STUDENTS, studentPayloadData);
+      return this.http.post<any>(ApiEndpoint.STUDENTS, studentPayloadData);
     }
   }
 
@@ -164,11 +201,15 @@ export class StudentCreateEditComponent extends Student implements OnInit {
     this.registrationNoFormCtl.setValue(this.student.registrationNo);
     this.registrationDateFormCtl.setValue(moment(this.student.registrationDate as string));
     this.statusFormCtl.setValue(this.student.status);
-
     this.firstNameFormCtl.setValue(this.student.firstName);
     this.middleNameFormCtl.setValue(this.student.middleName);
     this.lastNameFormCtl.setValue(this.student.lastName);
     this.standardFormCtl.setValue(this.student.standard);
+    this.bloodGroupFormCtl.setValue(this.student.bloodGroup);
+    this.genderFormCtl.setValue(this.student.gender);
+    this.religionFormCtl.setValue(this.student.religion);
+    this.communityFormCtl.setValue(this.student.community);
+    this.nationalityFormCtl.setValue(this.student.nationality);
     this.rollNoFormCtl.setValue(this.student.rollNo);
     this.dobFormCtl.setValue(moment(this.student.dob as string));
     this.joiningDateFormCtl.setValue(moment(this.student.joiningDate as string));
@@ -199,7 +240,9 @@ export class StudentCreateEditComponent extends Student implements OnInit {
     if (fatherInfo) {
       this.fInfoIdFormCtl.setValue(fatherInfo.id);
       this.fatherNameFormCtl.setValue(fatherInfo.name);
-      this.fatherDobFormCtl.setValue(moment(fatherInfo.dob as string));
+      if (fatherInfo.dob) {
+        this.fatherDobFormCtl.setValue(moment(fatherInfo.dob as string));
+      }
       this.fatherContactNoFormCtl.setValue(fatherInfo.contactNo);
       this.fatherAnnualIncomeFormCtl.setValue(fatherInfo.income);
       this.fatherEduQualiFormCtl.setValue(fatherInfo.eduQualification);
@@ -210,7 +253,9 @@ export class StudentCreateEditComponent extends Student implements OnInit {
     if (motherInfo) {
       this.mInfoIdFormCtl.setValue(motherInfo.id);
       this.motherNameFormCtl.setValue(motherInfo.name);
-      this.motherDobFormCtl.setValue(moment(motherInfo.dob as string));
+      if (motherInfo.dob) {
+        this.motherNameFormCtl.setValue(moment(motherInfo.dob as string));
+      }
       this.motherContactNoFormCtl.setValue(motherInfo.contactNo);
       this.motherAnnualIncomeFormCtl.setValue(motherInfo.income);
       this.motherEduQualiFormCtl.setValue(motherInfo.eduQualification);
@@ -221,7 +266,9 @@ export class StudentCreateEditComponent extends Student implements OnInit {
     if (guardianInfo) {
       this.gInfoIdFormCtl.setValue(guardianInfo.id);
       this.guardianNameFormCtl.setValue(guardianInfo.name);
-      this.guardianDobFormCtl.setValue(moment(guardianInfo.dob as string));
+      if (guardianInfo.dob) {
+        this.guardianDobFormCtl.setValue(moment(guardianInfo.dob as string));
+      }
       this.guardianContactNoFormCtl.setValue(guardianInfo.contactNo);
       this.guardianAnnualIncomeFormCtl.setValue(guardianInfo.income);
       this.guardianEduQualiFormCtl.setValue(guardianInfo.eduQualification);

@@ -6,6 +6,10 @@
 @import "../../../../assets/scss/color.scss";
 @import "../../../../assets/scss/font.scss";
 
+.body-layout{
+  margin-top: 46px;
+}
+
 mat-sidenav-container,
 mat-sidenav,
 mat-sidenav-content {
@@ -52,7 +56,6 @@ a {
 .mat-drawer-inner-container {
   overflow-x: hidden !important;
   overflow-y: auto !important;
-  background: $primary-blue;
 }
 
 .no-shadow {
@@ -74,7 +77,7 @@ a {
 
 .mat-expansion-panel {
   border-radius: 0;
-  background: $primary-blue;
+  background: $secondary;
 }
 
 .mat-drawer-side {
@@ -83,11 +86,13 @@ a {
 
 .mat-icon {
   font-size: $banner !important;
-  color: $white;
+  color: $black2;
 }
 
  .mat-expansion-indicator::after {
-  color: $white !important;
+  color: $black1 !important;
+  font-weight: 500 !important;
+  font-size: 15px !important;
 }
 
 .mat-list-base {
@@ -110,11 +115,15 @@ a {
 }
 
 .mat-expansion-panel-header-title {
-  color: #ffff !important;
+  color: $black2 !important;
+  font-weight: 500 !important;
+  font-size: 15px !important;
 }
 
 .mat-list-base .mat-list-item {
-  color: $white !important;
+  color: $black2 !important;
+  font-weight: 500 !important;
+  font-size: 15px !important;
 }
 
 .mat-list-item-content {
@@ -138,8 +147,10 @@ img:focus,
 }
 
 .fixed-nav-content {
+  top: 50px;
   position: fixed;
   overflow-x: auto;
   height: 100vh;
   width: 240px;
+  background: $secondary;
 }

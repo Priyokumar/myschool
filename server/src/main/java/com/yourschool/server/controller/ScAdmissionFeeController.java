@@ -48,6 +48,11 @@ public class ScAdmissionFeeController {
 	private ActionResponse updateAdmissionFee(@RequestBody Admission admission, @PathVariable("id") Long id) {
 		return admissionFeeService.createOrUpdateAdmissionFee(admission, id);
 	}
+	
+	@PutMapping(value = "/{id}/fee/{feeId}")
+	private ActionResponse payFee(@RequestBody Admission admission, @PathVariable("id") Long id, @PathVariable("feeId") Long feeId) {
+		return admissionFeeService.payFee(feeId);
+	}
 
 	@DeleteMapping(value = "/{id}")
 	private ActionResponse deleteAdmissionFee(@PathVariable("id") Long id) {

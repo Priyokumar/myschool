@@ -1,7 +1,7 @@
-<div class="shadow form-min-height ml-3 mr-3 mt-1 pb-5">
-  <div class="row p-1" style="background-color: #dddddd">
+<div class="shadow form-min-height">
+  <div class="row p-1 bg-gold">
     <div class="col-md-6">
-      <span style="font-weight: bold; font-size: 14px; line-height: 35px;">Add Employees</span>
+      <span class="font-400 font-banner" style="line-height: 35px;">Add Employees</span>
     </div>
     <div class="col-md-6 text-right">
       <button class="btn btn-cancel" routerLink="/admin/employees">
@@ -18,7 +18,7 @@
     </div>
   </div>
 
-  <div [ngClass]="['pt-1','pr-5','pl-5']">
+  <div [ngClass]="['pt-1','pb-4', 'pr-4','pl-4']" class="bg-white">
     <mat-tab-group dynamicHeight mat-align-tabs="center">
       <mat-tab>
         <ng-template mat-tab-label>
@@ -114,8 +114,8 @@
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Employee Type</mat-label>
               <mat-select placeholder="Status" [formControl]="employeeType">
-                <mat-option *ngFor="let option of employeeTypes" [value]="option.id"
-                  (click)="onChangeEmployeeType(option.id)">
+                <mat-option *ngFor="let option of employeeTypes" [value]="option.name"
+                  (click)="onChangeEmployeeType(option.name)">
                   {{option.name}}
                 </mat-option>
               </mat-select>
@@ -129,7 +129,7 @@
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Designation</mat-label>
               <mat-select placeholder="Designation" [formControl]="designation">
-                <mat-option *ngFor="let option of designations" [value]="option.id">
+                <mat-option *ngFor="let option of designations" [value]="option.name">
                   {{option.name}}
                 </mat-option>
               </mat-select>

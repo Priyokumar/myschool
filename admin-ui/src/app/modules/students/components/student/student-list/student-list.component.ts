@@ -1,24 +1,25 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { MatTableDataSource, MatDialog, MatPaginator, MatSort, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatTableDataSource, MatDialog, MatPaginator, MatSort, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { ApiEndpoint, IConfirmation } from 'src/app/modules/shared/model/shared.model';
+import { ApiEndpoint, IConfirmation, SnackBarConfig } from 'src/app/modules/shared/model/shared.model';
 import { IStudent } from '../../../models/student.model';
 import { ConfirmationDialogComponent } from 'src/app/modules/shared/components/confirmation-dialog/confirmation-dialog.component';
+import { SnackbarInfoComponent } from 'src/app/modules/shared/snackbar-info/snackbar-info.component';
 
 @Component({
   selector: 'app-student-list',
   templateUrl: './student-list.component.html',
-  styleUrls: ['./student-list.component.css']
+  styleUrls: ['./student-list.component.scss']
 })
 export class StudentListComponent implements OnInit {
 
   public errorMessage: string;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   // tslint:disable-next-line: max-line-length
-  public studentsColumns: string[] = ['firstName','middleName','lastName', 'registrationNo', 'registrationDate', 'status', 'action'];
+  public studentsColumns: string[] = ['firstName', 'middleName', 'lastName', 'gender', 'rollNo', 'standard', 'registrationNo', 'status', 'action'];
   public studentsDataSource: MatTableDataSource<IStudent>;
   public students: IStudent[] = [];
 
@@ -26,6 +27,7 @@ export class StudentListComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -85,7 +87,23 @@ export class StudentListComponent implements OnInit {
       .afterClosed().subscribe(okData => {
         if (okData) {
 
-          this.http.delete(ApiEndpoint.STUDENTS + '/' + studId).subscribe(data => {
+          this.http.delete<any>(ApiEndpoint.STUDENTS + '/' + studId).subscribe(data => {
+            if (data.apiMessage && data.apiMessage.error) {
+              this.snackBar.openFromComponent(
+                SnackbarInfoComponent,
+                {
+                  data: SnackBarConfig.dangerData(data.apiMessage.detail),
+                  ...SnackBarConfig.flashTopDangerSnackBar()
+                });
+              return;
+            } else {
+              this.snackBar.openFromComponent(
+                SnackbarInfoComponent,
+                {
+                  data: SnackBarConfig.successData(data.apiMessage.detail),
+                  ...SnackBarConfig.flashTopSuccessSnackBar()
+                });
+            }
             this.getStudents();
           }, err => {
             console.error(err);
@@ -94,6 +112,12 @@ export class StudentListComponent implements OnInit {
             } else {
               this.errorMessage = err.message;
             }
+            this.snackBar.openFromComponent(
+              SnackbarInfoComponent,
+              {
+                data: SnackBarConfig.dangerData(this.errorMessage),
+                ...SnackBarConfig.flashTopDangerSnackBar()
+              });
           });
 
         }

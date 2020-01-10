@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 import { IStudent } from '../../../models/student.model';
-import { ApiEndpoint, IConfirmation } from 'src/app/modules/shared/model/shared.model';
-import { MatDialog } from '@angular/material';
+import { ApiEndpoint, IConfirmation, SnackBarConfig } from 'src/app/modules/shared/model/shared.model';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { ConfirmationDialogComponent } from 'src/app/modules/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { FileUploadService } from 'src/app/modules/shared/services/file-upload.service';
+import { SnackbarInfoComponent } from 'src/app/modules/shared/snackbar-info/snackbar-info.component';
 
 @Component({
   selector: 'app-student-view',
@@ -26,7 +27,8 @@ export class StudentViewComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
-    private fileUploadService: FileUploadService
+    private fileUploadService: FileUploadService,
+    private snackBar: MatSnackBar
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.studId = params.id;
@@ -65,8 +67,23 @@ export class StudentViewComponent implements OnInit {
     this.dialog.open(ConfirmationDialogComponent, { width: '26%', data: confirmationData, disableClose: true })
       .afterClosed().subscribe(okData => {
         if (okData) {
-
-          this.http.delete(ApiEndpoint.STUDENTS + '/' + this.studId).subscribe(data => {
+          this.http.delete<any>(ApiEndpoint.STUDENTS + '/' + this.studId).subscribe(data => {
+            if (data.apiMessage && data.apiMessage.error) {
+              this.snackBar.openFromComponent(
+                SnackbarInfoComponent,
+                {
+                  data: SnackBarConfig.dangerData(data.apiMessage.detail),
+                  ...SnackBarConfig.flashTopDangerSnackBar()
+                });
+              return;
+            } else {
+              this.snackBar.openFromComponent(
+                SnackbarInfoComponent,
+                {
+                  data: SnackBarConfig.successData(data.apiMessage.detail),
+                  ...SnackBarConfig.flashTopSuccessSnackBar()
+                });
+            }
             this.router.navigate(['/admin/students']);
           }, err => {
             console.error(err);
@@ -75,6 +92,12 @@ export class StudentViewComponent implements OnInit {
             } else {
               this.errorMessage = err.message;
             }
+            this.snackBar.openFromComponent(
+              SnackbarInfoComponent,
+              {
+                data: SnackBarConfig.dangerData(this.errorMessage),
+                ...SnackBarConfig.flashTopDangerSnackBar()
+              });
           });
 
         }

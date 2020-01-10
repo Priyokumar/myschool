@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ApiEndpoint } from 'src/app/modules/shared/model/shared.model';
+import { ApiEndpoint, SnackBarConfig } from 'src/app/modules/shared/model/shared.model';
 import { IStandard } from '../../model/standard';
+import { SnackbarInfoComponent } from 'src/app/modules/shared/snackbar-info/snackbar-info.component';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-class-create-edit',
@@ -25,7 +27,8 @@ export class ClassCreateEditComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private snackBar: MatSnackBar
   ) {
 
     this.standardForm = new FormGroup({
@@ -73,6 +76,23 @@ export class ClassCreateEditComponent implements OnInit {
 
     this.saveOrUpdateHttpObservable(standardPayload).subscribe(data => {
 
+      if (data.apiMessage && data.apiMessage.error) {
+        this.snackBar.openFromComponent(
+          SnackbarInfoComponent,
+          {
+            data: SnackBarConfig.dangerData(data.apiMessage.detail),
+            ...SnackBarConfig.flashTopDangerSnackBar()
+          });
+        return;
+      } else {
+        this.snackBar.openFromComponent(
+          SnackbarInfoComponent,
+          {
+            data: SnackBarConfig.successData(data.apiMessage.detail),
+            ...SnackBarConfig.flashTopSuccessSnackBar()
+          });
+      }
+
       this.router.navigate(['/admin/maintenances/classes']);
 
     }, err => {
@@ -82,15 +102,21 @@ export class ClassCreateEditComponent implements OnInit {
       } else {
         this.errorMessage = err.message;
       }
+      this.snackBar.openFromComponent(
+        SnackbarInfoComponent,
+        {
+          data: SnackBarConfig.dangerData(this.errorMessage),
+          ...SnackBarConfig.flashTopDangerSnackBar()
+        });
     });
   }
 
   private saveOrUpdateHttpObservable(standardPayload: IStandard) {
 
     if (this.standardId) {
-      return this.http.put(ApiEndpoint.STANDARD + '/' + this.standardId, standardPayload);
+      return this.http.put<any>(ApiEndpoint.STANDARD + '/' + this.standardId, standardPayload);
     } else {
-      return this.http.post(ApiEndpoint.STANDARD, standardPayload);
+      return this.http.post<any>(ApiEndpoint.STANDARD, standardPayload);
     }
   }
 

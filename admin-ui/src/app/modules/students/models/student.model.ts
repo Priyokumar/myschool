@@ -6,6 +6,13 @@ export interface IStudent {
     id: number;
     registrationNo: string;
     registrationDate: string;
+    gender: string;
+    bloodGroup: string;
+    religion: string;
+    community: string;
+    nationality: string;
+    aadhaarNo: string;
+    physicallyChallenged: boolean;
     status?: string;
     firstName: string;
     middleName: string;
@@ -38,7 +45,7 @@ export const Standards: IKeyValue[] = [
 
     { key: 'NUSSERY', value: 'Nussery' },
     { key: 'KG', value: 'KG' },
-    { key: 'CLASS_I', value: 'Class I' }, 
+    { key: 'CLASS_I', value: 'Class I' },
     { key: 'CLASS_II', value: 'Class II' },
     { key: 'CLASS_III', value: 'Class III' },
     { key: 'CLASS_IV', value: 'Class IV' },
@@ -51,14 +58,7 @@ export const Standards: IKeyValue[] = [
 
 ];
 
-export const StudentStatuses: string[] = [
-
-    'Registered',
-    'Admitted',
-    'Expired Admission',
-    'Renewed Admission',
-    'Expired'
-];
+export const StudentStatuses: string[] = ['Active', 'Inactive'];
 
 export const Genders: IKeyValue[] = [
     { key: 'MALE', value: 'Male' },

@@ -13,21 +13,21 @@ export class Admission {
     hasSubmitted = false;
     admissionForm: FormGroup;
     admission: IAdmission;
-    statuses: string[] = StudentStatuses;
+    studentStatuses: string[] = StudentStatuses;
+    admissionStatuses: string[] = AdmissionStatuses;
     standards: IKeyValue[] = Standards;
     fees: IFee[];
     student: IStudent;
     admissionFeeMaintenance: IAdmissionFeeMaintenance;
 
     public feeColumns: string[] = [
-
-        'id',
         'feeRef',
         'amount',
         'exptdateOfPayment',
         'actdateOfPayment',
         'monthOf',
         'status',
+        'action'
     ];
 
     public feesDataSource: MatTableDataSource<IFee>;
@@ -35,10 +35,11 @@ export class Admission {
 
     idFormCtl = new FormControl('', null);
     admissionRefNoFormCtl = new FormControl('', null);
+    admissionStatusFormCtl = new FormControl('', null);
     academicYearFormCtl = new FormControl('', null);
     admissionDateFormCtl = new FormControl('', null);
     standardFormCtl = new FormControl('', null);
-    statusFormCtl = new FormControl('', null);
+    studentStatusFormCtl = new FormControl('', null);
     admissionAmountFormCtl = new FormControl('', Validators.required);
     paidAmountFormCtl = new FormControl('', Validators.required);
     dueAmountFormCtl = new FormControl('', null);
@@ -59,7 +60,7 @@ export class Admission {
             academicYearFormCtl: this.academicYearFormCtl,
             admissionDateFormCtl: this.admissionDateFormCtl,
             standardFormCtl: this.standardFormCtl,
-            statusFormCtl: this.statusFormCtl,
+            statusFormCtl: this.studentStatusFormCtl,
             admissionAmountFormCtl: this.admissionAmountFormCtl,
             paidAmountFormCtl: this.paidAmountFormCtl,
             dueAmountFormCtl: this.dueAmountFormCtl,
@@ -74,7 +75,7 @@ export class Admission {
         this.academicYearFormCtl.disable();
         this.admissionRefNoFormCtl.disable();
         this.admissionDateFormCtl.disable();
-        this.statusFormCtl.disable();
+        this.studentStatusFormCtl.disable();
         this.firstNameFormCtl.disable();
         this.lastNameFormCtl.disable();
         this.rollNoFormCtl.disable();

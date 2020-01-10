@@ -1,3 +1,5 @@
+import { MatSnackBarConfig } from '@angular/material';
+
 export const allSideNavs: ISideNav[] = [
 
     { title: 'Dashboard', path: '/admin/dashboard', icon: 'home', hasSubmenu: false, submenu: [] },
@@ -153,4 +155,40 @@ export interface IConfirmation {
 export interface Document {
     id: number;
     docUrl: string;
+}
+
+export class SnackBarConfig {
+
+    static flashTopSuccessSnackBar(): MatSnackBarConfig {
+        return {
+            panelClass: 'success-snackbar',
+            duration: 5000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top'
+        };
+    }
+
+    static flashTopDangerSnackBar(): MatSnackBarConfig {
+        return {
+            panelClass: 'danger-snackbar',
+            duration: 5000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top'
+        };
+    }
+
+    static dangerData(message: string) {
+        return {
+            icon: 'error',
+            message
+        };
+    }
+
+    static successData(message: string) {
+        return {
+            icon: 'check_circle',
+            message
+        };
+    }
+
 }

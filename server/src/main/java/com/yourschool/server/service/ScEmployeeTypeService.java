@@ -12,6 +12,9 @@ import com.yourschool.server.entity.empType.ScDesignation;
 import com.yourschool.server.entity.empType.ScEmployeeType;
 import com.yourschool.server.service.common.CommonService;
 import com.yourschool.server.util.ScUtil;
+import com.yourschool.server.vo.FieldType;
+import com.yourschool.server.vo.Filter;
+import com.yourschool.server.vo.Operator;
 
 @Service
 public class ScEmployeeTypeService {
@@ -73,11 +76,13 @@ public class ScEmployeeTypeService {
 		return dtoEmployeeType;
 	}
 
-	public EmployeeType findEmployeeTypeById(Long id) {
+	public EmployeeType findEmployeeTypeById(String name) {
 
 		EmployeeType dtoEmployeeType = new EmployeeType();
-
-		ScEmployeeType employeeType = commonService.findById(id, ScEmployeeType.class);
+		
+		List<Filter> filters = new ArrayList<>();
+		filters.add(new Filter("name", Operator.EQUAL, FieldType.STRING, name));
+		ScEmployeeType employeeType = commonService.findOne(filters, ScEmployeeType.class);
 
 		if (ScUtil.isAllPresent(employeeType)) {
 			dtoEmployeeType = setEmployeeTypeToDto(employeeType);
@@ -85,11 +90,13 @@ public class ScEmployeeTypeService {
 		return dtoEmployeeType;
 	}
 
-	public List<Designation> findDesignationsByEmployeeType(Long id) {
+	public List<Designation> findDesignationsByEmployeeType(String name) {
 
 		List<Designation> dtoDesignations = new ArrayList<>();
 
-		ScEmployeeType employeeType = commonService.findById(id, ScEmployeeType.class);
+		List<Filter> filters = new ArrayList<>();
+		filters.add(new Filter("name", Operator.EQUAL, FieldType.STRING, name));
+		ScEmployeeType employeeType = commonService.findOne(filters, ScEmployeeType.class);
 
 		if (ScUtil.isAllPresent(employeeType)) {
 			dtoDesignations = setDesignationsToDto(employeeType.getDesignations());
@@ -97,11 +104,13 @@ public class ScEmployeeTypeService {
 		return dtoDesignations;
 	}
 	
-	public Designation findDesignationById(Long id) {
+	public Designation findDesignationById(String name) {
 
 		Designation dtoDesignation = new Designation();
-
-		ScDesignation designation = commonService.findById(id, ScDesignation.class);
+		
+		List<Filter> filters = new ArrayList<>();
+		filters.add(new Filter("name", Operator.EQUAL, FieldType.STRING, name));
+		ScDesignation designation = commonService.findOne(filters, ScDesignation.class);
 
 		if (ScUtil.isAllPresent(designation)) {
 			dtoDesignation = setDesignationToDto(designation);

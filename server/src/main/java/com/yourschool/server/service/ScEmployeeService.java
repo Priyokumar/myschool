@@ -34,6 +34,7 @@ import com.yourschool.server.util.ScUtil;
 import com.yourschool.server.vo.FieldType;
 import com.yourschool.server.vo.Filter;
 import com.yourschool.server.vo.Operator;
+import com.yourschool.server.vo.RefType;
 
 @Service
 public class ScEmployeeService {
@@ -91,7 +92,7 @@ public class ScEmployeeService {
 
 		return res;
 	}
-	
+
 	public EmployeeResponse findEmployee(String email) {
 
 		EmployeeResponse res = new EmployeeResponse();
@@ -168,7 +169,7 @@ public class ScEmployeeService {
 		if (ScUtil.isAllPresent(personalInfo)) {
 
 			PersonalInfo pcInfoDto = new PersonalInfo();
-			
+
 			pcInfoDto.setAadharCardDoc(setDocDtoDoc(personalInfo.getAadharCardDoc()));
 			pcInfoDto.setDrivingLicenceDoc(setDocDtoDoc(personalInfo.getDrivingLicenceDoc()));
 			pcInfoDto.setPanCardDoc(setDocDtoDoc(personalInfo.getPanCardDoc()));
@@ -177,7 +178,7 @@ public class ScEmployeeService {
 			pcInfoDto.setxIICertDoc(setDocDtoDoc(personalInfo.getxIICertDoc()));
 			pcInfoDto.setGraduationCertDoc(setDocDtoDoc(personalInfo.getGraduationCertDoc()));
 			pcInfoDto.setPostGraduationCertDoc(setDocDtoDoc(personalInfo.getPostGraduationCertDoc()));
-			
+
 			pcInfoDto.setAadharCard(personalInfo.getAadharCard());
 			pcInfoDto.setDrivingLicence(personalInfo.getDrivingLicence());
 			pcInfoDto.setId(personalInfo.getId());
@@ -221,10 +222,10 @@ public class ScEmployeeService {
 	}
 
 	private Document setDocDtoDoc(ScDocument aadharCardDoc) {
-		if(ScUtil.isAllPresent(aadharCardDoc)) {
+		if (ScUtil.isAllPresent(aadharCardDoc)) {
 			Document doc = new Document();
 			doc.setId(aadharCardDoc.getId());
-			String docUrl = "/document/"+doc.getId()+"/view";
+			String docUrl = "/document/" + doc.getId() + "/view";
 			doc.setDocUrl(docUrl);
 			return doc;
 		}
@@ -241,10 +242,10 @@ public class ScEmployeeService {
 
 		if (!ScUtil.isAllPresent(employee))
 			throw new NotFoundException("No users can be found !");
-		
-		if(ScUtil.isAllPresent(id)) {
+
+		if (ScUtil.isAllPresent(id)) {
 			employee.setStatus(employeeDto.getStatus());
-		}else {
+		} else {
 			employee.setStatus("In active");
 		}
 
@@ -260,9 +261,9 @@ public class ScEmployeeService {
 		employee.setMiddleName(employeeDto.getMiddleName());
 		employee.setGender(employeeDto.getGender());
 		employee.setSameAsPermanentAddress(employeeDto.getSameAsPermanentAddress());
-		
-		if(employee.getSameAsPermanentAddress()==true) {
-			if(ScUtil.isAllPresent(employee.getPermanentAddress())) {
+
+		if (employee.getSameAsPermanentAddress() == true) {
+			if (ScUtil.isAllPresent(employee.getPermanentAddress())) {
 				employee.setPermanentAddress(null);
 			}
 		}
@@ -297,10 +298,8 @@ public class ScEmployeeService {
 		PersonalInfo pcInfoDto = employeeDto.getPersonalInfo();
 		if (ScUtil.isAllPresent(pcInfoDto)) {
 
-			
-			
 			ScPersonalInfo personalInfo = employee.getPersonalInfo();
-			
+
 			if (!ScUtil.isAllPresent(personalInfo))
 				personalInfo = new ScPersonalInfo();
 
@@ -347,15 +346,22 @@ public class ScEmployeeService {
 		}
 		employee = commonService.save(employee);
 		createOrUpdateEmployeeSalary(employee);
-		
-		if(!ScUtil.isAllPresent(employee.getEmpCode())) {
-			
-			String empCode = "EMP" + employee.getId();
+
+		if (!ScUtil.isAllPresent(employee.getEmpCode())) {
+
+			String empCode = RefType.EMPLOYEE + employee.getId();
 			employee.setEmpCode(empCode);
 			employee = commonService.save(employee);
 		}
 
-		res.setApiMessage(ApiUtil.okMessage("Success"));
+		String message = "";
+		if (ScUtil.isAllPresent(id)) {
+			message = "Employee has been updated successfully.";
+		} else {
+			message = "Employee has been created successfully.";
+		}
+
+		res.setApiMessage(ApiUtil.okMessage(message));
 		res.setActionMessage(employee.getId().toString());
 		return res;
 	}
@@ -383,9 +389,10 @@ public class ScEmployeeService {
 			throw new NotFoundException("No users can be found !");
 
 		deleteEmployeeSalary(id);
-		commonService.delete(employee);
+		commonService.delete(employee); 
+		
 
-		res.setApiMessage(ApiUtil.okMessage("Success"));
+		res.setApiMessage(ApiUtil.okMessage("Employee has been deleted successfully"));
 		return res;
 	}
 
@@ -403,13 +410,13 @@ public class ScEmployeeService {
 		ActionResponse res = new ActionResponse();
 
 		try {
-			
+
 			ObjectMapper objMapper = new ObjectMapper();
 			DocumentBody documentBody = objMapper.readValue(documentBodyStr, DocumentBody.class);
-			
+
 			ScDocument store = tempUploadService.store(file, documentBody, id);
 			res.setActionMessage(store.getId().toString());
-			
+
 		} catch (Exception e) {
 			throw new InternalServerException(e.getMessage());
 		}

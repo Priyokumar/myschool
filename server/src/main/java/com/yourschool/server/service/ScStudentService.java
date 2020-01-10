@@ -29,6 +29,7 @@ import com.yourschool.server.util.ScUtil;
 import com.yourschool.server.vo.FieldType;
 import com.yourschool.server.vo.Filter;
 import com.yourschool.server.vo.Operator;
+import com.yourschool.server.vo.StudentStatus;
 
 @Service
 public class ScStudentService {
@@ -111,10 +112,10 @@ public class ScStudentService {
 
 		String message = "";
 		if (ScUtil.isAllPresent(id)) {
-			message = "Successfully updated the student registration's data";
+			message = "Successfully updated.";
 			res.setApiMessage(ApiUtil.okMessage(message));
 		} else {
-			message = "Successfully created a student registration";
+			message = "Successfully registered.";
 			res.setApiMessage(ApiUtil.createdMessage(message));
 			res.setActionMessage(message);
 		}
@@ -243,7 +244,7 @@ public class ScStudentService {
 		if (!ScUtil.isAllPresent(student.getId())) {
 			student.setRegistrationNo(ScUtil.getGeneratedNumber("REG"));
 			student.setRegistrationDate(new Date());
-			student.setStatus("Registered");
+			student.setStatus(StudentStatus.ACTIVE);
 		} else {
 			student.setStatus(studentDto.getStatus());
 		}

@@ -1,7 +1,7 @@
 <div class="shadow-sm form-min-height">
-  <div class="row p-1" style="background-color: #dddddd">
+  <div class="row p-1 bg-gold">
     <div class="col-md-4">
-      <span style="font-weight: bold; font-size: 14px; line-height: 35px;">Students</span>
+      <span class="font-400 font-banner" style="line-height: 35px;">Students</span>
     </div>
     <div class="col-md-8 text-right">
       <mat-form-field class="w-50">
@@ -15,7 +15,7 @@
   </div>
   <div class="row">
     <div class="col-md-12 p-0 table-header">
-      <div class="no-shadow w-100">      
+      <div class="no-shadow w-100">
         <table mat-table [dataSource]="studentsDataSource" matSort>
 
           <ng-container matColumnDef="firstName">
@@ -25,7 +25,7 @@
 
           <ng-container matColumnDef="middleName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Middle Name</th>
-            <td mat-cell *matCellDef="let row" class="name-class" (click)="onClickRow(row.id)">{{row.lastName}}</td>
+            <td mat-cell *matCellDef="let row" class="name-class" (click)="onClickRow(row.id)">{{row.middleName}}</td>
           </ng-container>
 
           <ng-container matColumnDef="lastName">
@@ -33,25 +33,37 @@
             <td mat-cell *matCellDef="let row" class="name-class" (click)="onClickRow(row.id)">{{row.lastName}}</td>
           </ng-container>
 
-          <ng-container matColumnDef="registrationNo">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Registration No.</th>
-            <td mat-cell *matCellDef="let row"> {{row.registrationNo}} </td>
+          <ng-container matColumnDef="gender">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Gender</th>
+            <td mat-cell *matCellDef="let row" class="name-class" (click)="onClickRow(row.id)">{{row.gender}}</td>
           </ng-container>
 
-          <ng-container matColumnDef="registrationDate">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Registration Date</th>
-            <td mat-cell *matCellDef="let row"> {{row.registrationDate}} </td>
+          <ng-container matColumnDef="rollNo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Roll No.</th>
+            <td mat-cell *matCellDef="let row" class="name-class" (click)="onClickRow(row.id)">
+              {{row.rollNo?row.rollNo:"NA"}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="standard">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Class</th>
+            <td mat-cell *matCellDef="let row" class="name-class" (click)="onClickRow(row.id)">{{row.standard}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="registrationNo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Registration No.</th>
+            <td mat-cell *matCellDef="let row" class="name-class" (click)="onClickRow(row.id)"> {{row.registrationNo}}
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-            <td mat-cell *matCellDef="let row"> {{row.status}} </td>
+            <td mat-cell *matCellDef="let row" class="name-class" (click)="onClickRow(row.id)"> {{row.status}} </td>
           </ng-container>
 
           <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
             <td mat-cell *matCellDef="let row" class="text-right" (click)="onDeleteRow(row.id)">
-              <mat-icon style="color: firebrick; cursor: pointer;">clear</mat-icon> &nbsp;
+              <mat-icon style="color: firebrick; cursor: pointer;">delete</mat-icon> &nbsp;
             </td>
           </ng-container>
 

@@ -72,10 +72,10 @@ public class ScEmployee implements Serializable {
 	private Date joiningDate;
 
 	@Column(name = "EMPLOYEE_TYPE")
-	private Long employeeType;
+	private String employeeType;
 
 	@Column(name = "DESIGNATION")
-	private Long designation;
+	private String designation;
 	
 	@Column(name = "SAMEASPERMANENT_ADDRESS")
 	private Boolean sameAsPermanentAddress = false;
@@ -174,19 +174,19 @@ public class ScEmployee implements Serializable {
 		this.joiningDate = joiningDate;
 	}
 
-	public Long getEmployeeType() {
+	public String getEmployeeType() {
 		return employeeType;
 	}
 
-	public void setEmployeeType(Long employeeType) {
+	public void setEmployeeType(String employeeType) {
 		this.employeeType = employeeType;
 	}
 
-	public Long getDesignation() {
+	public String getDesignation() {
 		return designation;
 	}
 
-	public void setDesignation(Long designation) {
+	public void setDesignation(String designation) {
 		this.designation = designation;
 	}
 	

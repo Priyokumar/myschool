@@ -15,11 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yourschool.server.dto.ActionResponse;
+import com.yourschool.server.dto.ApiMessage;
 import com.yourschool.server.dto.ApiUtil;
-import com.yourschool.server.dto.admissionFee.AdmissionMonthly;
 import com.yourschool.server.dto.admissionFee.Admission;
 import com.yourschool.server.dto.admissionFee.AdmissionFeeResponse;
 import com.yourschool.server.dto.admissionFee.AdmissionFeesResponse;
+import com.yourschool.server.dto.admissionFee.AdmissionMonthly;
 import com.yourschool.server.dto.admissionFee.Fee;
 import com.yourschool.server.dto.admissionFee.FeesResponse;
 import com.yourschool.server.dto.admissionFee.StudentBasicDetail;
@@ -32,6 +33,7 @@ import com.yourschool.server.entity.student.ScStudent;
 import com.yourschool.server.service.common.CommonService;
 import com.yourschool.server.util.ScDateUtil;
 import com.yourschool.server.util.ScUtil;
+import com.yourschool.server.vo.AdmissionStatuses;
 import com.yourschool.server.vo.ApiMessageType;
 import com.yourschool.server.vo.FeeStatus;
 import com.yourschool.server.vo.FieldType;
@@ -106,25 +108,37 @@ public class ScAdmissionFeeService {
 		ActionResponse res = new ActionResponse();
 		ScAdmission admission = new ScAdmission();
 
-		if (ScUtil.isAllPresent(id))
+		Long studentId = admissionDto.getStudent().getId();
+		String academicYear = admissionDto.getAcademicYear();
+		String standard = admissionDto.getStandard();
+
+		if (ScUtil.isAllPresent(id)) {
 			admission = commonService.findById(id, ScAdmission.class);
+		} else {
+			List<Filter> filters = new ArrayList<>();
+			filters.add(new Filter("student", Operator.EQUAL, FieldType.NUMBER, studentId));
+			filters.add(new Filter("academicYear", Operator.EQUAL, FieldType.STRING, academicYear));
+			// filters.add(new Filter("standard", Operator.EQUAL, FieldType.STRING, standard));
+			ScAdmission existingAdmission = commonService.findOne(filters, ScAdmission.class);
+
+			if (ScUtil.isAllPresent(existingAdmission)) {
+
+				ApiMessage apiMessage = new ApiMessage(true, 500, "Student is already admitted for the academic year - " + academicYear, "Internal server error");
+				res.setApiMessage(apiMessage);
+				return res;
+			}
+		}
 
 		if (!ScUtil.isAllPresent(admission))
 			throw new NotFoundException("No Admission can be found !");
 
-		String academicYear = admissionDto.getAcademicYear();
 		admission.setAcademicYear(academicYear);
 		admission.setAdmissionAmount(admissionDto.getAdmissionAmount());
 		admission.setAdmissionDate(ScDateUtil.now());
-
-		if (!ScUtil.isAllPresent(admission.getId()))
-			admission.setAdmissionRefNo(ScUtil.getGeneratedNumber("ADM"));
-
 		admission.setDueAmount(admissionDto.getDueAmount());
 		admission.setPaidAmount(admissionDto.getPaidAmount());
 		admission.setPromiseToPayDate(ScDateUtil.stringToDate(admissionDto.getPromiseToPayDate()));
-		admission.setStandard(admissionDto.getStandard());
-		admission.setStatus(admissionDto.getStatus());
+		admission.setStandard(standard);
 
 		StudentBasicDetail studentDto = admissionDto.getStudent();
 
@@ -132,15 +146,22 @@ public class ScAdmissionFeeService {
 			throw new InternalServerException(
 					ApiMessageType.INSUFFICIENT_DATA + " Student information cannot be found");
 
-		Long studentId = studentDto.getId();
 		ScStudent student = commonService.findById(studentId, ScStudent.class);
-		admission.setStudent(student);
-
 		if (!ScUtil.isAllPresent(student))
 			throw new NotFoundException("No Student can be found !");
+		
+		if(!ScUtil.isAllPresent(id)) {
+			admission.setAdmissionRefNo(ScUtil.getGeneratedNumber("ADM"));
+			admission.setStatus(AdmissionStatuses.ADMITTED);
+		} else {
+			admission.setStatus(admissionDto.getStatus());	
+		}
+		
+		student.setStandard(admissionDto.getStandard());
+		admission.setStudent(student);
 
 		if (!ScUtil.isAllPresent(id)) {
-			List<ScFee> fees = generateFees(admissionDto.getStandard(), academicYear);
+			List<ScFee> fees = generateFees(admissionDto.getStandard(), academicYear, true);
 			admission.setFees(fees);
 		}
 
@@ -148,18 +169,29 @@ public class ScAdmissionFeeService {
 		String message = "";
 		if (ScUtil.isAllPresent(id)) {
 
-			message = "Successfully updated the Admission's data";
+			message = "Successfully updated the admission";
 			res.setApiMessage(ApiUtil.okMessage(message));
 
 		} else {
 
-			message = "Successfully created a Admission";
+			message = "Successfully created an admission";
 			res.setApiMessage(ApiUtil.createdMessage(message));
 			res.setActionMessage(message);
 		}
 		return res;
 	}
-
+	
+	public ActionResponse  payFee(Long feeId) {
+		ActionResponse res = new ActionResponse();
+		
+		ScFee fee = commonService.findById(feeId, ScFee.class);
+		fee.setActdateOfPayment(ScDateUtil.now());
+		fee.setStatus(FeeStatus.PAID);
+		commonService.save(fee);
+		
+		return 	res;
+	}
+	
 	public ActionResponse deleteAdmissionFee(Long id) {
 
 		ActionResponse res = new ActionResponse();
@@ -184,12 +216,12 @@ public class ScAdmissionFeeService {
 		dtoAdmission.setAdmissionAmount(admission.getAdmissionAmount());
 		dtoAdmission.setAdmissionDate(ScDateUtil.dateToString(admission.getAdmissionDate()));
 		dtoAdmission.setAdmissionRefNo(admission.getAdmissionRefNo());
+		dtoAdmission.setStatus(admission.getStatus());
 		dtoAdmission.setDueAmount(admission.getDueAmount());
 		dtoAdmission.setId(admission.getId());
 		dtoAdmission.setPaidAmount(admission.getPaidAmount());
 		dtoAdmission.setPromiseToPayDate(ScDateUtil.dateToString(admission.getPromiseToPayDate()));
 		dtoAdmission.setStandard(admission.getStandard());
-		dtoAdmission.setStatus(admission.getStatus());
 
 		ScStudent student = admission.getStudent();
 		if (ScUtil.isAllPresent(student)) {
@@ -198,7 +230,7 @@ public class ScAdmissionFeeService {
 
 			studBasicDetail.setRegistrationDate(ScDateUtil.dateToString(student.getRegistrationDate()));
 			studBasicDetail.setRegistrationNo(student.getRegistrationNo());
-			studBasicDetail.setRegistrationStatus(student.getStatus());
+			studBasicDetail.setStatus(student.getStatus());
 			studBasicDetail.setFirstName(student.getFirstName());
 			studBasicDetail.setId(student.getId());
 			studBasicDetail.setLastName(student.getLastName());
@@ -229,7 +261,7 @@ public class ScAdmissionFeeService {
 		return dtoAdmission;
 	}
 
-	public List<ScFee> generateFees(String standard, String year) {
+	public List<ScFee> generateFees(String standard, String year, boolean ref) {
 
 		Double feeAmount = 0.0;
 
@@ -246,7 +278,9 @@ public class ScAdmissionFeeService {
 			ScFee fee = new ScFee();
 
 			fee.setAmount(feeAmount);
-			fee.setFeeRefNo(ScUtil.getGeneratedNumber(RefType.FEE));
+
+			if (ref == true)
+				fee.setFeeRefNo(ScUtil.getGeneratedNumber(RefType.FEE));
 
 			String date = "01";
 			int monthInt = months[i].getValue();
@@ -271,7 +305,7 @@ public class ScAdmissionFeeService {
 
 		FeesResponse res = new FeesResponse();
 
-		List<ScFee> fees = generateFees(standard, year);
+		List<ScFee> fees = generateFees(standard, year, false);
 		if (!ScUtil.isAllPresent(fees))
 			throw new NotFoundException("No fee can be found !");
 
@@ -301,24 +335,26 @@ public class ScAdmissionFeeService {
 	}
 
 	public List<AdmissionMonthly> getAdmissionDashboardData(int year) {
-		
+
 		List<AdmissionMonthly> admisionsMonthly = new ArrayList<>();
-		
+
 		try {
 			for (int i = 1; i <= 12; i++) {
-			
-				Query q = em.createNativeQuery("SELECT COUNT(*) FROM sc_admission WHERE  EXTRACT(MONTH FROM admission_date) = "+ i +" AND  EXTRACT(YEAR FROM admission_date) = "+year);
-				BigInteger count =  (BigInteger) q.getSingleResult();
+
+				Query q = em.createNativeQuery(
+						"SELECT COUNT(*) FROM sc_admission WHERE  EXTRACT(MONTH FROM admission_date) = " + i
+								+ " AND  EXTRACT(YEAR FROM admission_date) = " + year);
+				BigInteger count = (BigInteger) q.getSingleResult();
 				int cou = count.intValue();
-				
+
 				admisionsMonthly.add(new AdmissionMonthly(ScDateUtil.getMonth(i), cou));
-					
+
 			}
 		} catch (Exception e) {
 			throw new InternalServerException(e.getMessage());
 		}
-		
+
 		return admisionsMonthly;
-		
+
 	}
 }

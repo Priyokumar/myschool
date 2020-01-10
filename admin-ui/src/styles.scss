@@ -2,7 +2,6 @@
 @import "~bootstrap/scss/bootstrap.scss";
 @import "./assets/scss/color.scss";
 @import "./assets/scss/font.scss";
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import "./assets/css/form-common.css";
 @import "./assets/css/dialog-form.css";
 
@@ -25,6 +24,10 @@ body {
 
 button:focus {
   outline: none !important;
+}
+
+th {
+  font-size: $text !important;
 }
 
 .row {
@@ -111,4 +114,20 @@ button:focus {
 
 table.mat-table {
   width: 100%;
+}
+
+.success-snackbar {
+  background: rgb(51, 112, 10);
+}
+
+.info-snackbar {
+  background: #2196f3;
+}
+
+.warning-snackbar {
+  background: rgb(248, 162, 3);
+}
+
+.danger-snackbar {
+  background: rgb(255, 72, 72);
 }

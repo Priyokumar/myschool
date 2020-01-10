@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatTableDataSource, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatDialog, MatSnackBar } from '@angular/material';
 import { AdmissionFeeStructureDialogComponent } from '../admission-fee-structure-dialog/admission-fee-structure-dialog.component';
 import { IAdmissionFeeMaintenance, IAdmissionFeeMaintenanceYearly } from 'src/app/modules/students/models/maintenance';
 import { CommonService } from 'src/app/modules/shared/services/common.service';
-import { ApiEndpoint } from 'src/app/modules/shared/model/shared.model';
+import { ApiEndpoint, SnackBarConfig } from 'src/app/modules/shared/model/shared.model';
+import { SnackbarInfoComponent } from 'src/app/modules/shared/snackbar-info/snackbar-info.component';
 
 @Component({
   selector: 'app-admissionfee-structure-create-edit',
@@ -33,7 +34,8 @@ export class AdmissionfeeStructureCreateEditComponent implements OnInit {
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private commonService: CommonService,
-              private dialog: MatDialog
+              private dialog: MatDialog,
+              private snackBar: MatSnackBar
   ) {
 
     this.admFeeStructureYearlyForm = new FormGroup({
@@ -80,11 +82,21 @@ export class AdmissionfeeStructureCreateEditComponent implements OnInit {
 
     this.saveOrUpdateHttpObservable(admFeeStructureYearlyPayload).subscribe(data => {
 
-      const apiMessage = data.apiMessage;
-
-      if (apiMessage.error) {
-        this.errorMessage = apiMessage.detail;
+      if (data.apiMessage && data.apiMessage.error) {
+        this.snackBar.openFromComponent(
+          SnackbarInfoComponent,
+          {
+            data: SnackBarConfig.dangerData(data.apiMessage.detail),
+            ...SnackBarConfig.flashTopDangerSnackBar()
+          });
         return;
+      } else {
+        this.snackBar.openFromComponent(
+          SnackbarInfoComponent,
+          {
+            data: SnackBarConfig.successData(data.apiMessage.detail),
+            ...SnackBarConfig.flashTopSuccessSnackBar()
+          });
       }
 
       this.router.navigate(['admin/maintenances/admission-fees']);
@@ -96,6 +108,12 @@ export class AdmissionfeeStructureCreateEditComponent implements OnInit {
       } else {
         this.errorMessage = err.message;
       }
+      this.snackBar.openFromComponent(
+        SnackbarInfoComponent,
+        {
+          data: SnackBarConfig.dangerData(this.errorMessage ),
+          ...SnackBarConfig.flashTopDangerSnackBar()
+        });
     });
   }
 

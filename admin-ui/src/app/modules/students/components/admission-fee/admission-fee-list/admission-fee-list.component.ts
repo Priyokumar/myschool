@@ -1,29 +1,39 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatDialog, MatPaginator, MatSort } from '@angular/material';
+import { MatTableDataSource, MatDialog, MatPaginator, MatSort, MatSnackBar } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { IAdmission } from '../../../models/admission-fee.model';
-import { ApiEndpoint, IConfirmation } from 'src/app/modules/shared/model/shared.model';
+import { ApiEndpoint, IConfirmation, SnackBarConfig } from 'src/app/modules/shared/model/shared.model';
 import { ConfirmationDialogComponent } from 'src/app/modules/shared/components/confirmation-dialog/confirmation-dialog.component';
+import { SnackbarInfoComponent } from 'src/app/modules/shared/snackbar-info/snackbar-info.component';
 
 @Component({
   selector: 'app-admission-fee-list',
   templateUrl: './admission-fee-list.component.html',
-  styleUrls: ['./admission-fee-list.component.css']
+  styleUrls: ['./admission-fee-list.component.scss']
 })
 export class AdmissionFeeListComponent implements OnInit {
 
   public errorMessage: string;
-  public admissionColumns: string[] = ['id', 'name', 'registrationNo', 'Class', 'Admission Number', 'action'];
+  public admissionColumns: string[] = [
+    'name',
+    'registrationNo',
+    'studentStatus',
+    'admissionStatus',
+    'Class',
+    'Admission Number',
+    'action'
+  ];
   public admissionsDataSource: MatTableDataSource<IAdmission>;
   public admissions: IAdmission[] = [];
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(
     private http: HttpClient,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -32,23 +42,11 @@ export class AdmissionFeeListComponent implements OnInit {
 
   private getAdmissions() {
 
-    let resp;
-    this.http.get(ApiEndpoint.ADMISSIONS).subscribe(data => {
-
-      resp = data;
-      if (resp && !resp.apiMessage.error) {
-
-        this.admissions = resp.data;
-        this.admissionsDataSource = new MatTableDataSource(this.admissions);
-
-        if (!this.admissions) {
-          this.errorMessage = 'No Admission found';
-        }
-
-      } else {
-        this.errorMessage = resp.apiMessage.detail;
-      }
-
+    this.http.get<any>(ApiEndpoint.ADMISSIONS).subscribe(data => {
+      this.admissions = data.data;
+      this.admissionsDataSource = new MatTableDataSource(this.admissions);
+      this.admissionsDataSource.paginator = this.paginator;
+      this.admissionsDataSource.sort = this.sort;
     }, err => {
       if (err.error && err.error.apiMessage) {
         this.errorMessage = err.error.apiMessage.detail;
@@ -82,7 +80,23 @@ export class AdmissionFeeListComponent implements OnInit {
       .afterClosed().subscribe(okData => {
         if (okData) {
 
-          this.http.delete(ApiEndpoint.ADMISSIONS + '/' + admId).subscribe(data => {
+          this.http.delete<any>(ApiEndpoint.ADMISSIONS + '/' + admId).subscribe(data => {
+            if (data.apiMessage && data.apiMessage.error) {
+              this.snackBar.openFromComponent(
+                SnackbarInfoComponent,
+                {
+                  data: SnackBarConfig.dangerData(data.apiMessage.detail),
+                  ...SnackBarConfig.flashTopDangerSnackBar()
+                });
+              return;
+            } else {
+              this.snackBar.openFromComponent(
+                SnackbarInfoComponent,
+                {
+                  data: SnackBarConfig.successData(data.apiMessage.detail),
+                  ...SnackBarConfig.flashTopSuccessSnackBar()
+                });
+            }
             this.admissionsDataSource = new MatTableDataSource([]);
             this.ngOnInit();
           }, err => {
@@ -92,6 +106,12 @@ export class AdmissionFeeListComponent implements OnInit {
             } else {
               this.errorMessage = err.message;
             }
+            this.snackBar.openFromComponent(
+              SnackbarInfoComponent,
+              {
+                data: SnackBarConfig.dangerData(this.errorMessage),
+                ...SnackBarConfig.flashTopDangerSnackBar()
+              });
           });
 
         }

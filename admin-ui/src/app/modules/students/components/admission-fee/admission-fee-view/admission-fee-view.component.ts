@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatTableDataSource, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatDialog, MatSnackBarConfig, MatSnackBar } from '@angular/material';
 import { IAdmission, IFee } from '../../../models/admission-fee.model';
-import { ApiEndpoint, IConfirmation } from 'src/app/modules/shared/model/shared.model';
+import { ApiEndpoint, IConfirmation, SnackBarConfig } from 'src/app/modules/shared/model/shared.model';
 import { HttpClient } from '@angular/common/http';
 import { ConfirmationDialogComponent } from 'src/app/modules/shared/components/confirmation-dialog/confirmation-dialog.component';
+import { SnackbarInfoComponent } from 'src/app/modules/shared/snackbar-info/snackbar-info.component';
 
 @Component({
   selector: 'app-admission-fee-view',
@@ -36,7 +37,8 @@ export class AdmissionFeeViewComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.admId = params.id;
@@ -79,7 +81,25 @@ export class AdmissionFeeViewComponent implements OnInit {
       .afterClosed().subscribe(okData => {
         if (okData) {
 
-          this.http.delete(ApiEndpoint.ADMISSIONS + '/' + this.admId).subscribe(data => {
+          this.http.delete<any>(ApiEndpoint.ADMISSIONS + '/' + this.admId).subscribe(data => {
+
+            if (data.apiMessage && data.apiMessage.error) {
+              this.snackBar.openFromComponent(
+                SnackbarInfoComponent,
+                {
+                  data: SnackBarConfig.dangerData(data.apiMessage.detail),
+                  ...SnackBarConfig.flashTopDangerSnackBar()
+                });
+              return;
+            } else {
+              this.snackBar.openFromComponent(
+                SnackbarInfoComponent,
+                {
+                  data: SnackBarConfig.successData(data.apiMessage.detail),
+                  ...SnackBarConfig.flashTopSuccessSnackBar()
+                });
+            }
+
             this.router.navigate(['/admin/students/admissions']);
           }, err => {
             console.error(err);
@@ -88,6 +108,12 @@ export class AdmissionFeeViewComponent implements OnInit {
             } else {
               this.errorMessage = err.message;
             }
+            this.snackBar.openFromComponent(
+              SnackbarInfoComponent,
+              {
+                data: SnackBarConfig.dangerData(this.errorMessage),
+                ...SnackBarConfig.flashTopDangerSnackBar()
+              });
           });
 
         }
@@ -104,6 +130,42 @@ export class AdmissionFeeViewComponent implements OnInit {
 
   onClickRow(fee: IFee) {
 
+  }
+
+  payFee(fee: IFee) {
+    this.dialog.open(ConfirmationDialogComponent,
+      {
+        width: '26%',
+        data: {
+          title: 'Pay fee',
+          subtitle: 'Click Ok to pay the fee.'
+        }
+        , disableClose: true
+      })
+      .afterClosed().subscribe(okData => {
+        if (okData) {
+          this.http.put(ApiEndpoint.ADMISSIONS + '/' + this.admId + '/fee/' + fee.id, {}).subscribe(data => {
+
+            this.getAdmission();
+            const configSuccess: MatSnackBarConfig = {
+              panelClass: 'success-snackbar',
+              duration: 5000,
+              horizontalPosition: 'center',
+              verticalPosition: 'top'
+            };
+            this.snackBar.openFromComponent(SnackbarInfoComponent, { data: 'Successfully paid the fee.', ...configSuccess });
+
+          }, err => {
+            console.error(err);
+            if (err.error && err.error.apiMessage) {
+              this.errorMessage = err.error.apiMessage.detail;
+            } else {
+              this.errorMessage = err.message;
+            }
+          });
+
+        }
+      });
   }
 
 }
