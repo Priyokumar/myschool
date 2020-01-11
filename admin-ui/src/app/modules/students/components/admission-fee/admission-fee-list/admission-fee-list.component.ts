@@ -6,6 +6,7 @@ import { IAdmission } from '../../../models/admission-fee.model';
 import { ApiEndpoint, IConfirmation, SnackBarConfig } from 'src/app/modules/shared/model/shared.model';
 import { ConfirmationDialogComponent } from 'src/app/modules/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { SnackbarInfoComponent } from 'src/app/modules/shared/components/snackbar-info/snackbar-info.component';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 
 @Component({
   selector: 'app-admission-fee-list',
@@ -28,15 +29,18 @@ export class AdmissionFeeListComponent implements OnInit {
   public admissions: IAdmission[] = [];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  isSuperAdmin = false;
 
   constructor(
     private http: HttpClient,
     private router: Router,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
+    this.isSuperAdmin = this.authService.isSuperAdmin();
     this.getAdmissions();
   }
 

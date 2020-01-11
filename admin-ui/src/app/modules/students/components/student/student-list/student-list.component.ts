@@ -6,6 +6,7 @@ import { ApiEndpoint, IConfirmation, SnackBarConfig } from 'src/app/modules/shar
 import { IStudent } from '../../../models/student.model';
 import { ConfirmationDialogComponent } from 'src/app/modules/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { SnackbarInfoComponent } from 'src/app/modules/shared/components/snackbar-info/snackbar-info.component';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 
 @Component({
   selector: 'app-student-list',
@@ -22,15 +23,18 @@ export class StudentListComponent implements OnInit {
   public studentsColumns: string[] = ['firstName', 'middleName', 'lastName', 'gender', 'rollNo', 'standard', 'registrationNo', 'status', 'action'];
   public studentsDataSource: MatTableDataSource<IStudent>;
   public students: IStudent[] = [];
+  isSuperAdmin = false;
 
   constructor(
     private http: HttpClient,
     private router: Router,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
+    this.isSuperAdmin = this.authService.isSuperAdmin();
     this.getStudents();
   }
 

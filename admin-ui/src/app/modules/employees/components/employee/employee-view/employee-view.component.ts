@@ -8,6 +8,7 @@ import { FileUploadService } from 'src/app/modules/shared/services/file-upload.s
 import { ConfirmationDialogComponent } from 'src/app/modules/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { Observable } from 'rxjs';
 import { SnackbarInfoComponent } from 'src/app/modules/shared/components/snackbar-info/snackbar-info.component';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 
 @Component({
   selector: 'app-employee-view',
@@ -47,6 +48,7 @@ export class EmployeeViewComponent implements OnInit {
 
   employeeType = '';
   designation = '';
+  isSuperAdmin = false;
 
   constructor(
     private http: HttpClient,
@@ -54,7 +56,8 @@ export class EmployeeViewComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private fileUploadService: FileUploadService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private authService: AuthService
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.empId = params.empId;
@@ -62,6 +65,7 @@ export class EmployeeViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isSuperAdmin = this.authService.isSuperAdmin();
     this.getEmployee();
   }
 

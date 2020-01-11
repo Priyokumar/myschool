@@ -7,7 +7,7 @@
       <button class="btn btn-save" routerLink="/admin/students/admissions">
         <mat-icon class="white-icon">keyboard_arrow_left</mat-icon>&nbsp;Back
       </button>
-      <button class="btn btn-cancel" (click)="delete()">
+      <button *ngIf="isSuperAdmin" class="btn btn-cancel" (click)="delete()">
         <mat-icon class="white-icon">clear</mat-icon>&nbsp;Delete
       </button>
       <button class="btn btn-edit" (click)="edit()">

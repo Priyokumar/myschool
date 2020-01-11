@@ -44,12 +44,12 @@
             <td mat-cell *matCellDef="let row" class="name-class" (click)="onClickRow(row.id)">
               {{row.employeeType}}
             </td>
-          </ng-container> 
+          </ng-container>
 
           <ng-container matColumnDef="designation">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Desigination</th>
             <td mat-cell *matCellDef="let row" class="name-class" (click)="onClickRow(row.id)">
-             {{row.designation}}
+              {{row.designation}}
             </td>
           </ng-container>
 
@@ -60,8 +60,9 @@
 
           <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-            <td mat-cell *matCellDef="let row" class="text-right" (click)="onDeleteEmployee(row.id)">
-              <mat-icon style="color: firebrick; cursor: pointer;">delete</mat-icon> &nbsp;
+            <td mat-cell *matCellDef="let row" class="text-right">
+              <mat-icon *ngIf="isSuperAdmin" (click)="onDeleteEmployee(row.id)"
+                style="color: firebrick; cursor: pointer;">delete</mat-icon> &nbsp;
             </td>
           </ng-container>
 

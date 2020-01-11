@@ -26,6 +26,7 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
   admissionDashboardData: any[] = [];
   employees: IEmployee[] = [];
   teachingStaffs: IEmployee[] = [];
+  totalAdmission: number;
 
   constructor(
     private http: HttpClient
@@ -193,6 +194,10 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
 
     const counts = admissionsData.map(admission => {
       return admission.count;
+    });
+
+    this.totalAdmission = counts.reduce((total, count) => {
+      return total + count;
     });
 
     this.admissionLineChart = new Chart('admission-line-chart', {

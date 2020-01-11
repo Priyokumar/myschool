@@ -1,5 +1,23 @@
 import { MatSnackBarConfig } from '@angular/material';
 
+export const adminSideNavs: ISideNav[] = [
+
+    { title: 'Dashboard', path: '/admin/dashboard', icon: 'home', hasSubmenu: false, submenu: [] },
+    {
+        title: 'Employees', path: '', icon: 'cloud_circle', hasSubmenu: true, submenu:
+            [
+                { title: 'Employee List', path: '/admin/employees', icon: 'dashboard', hasSubmenu: false, submenu: [] }
+            ]
+    },
+    {
+        title: 'Student Management', path: '', icon: 'wc', hasSubmenu: true, submenu:
+            [
+                { title: 'Student', path: '/admin/students', icon: 'dashboard', hasSubmenu: false, submenu: [] },
+                { title: 'Admission', path: '/admin/students/admissions', icon: 'dashboard', hasSubmenu: false, submenu: [] }
+            ]
+    }
+];
+
 export const allSideNavs: ISideNav[] = [
 
     { title: 'Dashboard', path: '/admin/dashboard', icon: 'home', hasSubmenu: false, submenu: [] },

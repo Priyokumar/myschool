@@ -6,6 +6,7 @@ import { ApiEndpoint, IConfirmation, SnackBarConfig } from 'src/app/modules/shar
 import { IEmployee } from '../../../model/employeeModels';
 import { ConfirmationDialogComponent } from 'src/app/modules/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { SnackbarInfoComponent } from 'src/app/modules/shared/components/snackbar-info/snackbar-info.component';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 
 @Component({
   selector: 'app-employee-list',
@@ -18,15 +19,18 @@ export class EmployeeListComponent implements OnInit {
   employeesColumns: string[] = ['firstName', 'middleName', 'lastName', 'empCode', 'employeeType', 'designation', 'status', 'action'];
   employeesDataSource: MatTableDataSource<IEmployee>;
   employees: IEmployee[] = [];
+  isSuperAdmin = false;
 
   constructor(
     private http: HttpClient,
     private router: Router,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
+    this.isSuperAdmin = this.authService.isSuperAdmin();
     this.getEmployees();
   }
 

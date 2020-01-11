@@ -7,6 +7,7 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { ConfirmationDialogComponent } from 'src/app/modules/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { FileUploadService } from 'src/app/modules/shared/services/file-upload.service';
 import { SnackbarInfoComponent } from 'src/app/modules/shared/components/snackbar-info/snackbar-info.component';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 
 @Component({
   selector: 'app-student-view',
@@ -21,6 +22,7 @@ export class StudentViewComponent implements OnInit {
   percentage: number;
   uploadingFile: boolean;
   profilePicUrl = '../../../../../../assets/images/avatar.png';
+  isSuperAdmin = false;
 
   constructor(
     private http: HttpClient,
@@ -28,7 +30,8 @@ export class StudentViewComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
     private fileUploadService: FileUploadService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private authService: AuthService
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.studId = params.id;
@@ -36,6 +39,7 @@ export class StudentViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isSuperAdmin = this.authService.isSuperAdmin();
     this.getStudent();
   }
 

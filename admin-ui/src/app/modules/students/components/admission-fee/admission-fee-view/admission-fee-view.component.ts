@@ -6,6 +6,7 @@ import { ApiEndpoint, IConfirmation, SnackBarConfig } from 'src/app/modules/shar
 import { HttpClient } from '@angular/common/http';
 import { ConfirmationDialogComponent } from 'src/app/modules/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { SnackbarInfoComponent } from 'src/app/modules/shared/components/snackbar-info/snackbar-info.component';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 
 @Component({
   selector: 'app-admission-fee-view',
@@ -32,13 +33,15 @@ export class AdmissionFeeViewComponent implements OnInit {
 
   public feesDataSource: MatTableDataSource<IFee>;
   public fee: IFee[] = [];
+  isSuperAdmin = false;
 
   constructor(
     private http: HttpClient,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private authService: AuthService
   ) {
     this.activatedRoute.params.subscribe(params => {
       this.admId = params.id;
@@ -46,6 +49,7 @@ export class AdmissionFeeViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isSuperAdmin = this.authService.isSuperAdmin();
     this.getAdmission();
   }
 

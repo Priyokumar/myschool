@@ -7,7 +7,7 @@
       <button class="btn btn-save" routerLink="/admin/students">
         <mat-icon class="white-icon">keyboard_arrow_left</mat-icon>&nbsp;Back
       </button>
-      <button class="btn btn-cancel" (click)="delete()">
+      <button class="btn btn-cancel" (click)="delete()" *ngIf="isSuperAdmin">
         <mat-icon class="white-icon">clear</mat-icon>&nbsp;Delete
       </button>
       <button class="btn btn-edit" (click)="edit()">
@@ -53,8 +53,9 @@
                   <p>Registration Date : {{student.registrationDate}}</p>
                 </div>
                 <div class="col-md-4">
-                  <p>Status : <span class="pl-2 pr-2 rounded font-white"  
-                    [ngClass]="{'bg-green': student.status === 'Active','bg-red':student.status === 'Inactive'}">{{student.status}}</span></p>
+                  <p>Status : <span class="pl-2 pr-2 rounded font-white"
+                      [ngClass]="{'bg-green': student.status === 'Active','bg-red':student.status === 'Inactive'}">{{student.status}}</span>
+                  </p>
                 </div>
 
                 <div class="col-md-12">

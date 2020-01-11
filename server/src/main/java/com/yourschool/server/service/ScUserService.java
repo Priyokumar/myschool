@@ -106,7 +106,7 @@ public class ScUserService {
 		dtoUser.setLinkedId(user.getLinkedId());
 		dtoUser.setMobile(user.getMobile());
 		dtoUser.setUserName(user.getUserName());
-		dtoUser.setPassword(user.getPassword());
+		// dtoUser.setPassword(user.getPassword());
 
 		List<SCUserRole> userRoles = user.getUserRoles();
 		if (ScUtil.isAllPresent(userRoles)) {

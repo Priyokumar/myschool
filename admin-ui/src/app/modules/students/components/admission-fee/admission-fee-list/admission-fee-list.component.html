@@ -59,8 +59,8 @@
 
           <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-            <td mat-cell *matCellDef="let row" class="text-right" (click)="onDeleteRow(row.id)">
-              <mat-icon style="color: firebrick; cursor: pointer;">delete</mat-icon> &nbsp;
+            <td mat-cell *matCellDef="let row" class="text-right">
+              <mat-icon *ngIf="isSuperAdmin" (click)="onDeleteRow(row.id)" style="color: firebrick; cursor: pointer;">delete</mat-icon> &nbsp;
             </td>
           </ng-container>
 

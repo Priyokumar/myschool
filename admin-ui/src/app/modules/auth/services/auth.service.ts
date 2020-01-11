@@ -5,17 +5,17 @@ import { environment } from '../../../../environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 import * as moment from 'moment';
 import jwtDecoder from 'jwt-decode';
-import { Subject, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class AuthService {
 
+  constructor(private http: HttpClient, private cookieService: CookieService) { }
+  public static USER_TOKEN = 'user_token';
+
   LOGIN_URL = environment.baseUrl + '/login';
-  private USER_TOKEN = 'user_token';
 
   private loginStatusSubject = new BehaviorSubject<boolean>(false);
-
-  constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   login(loginData: ILoginData) {
     return this.http.post<any>(this.LOGIN_URL, loginData);
@@ -25,7 +25,7 @@ export class AuthService {
     if (token) {
       const expiry = moment();
       expiry.add(10, 'minutes');
-      this.cookieService.set(this.USER_TOKEN, JSON.stringify(token), expiry.toDate());
+      this.cookieService.set(AuthService.USER_TOKEN, token, expiry.toDate());
     }
   }
 
@@ -34,7 +34,7 @@ export class AuthService {
   }
 
   getUserToken() {
-    const token = this.cookieService.get(this.USER_TOKEN);
+    const token = this.cookieService.get(AuthService.USER_TOKEN);
     return token;
   }
 
@@ -54,6 +54,20 @@ export class AuthService {
 
   recieveLoginSignal() {
     return this.loginStatusSubject.asObservable();
+  }
+
+  isSuperAdmin(): boolean {
+    let isSuperAdmin = false;
+    const user = this.getAuthDataFromCookies();
+    if (user && user.roles && user.roles.length > 0) {
+      const superAdminRole = user.roles.find(role => {
+        return role.name.toLowerCase().includes('Super Admin'.toLowerCase());
+      });
+      if (superAdminRole) {
+        isSuperAdmin = true;
+      }
+    }
+    return isSuperAdmin;
   }
 
 }
