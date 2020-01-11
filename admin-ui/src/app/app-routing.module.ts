@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AdminLayoutComponent } from './modules/shared/admin-layout/admin-layout.component';
+import { AdminLayoutComponent } from './modules/shared/components/admin-layout/admin-layout.component';
 
 const routes: Routes = [
   { path: '', loadChildren: './modules/auth/auth.module#AuthModule' },

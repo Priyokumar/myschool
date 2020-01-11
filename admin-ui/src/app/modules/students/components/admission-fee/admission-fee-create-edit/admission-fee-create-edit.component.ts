@@ -9,7 +9,7 @@ import { SearchStudentDialogComponent } from '../../search-student-dialog/search
 import { Validators } from '@angular/forms';
 import { ApiEndpoint, SnackBarConfig } from 'src/app/modules/shared/model/shared.model';
 import { IAdmission } from '../../../models/admission-fee.model';
-import { SnackbarInfoComponent } from 'src/app/modules/shared/snackbar-info/snackbar-info.component';
+import { SnackbarInfoComponent } from 'src/app/modules/shared/components/snackbar-info/snackbar-info.component';
 
 @Component({
   selector: 'app-admission-fee-create-edit',

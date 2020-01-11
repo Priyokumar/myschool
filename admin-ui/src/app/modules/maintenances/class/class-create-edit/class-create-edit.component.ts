@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ApiEndpoint, SnackBarConfig } from 'src/app/modules/shared/model/shared.model';
 import { IStandard } from '../../model/standard';
-import { SnackbarInfoComponent } from 'src/app/modules/shared/snackbar-info/snackbar-info.component';
+import { SnackbarInfoComponent } from 'src/app/modules/shared/components/snackbar-info/snackbar-info.component';
 import { MatSnackBar } from '@angular/material';
 
 @Component({

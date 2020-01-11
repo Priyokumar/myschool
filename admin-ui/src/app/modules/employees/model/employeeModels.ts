@@ -86,8 +86,8 @@ export interface IEmployee {
     status?: string;
     dob: string;
     joiningDate: string;
-    employeeType: number;
-    designation: number;
+    employeeType: string;
+    designation: string;
     profilePic?: Document;
 
     personalInfo: IPersonalInfo;

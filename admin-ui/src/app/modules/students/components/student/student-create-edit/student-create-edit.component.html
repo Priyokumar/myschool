@@ -6,10 +6,10 @@
     </div>
     <div class="col-md-6 text-right">
       <button class="btn btn-cancel" routerLink="/admin/students">
-        <mat-icon>clear</mat-icon>&nbsp;Cancel
+        <mat-icon class="white-icon">clear</mat-icon>&nbsp;Cancel
       </button>
       <button class="btn btn-save" (click)="save()" [disabled]='!studentForm.valid'>
-        <mat-icon>save_alt</mat-icon>&nbsp;{{studId ? 'Update':'Save'}}
+        <mat-icon class="white-icon">save_alt</mat-icon>&nbsp;{{studId ? 'Update':'Save'}}
       </button>
     </div>
   </div>

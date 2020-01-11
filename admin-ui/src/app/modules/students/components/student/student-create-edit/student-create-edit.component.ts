@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
 import { ApiEndpoint, SnackBarConfig } from 'src/app/modules/shared/model/shared.model';
 import { IStudent } from '../../../models/student.model';
-import { SnackbarInfoComponent } from 'src/app/modules/shared/snackbar-info/snackbar-info.component';
+import { SnackbarInfoComponent } from 'src/app/modules/shared/components/snackbar-info/snackbar-info.component';
 import { MatSnackBar } from '@angular/material';
 
 @Component({

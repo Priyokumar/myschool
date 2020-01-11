@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { IAdmissionFeeMaintenanceYearly } from 'src/app/modules/students/models/maintenance';
 import { ApiEndpoint, IConfirmation, SnackBarConfig } from 'src/app/modules/shared/model/shared.model';
 import { ConfirmationDialogComponent } from 'src/app/modules/shared/components/confirmation-dialog/confirmation-dialog.component';
-import { SnackbarInfoComponent } from 'src/app/modules/shared/snackbar-info/snackbar-info.component';
+import { SnackbarInfoComponent } from 'src/app/modules/shared/components/snackbar-info/snackbar-info.component';
 
 @Component({
   selector: 'app-admissionfee-structure-list',

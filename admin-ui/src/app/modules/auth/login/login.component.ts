@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { ILoginData } from '../model/auth.model';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
-import { CommonService } from '../../shared/services/common.service';
 
 @Component({
   selector: 'app-login',
@@ -14,18 +13,25 @@ import { CommonService } from '../../shared/services/common.service';
 })
 export class LoginComponent implements OnInit {
 
-  email = new FormControl('', Validators.required);
-  password = new FormControl('', Validators.required);
+  email = new FormControl('', null);
+  password = new FormControl('', null);
   errorMessage: string;
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private snackBar: MatSnackBar,
-    private commonService: CommonService
   ) { }
 
   ngOnInit() {
+    this.getUserData();
+  }
+
+  getUserData() {
+    const userData = this.authService.getAuthDataFromCookies();
+    if (userData) {
+      this.router.navigate(['/admin/dashboard']);
+    }
   }
 
   async login() {
@@ -41,8 +47,9 @@ export class LoginComponent implements OnInit {
 
     try {
       const resp = await this.authService.login(loginData).toPromise();
-      this.router.navigate(['admin/employees']);
-      this.commonService.setUserData(resp.token);
+      this.authService.storeToken(resp.token);
+      this.router.navigate(['/admin/dashboard']);
+      this.authService.sendLoginSignal();
     } catch (error) {
       console.error(error);
       this.errorMessage = 'Invalid credential !';

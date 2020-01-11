@@ -5,7 +5,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { MaterialModule } from '../shared/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { AuthService } from './services/auth.service';
 
 const routes: Routes = [
   { path: '', component: LoginComponent }
@@ -21,6 +20,6 @@ const routes: Routes = [
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [AuthService]
+  providers: []
 })
 export class AuthModule { }

@@ -5,7 +5,7 @@ import { MatTableDataSource, MatDialog, MatSnackBar } from '@angular/material';
 import { ApiEndpoint, IConfirmation, SnackBarConfig } from 'src/app/modules/shared/model/shared.model';
 import { IEmployee } from '../../../model/employeeModels';
 import { ConfirmationDialogComponent } from 'src/app/modules/shared/components/confirmation-dialog/confirmation-dialog.component';
-import { SnackbarInfoComponent } from 'src/app/modules/shared/snackbar-info/snackbar-info.component';
+import { SnackbarInfoComponent } from 'src/app/modules/shared/components/snackbar-info/snackbar-info.component';
 
 @Component({
   selector: 'app-employee-list',

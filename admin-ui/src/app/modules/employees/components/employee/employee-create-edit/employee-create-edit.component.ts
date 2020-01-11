@@ -8,7 +8,7 @@ import * as moment from 'moment';
 import { ApiEndpoint, SnackBarConfig } from 'src/app/modules/shared/model/shared.model';
 import { IEmployee, IEmployeeType, IDesignation } from '../../../model/employeeModels';
 import { MatSelectChange, MatSnackBar } from '@angular/material';
-import { SnackbarInfoComponent } from 'src/app/modules/shared/snackbar-info/snackbar-info.component';
+import { SnackbarInfoComponent } from 'src/app/modules/shared/components/snackbar-info/snackbar-info.component';
 
 @Component({
   selector: 'app-employee-create-edit',

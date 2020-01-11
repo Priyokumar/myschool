@@ -1,14 +1,14 @@
-<div class="shadow form-min-height ml-3 mr-3 mt-1 pb-5">
+<div class="shadow form-min-height">
   <div class="row p-1 bg-gold">
     <div class="col-md-6">
       <span class="font-400 font-banner" style="line-height: 35px;">Class</span>
     </div>
     <div class="col-md-6 text-right">
       <button class="btn btn-cancel" routerLink="/admin/maintenances/classes">
-        <mat-icon>clear</mat-icon>&nbsp;Cancel
+        <mat-icon class="white-icon">clear</mat-icon>&nbsp;Cancel
       </button>
       <button class="btn btn-save" (click)="save()" [disabled]='!standardForm.valid'>
-        <mat-icon>save_alt</mat-icon>&nbsp;Save Class
+        <mat-icon class="white-icon">save_alt</mat-icon>&nbsp;Save Class
       </button>
     </div>
   </div>

@@ -1,19 +1,19 @@
-<div class="shadow form-min-height">
+<div class="mat-elevation-z2">
   <div class="row p-1 bg-gold">
     <div class="col-md-6">
       <span class="font-400 font-banner" style="line-height: 35px;">Add Admission Fee Structure</span>
     </div>
     <div class="col-md-6 text-right">
       <button class="btn btn-cancel" routerLink="/admin/maintenances/admission-fees">
-        <mat-icon>clear</mat-icon>&nbsp;Cancel
+        <mat-icon class="white-icon">clear</mat-icon>&nbsp;Cancel
       </button>
       <button class="btn btn-save" (click)="save()" [disabled]='!admFeeStructureYearlyForm.valid'>
-        <mat-icon>save_alt</mat-icon>&nbsp;{{admFeeStructureYearlId ? 'Update':'Save'}}
+        <mat-icon class="white-icon">save_alt</mat-icon>&nbsp;{{admFeeStructureYearlId ? 'Update':'Save'}}
       </button>
     </div>
   </div>
 
-  <div [ngClass]="['pt-1','pr-5','pl-5']">
+  <div [ngClass]="['pt-1','pr-5','pl-5']" class="bg-white">
     <div class="row pt-3">
       <div class="col-md-12">
         <p style="font-weight: bold; font-size: 14px;">Year</p>
@@ -39,7 +39,7 @@
           </div>
           <div class="col-md-6 text-right">
             <button class="btn btn-save" (click)="addAdmFeeStructure()">
-              <mat-icon>add_circle</mat-icon>&nbsp;Add
+              <mat-icon class="white-icon">add_circle</mat-icon>&nbsp;Add
             </button>
           </div>
         </div>

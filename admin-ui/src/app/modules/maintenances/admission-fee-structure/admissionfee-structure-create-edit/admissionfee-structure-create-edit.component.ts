@@ -7,7 +7,7 @@ import { AdmissionFeeStructureDialogComponent } from '../admission-fee-structure
 import { IAdmissionFeeMaintenance, IAdmissionFeeMaintenanceYearly } from 'src/app/modules/students/models/maintenance';
 import { CommonService } from 'src/app/modules/shared/services/common.service';
 import { ApiEndpoint, SnackBarConfig } from 'src/app/modules/shared/model/shared.model';
-import { SnackbarInfoComponent } from 'src/app/modules/shared/snackbar-info/snackbar-info.component';
+import { SnackbarInfoComponent } from 'src/app/modules/shared/components/snackbar-info/snackbar-info.component';
 
 @Component({
   selector: 'app-admissionfee-structure-create-edit',

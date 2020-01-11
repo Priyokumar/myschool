@@ -1,20 +1,20 @@
-<div class="shadow form-min-height ml-3 mr-3 mt-1 pb-5">
+<div class="mat-elevation-z2 form-min-height">
   <div class="row p-1 bg-gold">
     <div class="col-md-6">
       <span class="font-400 font-banner" style="line-height: 35px;">Admission Fee Details</span>
     </div>
     <div class="col-md-6 text-right">
       <button class="btn btn-save" routerLink="/admin/maintenances/admission-fees">
-        <mat-icon>keyboard_arrow_left</mat-icon>&nbsp;Back
+        <mat-icon class="white-icon">keyboard_arrow_left</mat-icon>&nbsp;Back
       </button>
       <button class="btn btn-cancel" (click)="delete()">
-        <mat-icon>clear</mat-icon>&nbsp;Delete
+        <mat-icon class="white-icon">clear</mat-icon>&nbsp;Delete
       </button>
       <button class="btn btn-edit" (click)="edit()">
-        <mat-icon>edit</mat-icon>&nbsp;Edit
+        <mat-icon class="white-icon">edit</mat-icon>&nbsp;Edit
       </button>
       <button class="btn btn-save" [routerLink]="['/admin/maintenances/admission-fees/add']">
-        <mat-icon>add</mat-icon>&nbsp;New Admission Fee Structure
+        <mat-icon class="white-icon">add</mat-icon>&nbsp;New Admission Fee Structure
       </button>
     </div>
   </div>
@@ -24,21 +24,21 @@
     </div>
   </div>
 
-  <div [ngClass]="['pt-1','pr-5','pl-5']" *ngIf="admFeeStructure">
+  <div [ngClass]="['pt-1','pr-5','pl-5']" class="bg-white" *ngIf="admFeeStructure">
 
     <div class="row pt-3">
 
       <div class="col-md-12">
-        <p style="font-weight: bold; font-size: 14px;">Admission Fee Structure Info</p>
+        <p class="font-500 font-title-md">Admission Fee Structure Info</p>
       </div>
       <div class="col-md-4">
         <p>Year : {{admFeeStructure.year}}</p>
       </div>
 
-      <div class="col-md-12 table-header mb-5">
+      <div class="col-md-12 table-header p-0 mb-5">
         <div class="row p-2">
           <div class="col-md-6">
-            <span style="font-weight: bold; font-size: 14px;">Admission Fee Structure</span>
+            <span class="font-500 font-title-md">Admission Fee Structure</span>
           </div>
         </div>
         <div class="no-shadow w-100">

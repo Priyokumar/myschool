@@ -79,14 +79,16 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
 
   getEmployees() {
 
-    /* this.http.get<any>(ApiEndpoint.EMPLOYEES).subscribe(data => {
+    this.http.get<any>(ApiEndpoint.EMPLOYEES).subscribe(data => {
       this.employees = data.data;
       this.teachingStaffs = this.employees.filter(employee => {
-        return employee.employeeType.includes('staff');
+        if (employee.designation) {
+          return employee.designation.toLowerCase().includes('staff');
+        }
       });
     }, err => {
       console.error(err);
-    }); */
+    });
 
   }
 
@@ -111,24 +113,27 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
       const resp = await this.http.get<any>(ApiEndpoint.STUDENTS, { params: { standard: standard.name } }).toPromise();
       this.studentsBarChartLabels.push(standard.name);
 
-      let red = parseFloat(Math.random().toFixed(3)) * 1000;
-      let green = parseFloat(Math.random().toFixed(3)) * 1000;
-      let blue = parseFloat(Math.random().toFixed(3)) * 1000;
+      /*  let red = parseFloat(Math.random().toFixed(3)) * 1000;
+       let green = parseFloat(Math.random().toFixed(3)) * 1000;
+       let blue = parseFloat(Math.random().toFixed(3)) * 1000;
 
-      if (red >= 255) {
-        red /= 5;
-      }
+       if (red >= 255) {
+         red /= 5;
+       }
 
-      if (green >= 255) {
-        green /= 5;
-      }
+       if (green >= 255) {
+         green /= 5;
+       }
 
-      if (blue >= 255) {
-        blue /= 5;
-      }
+       if (blue >= 255) {
+         blue /= 5;
+       }
 
-      const bg = `rgba(${red},${green},${blue},0.3)`;
-      const brd = `rgba(${red},${green},${blue},1)`;
+       const bg = `rgba(${red},${green},${blue},0.3)`;
+       const brd = `rgba(${red},${green},${blue},1)`; */
+
+      const bg = `rgba(141, 182, 0,0.4)`;
+      const brd = `rgba(141, 182, 0,1)`;
 
       this.studentsBarChartDBgColor.push(bg);
       this.studentsBarChartDBorderColor.push(brd);
@@ -165,6 +170,14 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
           yAxes: [{
             ticks: {
               beginAtZero: true
+            },
+            gridLines: {
+              color: 'rgba(240, 240, 240, 0.9)',
+            }
+          }],
+          xAxes: [{
+            gridLines: {
+              color: 'rgba(240, 240, 240, 0.9)',
             }
           }]
         }
@@ -189,12 +202,13 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
         datasets: [{
           data: counts,
           label: 'Admissions',
-          borderColor: '#3e95cd',
+          borderColor: '#8db600',
           fill: false
         }
         ]
       },
       options: {
+        legend: { display: false },
         title: {
           display: false,
           text: 'Admissions'
@@ -203,6 +217,14 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
           yAxes: [{
             ticks: {
               min: 0
+            },
+            gridLines: {
+              color: 'rgba(240, 240, 240, 0.9)',
+            }
+          }],
+          xAxes: [{
+            gridLines: {
+              color: 'rgba(240, 240, 240, 0.9)',
             }
           }]
         }

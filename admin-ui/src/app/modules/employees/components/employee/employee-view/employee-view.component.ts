@@ -7,7 +7,7 @@ import { ApiEndpoint, IConfirmation, SnackBarConfig } from 'src/app/modules/shar
 import { FileUploadService } from 'src/app/modules/shared/services/file-upload.service';
 import { ConfirmationDialogComponent } from 'src/app/modules/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { Observable } from 'rxjs';
-import { SnackbarInfoComponent } from 'src/app/modules/shared/snackbar-info/snackbar-info.component';
+import { SnackbarInfoComponent } from 'src/app/modules/shared/components/snackbar-info/snackbar-info.component';
 
 @Component({
   selector: 'app-employee-view',

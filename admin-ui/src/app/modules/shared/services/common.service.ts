@@ -23,14 +23,4 @@ export class CommonService {
 
   constructor() { }
 
-  setUserData(token: string) {
-    localStorage.setItem('token', token);
-  }
-
-  getUserData() {
-    const token = localStorage.getItem('token');
-    const decodedToken = token ? jwtDecoder(token) : null;
-    return decodedToken ? JSON.parse(decodedToken.sub).data : null;
-  }
-
 }

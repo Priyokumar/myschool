@@ -5,7 +5,7 @@ import { ApiEndpoint, IConfirmation, SnackBarConfig } from 'src/app/modules/shar
 import { IStandard } from '../../model/standard';
 import { ConfirmationDialogComponent } from 'src/app/modules/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { SnackbarInfoComponent } from 'src/app/modules/shared/snackbar-info/snackbar-info.component';
+import { SnackbarInfoComponent } from 'src/app/modules/shared/components/snackbar-info/snackbar-info.component';
 
 @Component({
   selector: 'app-class-view',

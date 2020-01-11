@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { allSideNavs, ISideNav } from '../model/shared.model';
+import { allSideNavs, ISideNav } from '../../model/shared.model';
 
 @Component({
   selector: 'app-admin-layout',

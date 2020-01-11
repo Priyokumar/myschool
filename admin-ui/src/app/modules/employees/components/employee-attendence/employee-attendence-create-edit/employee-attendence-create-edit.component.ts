@@ -9,6 +9,7 @@ import { IUser } from 'src/app/modules/shared/model/security';
 import { CommonService } from 'src/app/modules/shared/services/common.service';
 import { MatDialog } from '@angular/material';
 import { EmployeesDialogComponent } from '../../employee/employees-dialog/employees-dialog.component';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 
 @Component({
   selector: 'app-employee-attendence-create-edit',
@@ -26,7 +27,7 @@ export class EmployeeAttendenceCreateEditComponent implements OnInit {
 
   constructor(
     private employeeService: EmployeeService,
-    private commonService: CommonService,
+    private authService: AuthService,
     private dialog: MatDialog
   ) {
     this.currentDateFctl.setValue(this.currDate);
@@ -38,7 +39,7 @@ export class EmployeeAttendenceCreateEditComponent implements OnInit {
   ngOnInit() {
     const now = moment();
     this.getWeekDates(now);
-    this.userData = this.commonService.getUserData();
+    this.userData = this.authService.getAuthDataFromCookies();
     console.log('this.userData', this.userData);
   }
 

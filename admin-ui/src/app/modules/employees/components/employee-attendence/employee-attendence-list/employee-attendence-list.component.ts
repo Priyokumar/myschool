@@ -7,6 +7,7 @@ import { CommonService } from 'src/app/modules/shared/services/common.service';
 import { addDays, subDays } from 'date-fns';
 import { FormControl } from '@angular/forms';
 import { EmployeeService } from '../../../services/employee.service';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 
 @Component({
   selector: 'app-employee-attendence-list',
@@ -26,7 +27,7 @@ export class EmployeeAttendenceListComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private commonService: CommonService,
+    private authService: AuthService,
     private employeeService: EmployeeService,
   ) {
   }
@@ -34,7 +35,7 @@ export class EmployeeAttendenceListComponent implements OnInit {
   ngOnInit() {
     this.currentDateFctl.setValue(this.selectedDate);
     this.getEmpAttds();
-    this.userData = this.commonService.getUserData();
+    this.userData = this.authService.getAuthDataFromCookies();
   }
 
   private getEmpAttds() {
