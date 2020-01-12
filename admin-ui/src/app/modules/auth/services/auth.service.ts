@@ -6,6 +6,7 @@ import { CookieService } from 'ngx-cookie-service';
 import * as moment from 'moment';
 import jwtDecoder from 'jwt-decode';
 import { BehaviorSubject } from 'rxjs';
+import { ApiEndpoint } from '../../shared/model/shared.model';
 
 @Injectable()
 export class AuthService {
@@ -18,7 +19,7 @@ export class AuthService {
   private loginStatusSubject = new BehaviorSubject<boolean>(false);
 
   login(loginData: ILoginData) {
-    return this.http.post<any>(this.LOGIN_URL, loginData);
+    return this.http.post<any>(ApiEndpoint.LOGIN, loginData);
   }
 
   storeToken(token: any) {
