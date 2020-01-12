@@ -25,7 +25,7 @@ export class AuthService {
   storeToken(token: any) {
     if (token) {
       const expiry = moment();
-      expiry.add(10, 'minutes');
+      expiry.add(10, 'hours');
       this.cookieService.set(AuthService.USER_TOKEN, token, expiry.toDate());
     }
   }
