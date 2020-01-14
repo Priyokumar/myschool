@@ -77,7 +77,7 @@ public class ScMaintAdmissionFeeService {
 		filters.add(new Filter("year", Operator.EQUAL, FieldType.NUMBER, year));
 		ScMaintenanceAdmissionFeeYearly existingData = commonService.findOne(filters, ScMaintenanceAdmissionFeeYearly.class);
 		
-		if(ScUtil.isAllPresent(existingData)) {
+		if(ScUtil.isAllPresent(existingData) && !ScUtil.isAllPresent(id)) {
 			ApiMessage apiMessage = new ApiMessage(true, 500, "Admission fee structure for the year - " + year+" is already exists", "Internal server error");
 			res.setApiMessage(apiMessage);
 			return res;
